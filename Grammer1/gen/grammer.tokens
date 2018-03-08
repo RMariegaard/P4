@@ -44,6 +44,7 @@ INT_NUM=43
 DECIMAL_NUM=44
 CHAR_VALUE=45
 WS=46
+COMMENTS=47
 'setup'=1
 'game-loop'=2
 'function'=3
