@@ -7,7 +7,7 @@ gameloop   : 'game-loop' block
           ;
 method    : 'function' ID '(' (dcl( ',' dcl)*)? ')' block
           ;
-predcl      : dcl | 'event' '('expr')' '->' ID NEWLINE+
+predcl      : dcl NEWLINE+ | 'event' '('expr')' '->' ID NEWLINE+
           ;
 
 block     : NEWLINE+ stmt* 'end' NEWLINE+
