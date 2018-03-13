@@ -38,10 +38,17 @@ abstract class Node{
             }
         }
     }
+    //Er vel bare constructeren som jo skal være specifict vel?
     public void makeNode(){}
 
-    public void MaleFamily(){
 
+    //Ifølge bogen skal den kaldes udefra med en parameter op hvor makeNode(op).AdoptChildren bliver kaldt på
+    //Men det her er vel det samme??
+    public void MakeFamily(Node... kids){
+            for(int i = 0; i<kids.length; i++) {
+                kids[i].MakeSiblings(kids[i+1]);
+            }
+            AdoptChildren(kids[0]);
         }
 
     }
