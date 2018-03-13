@@ -1,7 +1,9 @@
 package com.company;
 import gen.antlr.*;
+import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
+import java.nio.file.*;
 
 import java.io.IOException;
 
@@ -11,11 +13,16 @@ public class Main {
     public static void main(String[] args) {
 	// write your code here
         try {
-            antlrLexer lexer = new antlrLexer(CharStreams.fromFileName("codeExample.txt"));
+            CharStream input = CharStreams.fromFileName("codeExample.txt");
+            antlrLexer lexer = new antlrLexer(input);
             CommonTokenStream tokenStream = new CommonTokenStream(lexer);
             antlrParser parser = new antlrParser(tokenStream);
-        }catch (IOException e){
 
+            parser.prog();
+
+            
+        }catch (IOException e){
+            System.out.println(e.getMessage() + " ERROR" );
         }
         System.out.println("cool");
     }
