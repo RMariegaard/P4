@@ -20,7 +20,7 @@ public class Main {
 
             parser.prog();
 
-            
+
         }catch (IOException e){
             System.out.println(e.getMessage() + " ERROR" );
         }

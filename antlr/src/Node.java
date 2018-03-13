@@ -1,4 +1,4 @@
-package AST;
+
 
 abstract class Node{
 
@@ -9,7 +9,40 @@ abstract class Node{
 
     public Node(){}
 
-    public void MakeSiblings(){}
+    public void MakeSiblings(Node y){
+        Node xSibs = RightSibling;
+        while(xSibs.RightSibling != null){
+            xSibs = xSibs.RightSibling;
+        }
+        Node ySibs = y.LeftmostSibling;
+        xSibs.RightSibling = ySibs;
 
-    public void AdoptChildren(){}
+        ySibs.LeftmostSibling = xSibs.LeftmostSibling;
+        ySibs.Parent = xSibs.Parent;
+        while(ySibs.RightSibling != null){
+            ySibs = ySibs.RightSibling;
+            ySibs.LeftmostSibling = xSibs.LeftmostSibling;
+            ySibs.Parent = xSibs.Parent;
+        }
+
+    }
+    public void AdoptChildren(Node y) {
+        if (this.LeftmostChild != null)
+            this.LeftmostChild.MakeSiblings(y);
+        else {
+            Node ySibs = y.LeftmostSibling;
+            this.LeftmostChild = ySibs;
+            while (ySibs != null) {
+                ySibs.Parent = this;
+                ySibs = ySibs.RightSibling;
+            }
+        }
+    }
+    public void makeNode(){}
+
+    public void MaleFamily(){
+
+        }
+
+    }
 }
