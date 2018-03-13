@@ -1,5 +1,5 @@
 package com.company;
-import gen.antlr.*;
+import antlr.*;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -24,6 +24,6 @@ public class Main {
         }catch (IOException e){
             System.out.println(e.getMessage() + " ERROR" );
         }
-        System.out.println("cool");
+        System.out.println("No Errors");
     }
 }

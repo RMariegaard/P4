@@ -15,10 +15,10 @@ game-loop
     end
      
     else if (Game.getRoundNumber() > 5)
-		Tank.Fire(1)ASD
+		Tank.Fire(1)
 	    Radar.TurnRight(100)
 	end
-	else 
+	else
         Tank.Fire(3)
 	    Radar.TurnRight(50)
 	end
@@ -30,7 +30,7 @@ strategy Default
 
     behavior WhenEnergyIs40
 	    do(int i, 0, 5, i++)
-	    	fire(i),
+	    	fire(i)
 	    end
     end
 end
