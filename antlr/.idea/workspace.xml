@@ -12,11 +12,162 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/company/Main.java">
           <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="374">
+              <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="workspace.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+          <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
-              <caret line="2" column="23" lean-forward="false" selection-start-line="2" selection-start-column="23" selection-end-line="2" selection-end-column="23" />
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BuildASTVisitor.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/BuildASTVisitor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="12" column="5" lean-forward="false" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
+              <folding>
+                <element signature="e#152#153#0" expanded="true" />
+                <element signature="e#195#196#0" expanded="true" />
+                <element signature="e#269#270#0" expanded="true" />
+                <element signature="e#313#314#0" expanded="true" />
+                <element signature="e#393#394#0" expanded="true" />
+                <element signature="e#440#441#0" expanded="true" />
+                <element signature="e#516#517#0" expanded="true" />
+                <element signature="e#561#562#0" expanded="true" />
+                <element signature="e#637#638#0" expanded="true" />
+                <element signature="e#682#683#0" expanded="true" />
+                <element signature="e#756#757#0" expanded="true" />
+                <element signature="e#800#801#0" expanded="true" />
+                <element signature="e#872#873#0" expanded="true" />
+                <element signature="e#915#916#0" expanded="true" />
+                <element signature="e#991#992#0" expanded="true" />
+                <element signature="e#1036#1037#0" expanded="true" />
+                <element signature="e#1116#1117#0" expanded="true" />
+                <element signature="e#1163#1164#0" expanded="true" />
+                <element signature="e#1243#1244#0" expanded="true" />
+                <element signature="e#1290#1291#0" expanded="true" />
+                <element signature="e#1364#1365#0" expanded="true" />
+                <element signature="e#1408#1409#0" expanded="true" />
+                <element signature="e#1478#1479#0" expanded="true" />
+                <element signature="e#1520#1521#0" expanded="true" />
+                <element signature="e#1592#1593#0" expanded="true" />
+                <element signature="e#1635#1636#0" expanded="true" />
+                <element signature="e#1705#1706#0" expanded="true" />
+                <element signature="e#1747#1748#0" expanded="true" />
+                <element signature="e#1823#1824#0" expanded="true" />
+                <element signature="e#1868#1869#0" expanded="true" />
+                <element signature="e#1940#1941#0" expanded="true" />
+                <element signature="e#1983#1984#0" expanded="true" />
+                <element signature="e#2055#2056#0" expanded="true" />
+                <element signature="e#2098#2099#0" expanded="true" />
+                <element signature="e#2174#2175#0" expanded="true" />
+                <element signature="e#2219#2220#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AstVisitor.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AstVisitor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="22" lean-forward="false" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CodeGenerator.class" pinned="false" current-in-tab="false">
+        <entry file="jar://$USER_HOME$/Downloads/intellij-plugin-v4 (1)/intellij-plugin-v4/lib/antlr-4.7-intellij-1.8.4-version-complete.jar!/org/antlr/v4/codegen/CodeGenerator.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="782">
+              <caret line="64" column="0" lean-forward="false" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
+              <folding>
+                <marker date="1520871324633" expanded="false" signature="0:104" ph="/.../" />
+                <marker date="1520871324633" expanded="false" signature="144:612" ph="..." />
+                <marker date="1520871324633" expanded="true" signature="1173:1292" ph="{...}" />
+                <marker date="1520871324633" expanded="false" signature="1329:1340" ph=" { " />
+                <marker date="1520871324633" expanded="false" signature="1387:1393" ph=" }" />
+                <marker date="1520871324633" expanded="true" signature="1459:1603" ph="{...}" />
+                <marker date="1520871324633" expanded="true" signature="1661:2180" ph="{...}" />
+                <marker date="1520871324633" expanded="true" signature="2212:2376" ph="{...}" />
+                <marker date="1520871324633" expanded="true" signature="2412:2508" ph="{...}" />
+                <marker date="1520871324633" expanded="true" signature="2565:3067" ph="{...}" />
+                <marker date="1520871324633" expanded="true" signature="3122:3340" ph="{...}" />
+                <marker date="1520871324633" expanded="true" signature="3409:3555" ph="{...}" />
+                <marker date="1520871324633" expanded="false" signature="3586:3597" ph=" { " />
+                <marker date="1520871324633" expanded="false" signature="3630:3636" ph=" }" />
+                <marker date="1520871324633" expanded="true" signature="3682:3778" ph="{...}" />
+                <marker date="1520871324633" expanded="false" signature="3810:3821" ph=" { " />
+                <marker date="1520871324633" expanded="false" signature="3855:3861" ph=" }" />
+                <marker date="1520871324633" expanded="true" signature="3908:4005" ph="{...}" />
+                <marker date="1520871324633" expanded="false" signature="4039:4050" ph=" { " />
+                <marker date="1520871324633" expanded="false" signature="4086:4092" ph=" }" />
+                <marker date="1520871324633" expanded="true" signature="4141:4240" ph="{...}" />
+                <marker date="1520871324633" expanded="false" signature="4278:4289" ph=" { " />
+                <marker date="1520871324633" expanded="false" signature="4329:4335" ph=" }" />
+                <marker date="1520871324633" expanded="true" signature="4388:4491" ph="{...}" />
+                <marker date="1520871324633" expanded="false" signature="4524:4535" ph=" { " />
+                <marker date="1520871324633" expanded="false" signature="4570:4576" ph=" }" />
+                <marker date="1520871324633" expanded="true" signature="4624:4722" ph="{...}" />
+                <marker date="1520871324633" expanded="false" signature="4759:4770" ph=" { " />
+                <marker date="1520871324633" expanded="false" signature="4809:4815" ph=" }" />
+                <marker date="1520871324633" expanded="true" signature="4867:4969" ph="{...}" />
+                <marker date="1520871324633" expanded="true" signature="5000:6030" ph="{...}" />
+                <marker date="1520871324633" expanded="true" signature="6097:6196" ph="{...}" />
+                <marker date="1520871324633" expanded="true" signature="6261:6358" ph="{...}" />
+                <marker date="1520871324633" expanded="true" signature="6427:6528" ph="{...}" />
+                <marker date="1520871324633" expanded="true" signature="6592:6688" ph="{...}" />
+                <marker date="1520871324633" expanded="true" signature="6756:6856" ph="{...}" />
+                <marker date="1520871324633" expanded="true" signature="6891:7138" ph="{...}" />
+                <marker date="1520871324633" expanded="true" signature="7188:7575" ph="{...}" />
+                <marker date="1520871324633" expanded="false" signature="7618:7629" ph=" { " />
+                <marker date="1520871324633" expanded="false" signature="7670:7676" ph=" }" />
+                <marker date="1520871324633" expanded="false" signature="7717:7728" ph=" { " />
+                <marker date="1520871324633" expanded="false" signature="7767:7773" ph=" }" />
+                <marker date="1520871324633" expanded="false" signature="7813:7824" ph=" { " />
+                <marker date="1520871324633" expanded="false" signature="7862:7868" ph=" }" />
+                <marker date="1520871324633" expanded="false" signature="7913:7924" ph=" { " />
+                <marker date="1520871324633" expanded="false" signature="7967:7973" ph=" }" />
+                <marker date="1520871324633" expanded="false" signature="8017:8028" ph=" { " />
+                <marker date="1520871324633" expanded="false" signature="8070:8076" ph=" }" />
+                <marker date="1520871324633" expanded="false" signature="8133:8144" ph=" { " />
+                <marker date="1520871324633" expanded="false" signature="8198:8204" ph=" }" />
+                <marker date="1520871324633" expanded="false" signature="8259:8270" ph=" { " />
+                <marker date="1520871324633" expanded="false" signature="8322:8328" ph=" }" />
+                <marker date="1520871324633" expanded="false" signature="8382:8393" ph=" { " />
+                <marker date="1520871324633" expanded="false" signature="8444:8450" ph=" }" />
+                <marker date="1520871324633" expanded="false" signature="8509:8520" ph=" { " />
+                <marker date="1520871324633" expanded="false" signature="8576:8582" ph=" }" />
+                <marker date="1520871324633" expanded="false" signature="8640:8651" ph=" { " />
+                <marker date="1520871324633" expanded="false" signature="8706:8712" ph=" }" />
+                <marker date="1520871324633" expanded="false" signature="8750:8761" ph=" { " />
+                <marker date="1520871324633" expanded="false" signature="8792:8798" ph=" }" />
+                <marker date="1520871324633" expanded="true" signature="8838:9119" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="antlrBaseVisitor.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/gen/antlr/antlrBaseVisitor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -25,28 +176,8 @@
       <file leaf-file-name="Node.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Node.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="43" column="0" lean-forward="true" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Expression.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Expression.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Terminal.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Terminal.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="42">
-              <caret line="2" column="17" lean-forward="false" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+            <state relative-caret-position="612">
+              <caret line="36" column="20" lean-forward="false" selection-start-line="36" selection-start-column="20" selection-end-line="36" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -55,7 +186,7 @@
       <file leaf-file-name="antlr.g4" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/antlr.g4">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
+            <state relative-caret-position="153">
               <caret line="9" column="10" lean-forward="false" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
               <folding />
             </state>
@@ -83,9 +214,9 @@
         <option value="$PROJECT_DIR$/src/AST/Node.java" />
         <option value="$PROJECT_DIR$/src/BaseASTVisitor.java" />
         <option value="$PROJECT_DIR$/src/com/company/Main.java" />
-        <option value="$PROJECT_DIR$/src/Node.java" />
         <option value="$PROJECT_DIR$/src/Expression.java" />
         <option value="$PROJECT_DIR$/src/Terminal.java" />
+        <option value="$PROJECT_DIR$/src/Node.java" />
       </list>
     </option>
   </component>
@@ -111,6 +242,8 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -122,7 +255,24 @@
             <path>
               <item name="antlr" type="b2602c69:ProjectViewProjectNode" />
               <item name="antlr" type="462c0819:PsiDirectoryNode" />
+              <item name=".idea" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="antlr" type="b2602c69:ProjectViewProjectNode" />
+              <item name="antlr" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="antlr" type="b2602c69:ProjectViewProjectNode" />
+              <item name="antlr" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="company" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="antlr" type="b2602c69:ProjectViewProjectNode" />
+              <item name="antlr" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="antlr" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="antlr" type="b2602c69:ProjectViewProjectNode" />
@@ -132,8 +282,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -232,7 +380,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1060" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -248,7 +396,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25260416" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2553305" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="ANTLR Preview" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Learn" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -274,11 +422,343 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/BuildASTVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="12" column="5" lean-forward="true" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
+          <folding>
+            <element signature="e#152#153#0" expanded="true" />
+            <element signature="e#195#196#0" expanded="true" />
+            <element signature="e#269#270#0" expanded="true" />
+            <element signature="e#313#314#0" expanded="true" />
+            <element signature="e#393#394#0" expanded="true" />
+            <element signature="e#440#441#0" expanded="true" />
+            <element signature="e#516#517#0" expanded="true" />
+            <element signature="e#561#562#0" expanded="true" />
+            <element signature="e#637#638#0" expanded="true" />
+            <element signature="e#682#683#0" expanded="true" />
+            <element signature="e#756#757#0" expanded="true" />
+            <element signature="e#800#801#0" expanded="true" />
+            <element signature="e#872#873#0" expanded="true" />
+            <element signature="e#915#916#0" expanded="true" />
+            <element signature="e#991#992#0" expanded="true" />
+            <element signature="e#1036#1037#0" expanded="true" />
+            <element signature="e#1116#1117#0" expanded="true" />
+            <element signature="e#1163#1164#0" expanded="true" />
+            <element signature="e#1243#1244#0" expanded="true" />
+            <element signature="e#1290#1291#0" expanded="true" />
+            <element signature="e#1364#1365#0" expanded="true" />
+            <element signature="e#1408#1409#0" expanded="true" />
+            <element signature="e#1478#1479#0" expanded="true" />
+            <element signature="e#1520#1521#0" expanded="true" />
+            <element signature="e#1592#1593#0" expanded="true" />
+            <element signature="e#1635#1636#0" expanded="true" />
+            <element signature="e#1705#1706#0" expanded="true" />
+            <element signature="e#1747#1748#0" expanded="true" />
+            <element signature="e#1823#1824#0" expanded="true" />
+            <element signature="e#1868#1869#0" expanded="true" />
+            <element signature="e#1940#1941#0" expanded="true" />
+            <element signature="e#1983#1984#0" expanded="true" />
+            <element signature="e#2055#2056#0" expanded="true" />
+            <element signature="e#2098#2099#0" expanded="true" />
+            <element signature="e#2174#2175#0" expanded="true" />
+            <element signature="e#2219#2220#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AstVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="22" lean-forward="false" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/Downloads/intellij-plugin-v4 (1)/intellij-plugin-v4/lib/antlr-4.7-intellij-1.8.4-version-complete.jar!/org/antlr/v4/codegen/CodeGenerator.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1088">
+          <caret line="64" column="0" lean-forward="true" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
+          <folding>
+            <marker date="1520871324633" expanded="false" signature="0:104" ph="/.../" />
+            <marker date="1520871324633" expanded="false" signature="144:612" ph="..." />
+            <marker date="1520871324633" expanded="true" signature="1173:1292" ph="{...}" />
+            <marker date="1520871324633" expanded="false" signature="1329:1340" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="1387:1393" ph=" }" />
+            <marker date="1520871324633" expanded="true" signature="1459:1603" ph="{...}" />
+            <marker date="1520871324633" expanded="true" signature="1661:2180" ph="{...}" />
+            <marker date="1520871324633" expanded="true" signature="2212:2376" ph="{...}" />
+            <marker date="1520871324633" expanded="true" signature="2412:2508" ph="{...}" />
+            <marker date="1520871324633" expanded="true" signature="2565:3067" ph="{...}" />
+            <marker date="1520871324633" expanded="true" signature="3122:3340" ph="{...}" />
+            <marker date="1520871324633" expanded="true" signature="3409:3555" ph="{...}" />
+            <marker date="1520871324633" expanded="false" signature="3586:3597" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="3630:3636" ph=" }" />
+            <marker date="1520871324633" expanded="true" signature="3682:3778" ph="{...}" />
+            <marker date="1520871324633" expanded="false" signature="3810:3821" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="3855:3861" ph=" }" />
+            <marker date="1520871324633" expanded="true" signature="3908:4005" ph="{...}" />
+            <marker date="1520871324633" expanded="false" signature="4039:4050" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="4086:4092" ph=" }" />
+            <marker date="1520871324633" expanded="true" signature="4141:4240" ph="{...}" />
+            <marker date="1520871324633" expanded="false" signature="4278:4289" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="4329:4335" ph=" }" />
+            <marker date="1520871324633" expanded="true" signature="4388:4491" ph="{...}" />
+            <marker date="1520871324633" expanded="false" signature="4524:4535" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="4570:4576" ph=" }" />
+            <marker date="1520871324633" expanded="true" signature="4624:4722" ph="{...}" />
+            <marker date="1520871324633" expanded="false" signature="4759:4770" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="4809:4815" ph=" }" />
+            <marker date="1520871324633" expanded="true" signature="4867:4969" ph="{...}" />
+            <marker date="1520871324633" expanded="true" signature="5000:6030" ph="{...}" />
+            <marker date="1520871324633" expanded="true" signature="6097:6196" ph="{...}" />
+            <marker date="1520871324633" expanded="true" signature="6261:6358" ph="{...}" />
+            <marker date="1520871324633" expanded="true" signature="6427:6528" ph="{...}" />
+            <marker date="1520871324633" expanded="true" signature="6592:6688" ph="{...}" />
+            <marker date="1520871324633" expanded="true" signature="6756:6856" ph="{...}" />
+            <marker date="1520871324633" expanded="true" signature="6891:7138" ph="{...}" />
+            <marker date="1520871324633" expanded="true" signature="7188:7575" ph="{...}" />
+            <marker date="1520871324633" expanded="false" signature="7618:7629" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="7670:7676" ph=" }" />
+            <marker date="1520871324633" expanded="false" signature="7717:7728" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="7767:7773" ph=" }" />
+            <marker date="1520871324633" expanded="false" signature="7813:7824" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="7862:7868" ph=" }" />
+            <marker date="1520871324633" expanded="false" signature="7913:7924" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="7967:7973" ph=" }" />
+            <marker date="1520871324633" expanded="false" signature="8017:8028" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="8070:8076" ph=" }" />
+            <marker date="1520871324633" expanded="false" signature="8133:8144" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="8198:8204" ph=" }" />
+            <marker date="1520871324633" expanded="false" signature="8259:8270" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="8322:8328" ph=" }" />
+            <marker date="1520871324633" expanded="false" signature="8382:8393" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="8444:8450" ph=" }" />
+            <marker date="1520871324633" expanded="false" signature="8509:8520" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="8576:8582" ph=" }" />
+            <marker date="1520871324633" expanded="false" signature="8640:8651" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="8706:8712" ph=" }" />
+            <marker date="1520871324633" expanded="false" signature="8750:8761" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="8792:8798" ph=" }" />
+            <marker date="1520871324633" expanded="true" signature="8838:9119" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gen/antlr/antlrBaseVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Node.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="36" column="20" lean-forward="false" selection-start-line="36" selection-start-column="20" selection-end-line="36" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/antlr.g4">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="10" lean-forward="false" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/company/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/antlr.g4">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="10" lean-forward="false" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gen/antlr/antlrBaseListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AST/AST.iml" />
+    <entry file="file://$PROJECT_DIR$/src/gen/antlr/antlrBaseVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/Downloads/intellij-plugin-v4 (1)/intellij-plugin-v4/lib/antlr-4.7-intellij-1.8.4-version-complete.jar!/org/antlr/v4/codegen/CodeGenerator.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="782">
+          <caret line="64" column="0" lean-forward="false" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
+          <folding>
+            <marker date="1520871324633" expanded="false" signature="0:104" ph="/.../" />
+            <marker date="1520871324633" expanded="false" signature="144:612" ph="..." />
+            <marker date="1520871324633" expanded="true" signature="1173:1292" ph="{...}" />
+            <marker date="1520871324633" expanded="false" signature="1329:1340" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="1387:1393" ph=" }" />
+            <marker date="1520871324633" expanded="true" signature="1459:1603" ph="{...}" />
+            <marker date="1520871324633" expanded="true" signature="1661:2180" ph="{...}" />
+            <marker date="1520871324633" expanded="true" signature="2212:2376" ph="{...}" />
+            <marker date="1520871324633" expanded="true" signature="2412:2508" ph="{...}" />
+            <marker date="1520871324633" expanded="true" signature="2565:3067" ph="{...}" />
+            <marker date="1520871324633" expanded="true" signature="3122:3340" ph="{...}" />
+            <marker date="1520871324633" expanded="true" signature="3409:3555" ph="{...}" />
+            <marker date="1520871324633" expanded="false" signature="3586:3597" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="3630:3636" ph=" }" />
+            <marker date="1520871324633" expanded="true" signature="3682:3778" ph="{...}" />
+            <marker date="1520871324633" expanded="false" signature="3810:3821" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="3855:3861" ph=" }" />
+            <marker date="1520871324633" expanded="true" signature="3908:4005" ph="{...}" />
+            <marker date="1520871324633" expanded="false" signature="4039:4050" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="4086:4092" ph=" }" />
+            <marker date="1520871324633" expanded="true" signature="4141:4240" ph="{...}" />
+            <marker date="1520871324633" expanded="false" signature="4278:4289" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="4329:4335" ph=" }" />
+            <marker date="1520871324633" expanded="true" signature="4388:4491" ph="{...}" />
+            <marker date="1520871324633" expanded="false" signature="4524:4535" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="4570:4576" ph=" }" />
+            <marker date="1520871324633" expanded="true" signature="4624:4722" ph="{...}" />
+            <marker date="1520871324633" expanded="false" signature="4759:4770" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="4809:4815" ph=" }" />
+            <marker date="1520871324633" expanded="true" signature="4867:4969" ph="{...}" />
+            <marker date="1520871324633" expanded="true" signature="5000:6030" ph="{...}" />
+            <marker date="1520871324633" expanded="true" signature="6097:6196" ph="{...}" />
+            <marker date="1520871324633" expanded="true" signature="6261:6358" ph="{...}" />
+            <marker date="1520871324633" expanded="true" signature="6427:6528" ph="{...}" />
+            <marker date="1520871324633" expanded="true" signature="6592:6688" ph="{...}" />
+            <marker date="1520871324633" expanded="true" signature="6756:6856" ph="{...}" />
+            <marker date="1520871324633" expanded="true" signature="6891:7138" ph="{...}" />
+            <marker date="1520871324633" expanded="true" signature="7188:7575" ph="{...}" />
+            <marker date="1520871324633" expanded="false" signature="7618:7629" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="7670:7676" ph=" }" />
+            <marker date="1520871324633" expanded="false" signature="7717:7728" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="7767:7773" ph=" }" />
+            <marker date="1520871324633" expanded="false" signature="7813:7824" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="7862:7868" ph=" }" />
+            <marker date="1520871324633" expanded="false" signature="7913:7924" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="7967:7973" ph=" }" />
+            <marker date="1520871324633" expanded="false" signature="8017:8028" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="8070:8076" ph=" }" />
+            <marker date="1520871324633" expanded="false" signature="8133:8144" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="8198:8204" ph=" }" />
+            <marker date="1520871324633" expanded="false" signature="8259:8270" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="8322:8328" ph=" }" />
+            <marker date="1520871324633" expanded="false" signature="8382:8393" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="8444:8450" ph=" }" />
+            <marker date="1520871324633" expanded="false" signature="8509:8520" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="8576:8582" ph=" }" />
+            <marker date="1520871324633" expanded="false" signature="8640:8651" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="8706:8712" ph=" }" />
+            <marker date="1520871324633" expanded="false" signature="8750:8761" ph=" { " />
+            <marker date="1520871324633" expanded="false" signature="8792:8798" ph=" }" />
+            <marker date="1520871324633" expanded="true" signature="8838:9119" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/BuildASTVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="5" lean-forward="true" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
+          <folding>
+            <element signature="e#152#153#0" expanded="true" />
+            <element signature="e#195#196#0" expanded="true" />
+            <element signature="e#269#270#0" expanded="true" />
+            <element signature="e#313#314#0" expanded="true" />
+            <element signature="e#393#394#0" expanded="true" />
+            <element signature="e#440#441#0" expanded="true" />
+            <element signature="e#516#517#0" expanded="true" />
+            <element signature="e#561#562#0" expanded="true" />
+            <element signature="e#637#638#0" expanded="true" />
+            <element signature="e#682#683#0" expanded="true" />
+            <element signature="e#756#757#0" expanded="true" />
+            <element signature="e#800#801#0" expanded="true" />
+            <element signature="e#872#873#0" expanded="true" />
+            <element signature="e#915#916#0" expanded="true" />
+            <element signature="e#991#992#0" expanded="true" />
+            <element signature="e#1036#1037#0" expanded="true" />
+            <element signature="e#1116#1117#0" expanded="true" />
+            <element signature="e#1163#1164#0" expanded="true" />
+            <element signature="e#1243#1244#0" expanded="true" />
+            <element signature="e#1290#1291#0" expanded="true" />
+            <element signature="e#1364#1365#0" expanded="true" />
+            <element signature="e#1408#1409#0" expanded="true" />
+            <element signature="e#1478#1479#0" expanded="true" />
+            <element signature="e#1520#1521#0" expanded="true" />
+            <element signature="e#1592#1593#0" expanded="true" />
+            <element signature="e#1635#1636#0" expanded="true" />
+            <element signature="e#1705#1706#0" expanded="true" />
+            <element signature="e#1747#1748#0" expanded="true" />
+            <element signature="e#1823#1824#0" expanded="true" />
+            <element signature="e#1868#1869#0" expanded="true" />
+            <element signature="e#1940#1941#0" expanded="true" />
+            <element signature="e#1983#1984#0" expanded="true" />
+            <element signature="e#2055#2056#0" expanded="true" />
+            <element signature="e#2098#2099#0" expanded="true" />
+            <element signature="e#2174#2175#0" expanded="true" />
+            <element signature="e#2219#2220#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AstVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="22" lean-forward="false" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/antlr.g4">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="9" column="10" lean-forward="false" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/company/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Node.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="433">
+          <caret line="43" column="0" lean-forward="true" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/company/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="42">
           <caret line="2" column="23" lean-forward="false" selection-start-line="2" selection-start-column="23" selection-end-line="2" selection-end-column="23" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -302,7 +782,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -327,7 +809,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -360,7 +844,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="42">
           <caret line="2" column="23" lean-forward="true" selection-start-line="2" selection-start-column="23" selection-end-line="2" selection-end-column="23" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -376,7 +862,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -417,7 +905,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="42">
           <caret line="2" column="23" lean-forward="true" selection-start-line="2" selection-start-column="23" selection-end-line="2" selection-end-column="23" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -425,7 +915,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -439,7 +931,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/antlr.g4">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
+        <state relative-caret-position="153">
           <caret line="9" column="10" lean-forward="false" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
           <folding />
         </state>
@@ -453,25 +945,55 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AST/AST.iml" />
-    <entry file="file://$PROJECT_DIR$/src/com/company/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="2" column="23" lean-forward="false" selection-start-line="2" selection-start-column="23" selection-end-line="2" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/BuildASTVisitor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+        <state relative-caret-position="136">
+          <caret line="12" column="5" lean-forward="false" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
+          <folding>
+            <element signature="e#152#153#0" expanded="true" />
+            <element signature="e#195#196#0" expanded="true" />
+            <element signature="e#269#270#0" expanded="true" />
+            <element signature="e#313#314#0" expanded="true" />
+            <element signature="e#393#394#0" expanded="true" />
+            <element signature="e#440#441#0" expanded="true" />
+            <element signature="e#516#517#0" expanded="true" />
+            <element signature="e#561#562#0" expanded="true" />
+            <element signature="e#637#638#0" expanded="true" />
+            <element signature="e#682#683#0" expanded="true" />
+            <element signature="e#756#757#0" expanded="true" />
+            <element signature="e#800#801#0" expanded="true" />
+            <element signature="e#872#873#0" expanded="true" />
+            <element signature="e#915#916#0" expanded="true" />
+            <element signature="e#991#992#0" expanded="true" />
+            <element signature="e#1036#1037#0" expanded="true" />
+            <element signature="e#1116#1117#0" expanded="true" />
+            <element signature="e#1163#1164#0" expanded="true" />
+            <element signature="e#1243#1244#0" expanded="true" />
+            <element signature="e#1290#1291#0" expanded="true" />
+            <element signature="e#1364#1365#0" expanded="true" />
+            <element signature="e#1408#1409#0" expanded="true" />
+            <element signature="e#1478#1479#0" expanded="true" />
+            <element signature="e#1520#1521#0" expanded="true" />
+            <element signature="e#1592#1593#0" expanded="true" />
+            <element signature="e#1635#1636#0" expanded="true" />
+            <element signature="e#1705#1706#0" expanded="true" />
+            <element signature="e#1747#1748#0" expanded="true" />
+            <element signature="e#1823#1824#0" expanded="true" />
+            <element signature="e#1868#1869#0" expanded="true" />
+            <element signature="e#1940#1941#0" expanded="true" />
+            <element signature="e#1983#1984#0" expanded="true" />
+            <element signature="e#2055#2056#0" expanded="true" />
+            <element signature="e#2098#2099#0" expanded="true" />
+            <element signature="e#2174#2175#0" expanded="true" />
+            <element signature="e#2219#2220#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Node.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="43" column="0" lean-forward="true" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+        <state relative-caret-position="612">
+          <caret line="36" column="20" lean-forward="false" selection-start-line="36" selection-start-column="20" selection-end-line="36" selection-end-column="20" />
           <folding />
         </state>
       </provider>
@@ -480,7 +1002,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -488,7 +1009,24 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="42">
           <caret line="2" column="17" lean-forward="false" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/company/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
