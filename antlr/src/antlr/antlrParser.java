@@ -1542,27 +1542,54 @@ public class antlrParser extends Parser {
 	}
 
 	public static class BexprContext extends ParserRuleContext {
+		public BexprContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_bexpr; }
+	 
+		public BexprContext() { }
+		public void copyFrom(BexprContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class AoexprContext extends BexprContext {
 		public B2exprContext b2expr() {
 			return getRuleContext(B2exprContext.class,0);
 		}
 		public BexprContext bexpr() {
 			return getRuleContext(BexprContext.class,0);
 		}
-		public BexprContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_bexpr; }
+		public AoexprContext(BexprContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof antlrListener ) ((antlrListener)listener).enterBexpr(this);
+			if ( listener instanceof antlrListener ) ((antlrListener)listener).enterAoexpr(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof antlrListener ) ((antlrListener)listener).exitBexpr(this);
+			if ( listener instanceof antlrListener ) ((antlrListener)listener).exitAoexpr(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof antlrVisitor ) return ((antlrVisitor<? extends T>)visitor).visitBexpr(this);
+			if ( visitor instanceof antlrVisitor ) return ((antlrVisitor<? extends T>)visitor).visitAoexpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class EmptyaoexprContext extends BexprContext {
+		public B2exprContext b2expr() {
+			return getRuleContext(B2exprContext.class,0);
+		}
+		public EmptyaoexprContext(BexprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof antlrListener ) ((antlrListener)listener).enterEmptyaoexpr(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof antlrListener ) ((antlrListener)listener).exitEmptyaoexpr(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof antlrVisitor ) return ((antlrVisitor<? extends T>)visitor).visitEmptyaoexpr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1576,6 +1603,7 @@ public class antlrParser extends Parser {
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,25,_ctx) ) {
 			case 1:
+				_localctx = new AoexprContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(244);
@@ -1595,6 +1623,7 @@ public class antlrParser extends Parser {
 				}
 				break;
 			case 2:
+				_localctx = new EmptyaoexprContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(248);
@@ -1615,27 +1644,73 @@ public class antlrParser extends Parser {
 	}
 
 	public static class B2exprContext extends ParserRuleContext {
+		public B2exprContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_b2expr; }
+	 
+		public B2exprContext() { }
+		public void copyFrom(B2exprContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class NotexprContext extends B2exprContext {
+		public ExprContext expr() {
+			return getRuleContext(ExprContext.class,0);
+		}
+		public NotexprContext(B2exprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof antlrListener ) ((antlrListener)listener).enterNotexpr(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof antlrListener ) ((antlrListener)listener).exitNotexpr(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof antlrVisitor ) return ((antlrVisitor<? extends T>)visitor).visitNotexpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class EmptyboolexprContext extends B2exprContext {
+		public ExprContext expr() {
+			return getRuleContext(ExprContext.class,0);
+		}
+		public EmptyboolexprContext(B2exprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof antlrListener ) ((antlrListener)listener).enterEmptyboolexpr(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof antlrListener ) ((antlrListener)listener).exitEmptyboolexpr(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof antlrVisitor ) return ((antlrVisitor<? extends T>)visitor).visitEmptyboolexpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class BoolexprContext extends B2exprContext {
 		public ExprContext expr() {
 			return getRuleContext(ExprContext.class,0);
 		}
 		public B2exprContext b2expr() {
 			return getRuleContext(B2exprContext.class,0);
 		}
-		public B2exprContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_b2expr; }
+		public BoolexprContext(B2exprContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof antlrListener ) ((antlrListener)listener).enterB2expr(this);
+			if ( listener instanceof antlrListener ) ((antlrListener)listener).enterBoolexpr(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof antlrListener ) ((antlrListener)listener).exitB2expr(this);
+			if ( listener instanceof antlrListener ) ((antlrListener)listener).exitBoolexpr(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof antlrVisitor ) return ((antlrVisitor<? extends T>)visitor).visitB2expr(this);
+			if ( visitor instanceof antlrVisitor ) return ((antlrVisitor<? extends T>)visitor).visitBoolexpr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1649,6 +1724,7 @@ public class antlrParser extends Parser {
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,26,_ctx) ) {
 			case 1:
+				_localctx = new BoolexprContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(251);
@@ -1668,6 +1744,7 @@ public class antlrParser extends Parser {
 				}
 				break;
 			case 2:
+				_localctx = new NotexprContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(255);
@@ -1677,6 +1754,7 @@ public class antlrParser extends Parser {
 				}
 				break;
 			case 3:
+				_localctx = new EmptyboolexprContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(257);

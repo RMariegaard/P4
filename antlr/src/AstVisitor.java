@@ -1,4 +1,4 @@
-
+import Nodes.Node;
 
 public abstract class AstVisitor<T> {
 

@@ -280,25 +280,61 @@ public class antlrBaseListener implements antlrListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBexpr(antlrParser.BexprContext ctx) { }
+	@Override public void enterAoexpr(antlrParser.AoexprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitBexpr(antlrParser.BexprContext ctx) { }
+	@Override public void exitAoexpr(antlrParser.AoexprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterB2expr(antlrParser.B2exprContext ctx) { }
+	@Override public void enterEmptyaoexpr(antlrParser.EmptyaoexprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitB2expr(antlrParser.B2exprContext ctx) { }
+	@Override public void exitEmptyaoexpr(antlrParser.EmptyaoexprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBoolexpr(antlrParser.BoolexprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBoolexpr(antlrParser.BoolexprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNotexpr(antlrParser.NotexprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNotexpr(antlrParser.NotexprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterEmptyboolexpr(antlrParser.EmptyboolexprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEmptyboolexpr(antlrParser.EmptyboolexprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

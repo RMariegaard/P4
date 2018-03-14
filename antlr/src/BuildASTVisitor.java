@@ -1,3 +1,4 @@
+import Nodes.Node;
 import antlr.*;
 
 public class BuildASTVisitor extends antlrBaseVisitor<Node>
@@ -94,6 +95,11 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
     }
 
     @Override
+    public Node visitArgmnt(antlrParser.ArgmntContext ctx) {
+        return super.visitArgmnt(ctx);
+    }
+
+    @Override
     public Node visitType(antlrParser.TypeContext ctx) {
         return super.visitType(ctx);
     }
@@ -106,6 +112,31 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
     @Override
     public Node visitAssign(antlrParser.AssignContext ctx) {
         return super.visitAssign(ctx);
+    }
+
+    @Override
+    public Node visitAoexpr(antlrParser.AoexprContext ctx) {
+        return super.visitAoexpr(ctx);
+    }
+
+    @Override
+    public Node visitEmptyaoexpr(antlrParser.EmptyaoexprContext ctx) {
+        return super.visitEmptyaoexpr(ctx);
+    }
+
+    @Override
+    public Node visitBoolexpr(antlrParser.BoolexprContext ctx) {
+        return super.visitBoolexpr(ctx);
+    }
+
+    @Override
+    public Node visitNotexpr(antlrParser.NotexprContext ctx) {
+        return super.visitNotexpr(ctx);
+    }
+
+    @Override
+    public Node visitEmptyboolexpr(antlrParser.EmptyboolexprContext ctx) {
+        return super.visitEmptyboolexpr(ctx);
     }
 
     @Override
@@ -124,23 +155,8 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
     }
 
     @Override
-    public Node visitBoolExpr(antlrParser.BoolExprContext ctx) {
-        return super.visitBoolExpr(ctx);
-    }
-
-    @Override
     public Node visitActionExpr(antlrParser.ActionExprContext ctx) {
         return super.visitActionExpr(ctx);
-    }
-
-    @Override
-    public Node visitAndOrExpr(antlrParser.AndOrExprContext ctx) {
-        return super.visitAndOrExpr(ctx);
-    }
-
-    @Override
-    public Node visitNotExpr(antlrParser.NotExprContext ctx) {
-        return super.visitNotExpr(ctx);
     }
 
     @Override

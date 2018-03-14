@@ -242,25 +242,65 @@ public interface antlrListener extends ParseTreeListener {
 	 */
 	void exitAssign(antlrParser.AssignContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link antlrParser#bexpr}.
+	 * Enter a parse tree produced by the {@code aoexpr}
+	 * labeled alternative in {@link antlrParser#bexpr}.
 	 * @param ctx the parse tree
 	 */
-	void enterBexpr(antlrParser.BexprContext ctx);
+	void enterAoexpr(antlrParser.AoexprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link antlrParser#bexpr}.
+	 * Exit a parse tree produced by the {@code aoexpr}
+	 * labeled alternative in {@link antlrParser#bexpr}.
 	 * @param ctx the parse tree
 	 */
-	void exitBexpr(antlrParser.BexprContext ctx);
+	void exitAoexpr(antlrParser.AoexprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link antlrParser#b2expr}.
+	 * Enter a parse tree produced by the {@code emptyaoexpr}
+	 * labeled alternative in {@link antlrParser#bexpr}.
 	 * @param ctx the parse tree
 	 */
-	void enterB2expr(antlrParser.B2exprContext ctx);
+	void enterEmptyaoexpr(antlrParser.EmptyaoexprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link antlrParser#b2expr}.
+	 * Exit a parse tree produced by the {@code emptyaoexpr}
+	 * labeled alternative in {@link antlrParser#bexpr}.
 	 * @param ctx the parse tree
 	 */
-	void exitB2expr(antlrParser.B2exprContext ctx);
+	void exitEmptyaoexpr(antlrParser.EmptyaoexprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code boolexpr}
+	 * labeled alternative in {@link antlrParser#b2expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterBoolexpr(antlrParser.BoolexprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code boolexpr}
+	 * labeled alternative in {@link antlrParser#b2expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitBoolexpr(antlrParser.BoolexprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code notexpr}
+	 * labeled alternative in {@link antlrParser#b2expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterNotexpr(antlrParser.NotexprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code notexpr}
+	 * labeled alternative in {@link antlrParser#b2expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitNotexpr(antlrParser.NotexprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code emptyboolexpr}
+	 * labeled alternative in {@link antlrParser#b2expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterEmptyboolexpr(antlrParser.EmptyboolexprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code emptyboolexpr}
+	 * labeled alternative in {@link antlrParser#b2expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitEmptyboolexpr(antlrParser.EmptyboolexprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code infixExpr}
 	 * labeled alternative in {@link antlrParser#expr}.

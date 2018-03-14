@@ -7,7 +7,7 @@ gameloop  : 'game-loop' block
           ;
 method    : 'function' ID '(' (argmnt( ',' argmnt)*)? ')' block
           ;
-predcl    : dcl NEWLINE+ | 'event' '('bexpr')' '->' ID NEWLINE+
+predcl    : dcl NEWLINE+ | 'event' '('aoexpr')' '->' ID NEWLINE+
           ;
 
 block     : NEWLINE+ stmt* 'end' NEWLINE+
@@ -15,9 +15,9 @@ block     : NEWLINE+ stmt* 'end' NEWLINE+
 stmt      : dcl NEWLINE+                                                                #dclStmt
           | assign NEWLINE+                                                             #assignStmt
           | action NEWLINE+                                                             #actionStmt
-          | 'if' '(' bexpr ')' block ('else' 'if' '(' bexpr ')' block )* ('else' block)?  #ifStmt
-          | 'do' '(' assign ',' bexpr ',' bexpr ',' bexpr ')' block                        #doStmt
-          | 'while''(' bexpr ')' block                                                   #whileStmt
+          | 'if' '(' aoexpr ')' block ('else' 'if' '(' aoexpr ')' block )* ('else' block)?  #ifStmt
+          | 'do' '(' assign ',' aoexpr ',' aoexpr ',' aoexpr ')' block                        #doStmt
+          | 'while''(' aoexpr ')' block                                                   #whileStmt
           | 'return' expr                                                               #returnStmt
           ;
 
@@ -46,12 +46,12 @@ ref       : ID
 assign    :ref '=' expr
           ;
 
-bexpr     : b2expr ( '&&' | '||' ) bexpr
-          | b2expr
+aoexpr     : bexpr ( '&&' | '||' ) aoexpr                             #andorexpr
+          | bexpr                                                     #emptyaoexpr
           ;
-b2expr    : expr ( '==' | '>=' | '<=' | '<' | '>') b2expr
-          |'!' expr
-          | expr
+bexpr    : expr ( '==' | '>=' | '<=' | '<' | '>') bexpr               #boolexpr
+          |'!' expr                                                   #notexpr
+          | expr                                                      #emptyboolexpr
           ;
 expr      : term( '+' | '-' ) expr                                    #infixExpr
           | term                                                      #termExpr
@@ -62,7 +62,7 @@ expr      : term( '+' | '-' ) expr                                    #infixExpr
 term      : factor ('*' | '/') term
           | factor
           ;
-factor    : '(' bexpr ')'
+factor    : '(' aoexpr ')'
           | (ID | INT_NUM |BOOL_VALUE | DECIMAL_NUM | CHAR_VALUE)
           ;
 
