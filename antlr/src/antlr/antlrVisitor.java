@@ -126,6 +126,12 @@ public interface antlrVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitDcl(antlrParser.DclContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link antlrParser#argmnt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArgmnt(antlrParser.ArgmntContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link antlrParser#type}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -143,6 +149,18 @@ public interface antlrVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitAssign(antlrParser.AssignContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link antlrParser#bexpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBexpr(antlrParser.BexprContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link antlrParser#b2expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitB2expr(antlrParser.B2exprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code infixExpr}
 	 * labeled alternative in {@link antlrParser#expr}.
@@ -165,33 +183,12 @@ public interface antlrVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitArrayExpr(antlrParser.ArrayExprContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code boolExpr}
-	 * labeled alternative in {@link antlrParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitBoolExpr(antlrParser.BoolExprContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code actionExpr}
 	 * labeled alternative in {@link antlrParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitActionExpr(antlrParser.ActionExprContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code andOrExpr}
-	 * labeled alternative in {@link antlrParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAndOrExpr(antlrParser.AndOrExprContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code notExpr}
-	 * labeled alternative in {@link antlrParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNotExpr(antlrParser.NotExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code unaryExpr}
 	 * labeled alternative in {@link antlrParser#expr}.

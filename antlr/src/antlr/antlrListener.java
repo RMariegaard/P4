@@ -202,6 +202,16 @@ public interface antlrListener extends ParseTreeListener {
 	 */
 	void exitDcl(antlrParser.DclContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link antlrParser#argmnt}.
+	 * @param ctx the parse tree
+	 */
+	void enterArgmnt(antlrParser.ArgmntContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link antlrParser#argmnt}.
+	 * @param ctx the parse tree
+	 */
+	void exitArgmnt(antlrParser.ArgmntContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link antlrParser#type}.
 	 * @param ctx the parse tree
 	 */
@@ -231,6 +241,26 @@ public interface antlrListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAssign(antlrParser.AssignContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link antlrParser#bexpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterBexpr(antlrParser.BexprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link antlrParser#bexpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitBexpr(antlrParser.BexprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link antlrParser#b2expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterB2expr(antlrParser.B2exprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link antlrParser#b2expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitB2expr(antlrParser.B2exprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code infixExpr}
 	 * labeled alternative in {@link antlrParser#expr}.
@@ -268,18 +298,6 @@ public interface antlrListener extends ParseTreeListener {
 	 */
 	void exitArrayExpr(antlrParser.ArrayExprContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code boolExpr}
-	 * labeled alternative in {@link antlrParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterBoolExpr(antlrParser.BoolExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code boolExpr}
-	 * labeled alternative in {@link antlrParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitBoolExpr(antlrParser.BoolExprContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code actionExpr}
 	 * labeled alternative in {@link antlrParser#expr}.
 	 * @param ctx the parse tree
@@ -291,30 +309,6 @@ public interface antlrListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitActionExpr(antlrParser.ActionExprContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code andOrExpr}
-	 * labeled alternative in {@link antlrParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterAndOrExpr(antlrParser.AndOrExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code andOrExpr}
-	 * labeled alternative in {@link antlrParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitAndOrExpr(antlrParser.AndOrExprContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code notExpr}
-	 * labeled alternative in {@link antlrParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterNotExpr(antlrParser.NotExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code notExpr}
-	 * labeled alternative in {@link antlrParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitNotExpr(antlrParser.NotExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code unaryExpr}
 	 * labeled alternative in {@link antlrParser#expr}.

@@ -5,9 +5,9 @@ setup     : 'setup' block
           ;
 gameloop  : 'game-loop' block
           ;
-method    : 'function' ID '(' (dcl( ',' dcl)*)? ')' block
+method    : 'function' ID '(' (argmnt( ',' argmnt)*)? ')' block
           ;
-predcl    : dcl NEWLINE+ | 'event' '('expr')' '->' ID NEWLINE+
+predcl    : dcl NEWLINE+ | 'event' '('bexpr')' '->' ID NEWLINE+
           ;
 
 block     : NEWLINE+ stmt* 'end' NEWLINE+
@@ -15,9 +15,9 @@ block     : NEWLINE+ stmt* 'end' NEWLINE+
 stmt      : dcl NEWLINE+                                                                #dclStmt
           | assign NEWLINE+                                                             #assignStmt
           | action NEWLINE+                                                             #actionStmt
-          | 'if' '(' expr ')' block ('else' 'if' '(' expr ')' block )* ('else' block)?  #ifStmt
-          | 'do' '(' dcl ',' expr ',' expr ',' expr ')' block                           #doStmt
-          | 'while''(' expr ')' block                                                   #whileStmt
+          | 'if' '(' bexpr ')' block ('else' 'if' '(' bexpr ')' block )* ('else' block)?  #ifStmt
+          | 'do' '(' assign ',' bexpr ',' bexpr ',' bexpr ')' block                        #doStmt
+          | 'while''(' bexpr ')' block                                                   #whileStmt
           | 'return' expr                                                               #returnStmt
           ;
 
@@ -34,26 +34,35 @@ fcall     : ID '(' (expr (',' expr)*)? ')'
 dcl       : type assign
           | type ref
           ;
+argmnt    : type ref
+          ;
+
 type      : ('bool' | 'int' | 'text' | 'char' | 'decimal')
           ;
 ref       : ID
           | ID '[' expr ']'
           ;
+
 assign    :ref '=' expr
+          ;
+
+bexpr     : b2expr ( '&&' | '||' ) bexpr
+          | b2expr
+          ;
+b2expr    : expr ( '==' | '>=' | '<=' | '<' | '>') b2expr
+          |'!' expr
+          | expr
           ;
 expr      : term( '+' | '-' ) expr                                    #infixExpr
           | term                                                      #termExpr
           | ID '[' expr ']'                                           #arrayExpr
-          | (term | action) ( '==' | '>=' | '<=' | '<' | '>') expr    #boolExpr
           | action                                                    #actionExpr
-          | term ( '&&' | '||' ) expr                                 #andOrExpr
-          |'!'expr                                                    #notExpr
           |factor('++'|'--')                                          #unaryExpr
           ;
 term      : factor ('*' | '/') term
           | factor
           ;
-factor    : '(' expr ')'
+factor    : '(' bexpr ')'
           | (ID | INT_NUM |BOOL_VALUE | DECIMAL_NUM | CHAR_VALUE)
           ;
 
