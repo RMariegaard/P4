@@ -155,10 +155,6 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
         return super.visitAndorexpr(ctx);
     }
 
-    @Override
-    public Node visitAoexpr(antlrParser.AoexprContext ctx) {
-        return super.visitAoexpr(ctx);
-    }
 
     @Override
     public Node visitEmptyaoexpr(antlrParser.EmptyaoexprContext ctx) {

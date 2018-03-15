@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="antlr-4.7-intellij-1.8.4-version-complete">
     <CLASSES>
-      <root url="jar://$USER_HOME$/Downloads/intellij-plugin-v4/lib/antlr-4.7-intellij-1.8.4-version-complete.jar!/" />
-      <root url="jar://$USER_HOME$/Downloads/intellij-plugin-v4/lib/intellij-plugin-v4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/antlr-4.7-intellij-1.8.4-version-complete.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/intellij-plugin-v4.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
