@@ -9,7 +9,8 @@ gameloop  : 'game-loop' block
           ;
 method    : 'function' ID '(' (argmnt( ',' argmnt)*)? ')' block
           ;
-predcl    : dcl NEWLINE+ | 'event' '('aoexpr')' '->' ID NEWLINE+
+predcl    : dcl NEWLINE+
+          | 'event' '('aoexpr')' '->' ID NEWLINE+
           ;
 
 block     : NEWLINE+ stmt* 'end' NEWLINE+
@@ -17,10 +18,13 @@ block     : NEWLINE+ stmt* 'end' NEWLINE+
 stmt      : dcl NEWLINE+                                                                #dclStmt
           | assign NEWLINE+                                                             #assignStmt
           | action NEWLINE+                                                             #actionStmt
-          | 'if' '(' aoexpr ')' block ('else' 'if' '(' aoexpr ')' block )* ('else' block)?  #ifStmt
-          | 'do' '(' argmnt',' aoexpr ',' aoexpr ',' aoexpr ')' block                        #doStmt
+          | 'if' '(' first=aoexpr ')' firstBlock=block (elseif)* ('else' secondBlock=block)?  #ifStmt
+          | 'do' '(' argmnt',' firstAo=aoexpr ',' secondAo=aoexpr ',' thirdAo=aoexpr ')' block                 #doStmt
           | 'while''(' aoexpr ')' block                                                   #whileStmt
           | 'return' expr NEWLINE+                                                               #returnStmt
+          ;
+
+elseif    : 'else' 'if' '(' aoexpr ')' block
           ;
 
 action    : ID ( '.' ID )* '.' fcall
@@ -49,8 +53,8 @@ assign    :ref '=' expr
           |ref('++'|'--')
           ;
 
-aoexpr     : bexpr ( '&&' | '||' ) aoexpr                             #andorexpr
-          | bexpr                                                     #emptyaoexpr
+aoexpr     : bexpr ( '&&' | '||' ) aoexpr
+          | bexpr
           ;
 bexpr    : expr ( '==' | '>=' | '<=' | '<' | '>') bexpr               #boolexpr
           |'!' expr                                                   #notexpr

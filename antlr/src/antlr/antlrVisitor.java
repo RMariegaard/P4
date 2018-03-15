@@ -1,4 +1,4 @@
-// Generated from C:/Users/Casper/Documents/GitHub/P4/antlr/src\antlr.g4 by ANTLR 4.7
+// Generated from C:/Users/caspe/Documents/GitHub/P4/antlr/src\antlr.g4 by ANTLR 4.7
 package antlr;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -102,6 +102,12 @@ public interface antlrVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitReturnStmt(antlrParser.ReturnStmtContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link antlrParser#elseif}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitElseif(antlrParser.ElseifContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link antlrParser#action}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -156,19 +162,11 @@ public interface antlrVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAssign(antlrParser.AssignContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code andorexpr}
-	 * labeled alternative in {@link antlrParser#aoexpr}.
+	 * Visit a parse tree produced by {@link antlrParser#aoexpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAndorexpr(antlrParser.AndorexprContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code emptyaoexpr}
-	 * labeled alternative in {@link antlrParser#aoexpr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitEmptyaoexpr(antlrParser.EmptyaoexprContext ctx);
+	T visitAoexpr(antlrParser.AoexprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code boolexpr}
 	 * labeled alternative in {@link antlrParser#bexpr}.
