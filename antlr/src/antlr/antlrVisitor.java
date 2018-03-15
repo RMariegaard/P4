@@ -1,4 +1,4 @@
-// Generated from C:/Users/mark/Documents/GitHub/P4/antlr/src\antlr.g4 by ANTLR 4.7
+// Generated from C:/Users/Casper/Documents/GitHub/P4/antlr/src\antlr.g4 by ANTLR 4.7
 package antlr;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -16,6 +16,12 @@ public interface antlrVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitProg(antlrParser.ProgContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link antlrParser#sm}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSm(antlrParser.SmContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link antlrParser#setup}.
 	 * @param ctx the parse tree
@@ -150,36 +156,36 @@ public interface antlrVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAssign(antlrParser.AssignContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code aoexpr}
-	 * labeled alternative in {@link antlrParser#bexpr}.
+	 * Visit a parse tree produced by the {@code andorexpr}
+	 * labeled alternative in {@link antlrParser#aoexpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAoexpr(antlrParser.AoexprContext ctx);
+	T visitAndorexpr(antlrParser.AndorexprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code emptyaoexpr}
-	 * labeled alternative in {@link antlrParser#bexpr}.
+	 * labeled alternative in {@link antlrParser#aoexpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitEmptyaoexpr(antlrParser.EmptyaoexprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code boolexpr}
-	 * labeled alternative in {@link antlrParser#b2expr}.
+	 * labeled alternative in {@link antlrParser#bexpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitBoolexpr(antlrParser.BoolexprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code notexpr}
-	 * labeled alternative in {@link antlrParser#b2expr}.
+	 * labeled alternative in {@link antlrParser#bexpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitNotexpr(antlrParser.NotexprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code emptyboolexpr}
-	 * labeled alternative in {@link antlrParser#b2expr}.
+	 * labeled alternative in {@link antlrParser#bexpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */

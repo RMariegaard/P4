@@ -23,11 +23,12 @@ game-loop
 	    Radar.TurnRight(50)
 	end
 end
+
+
 strategy Default
     behavior OnScannedRobot
 	    Tank.TurnRight(Enemy.GetBearing())
     end
-
     behavior WhenEnergyIs40
 	    do(int i, 0, 5, i++)
 	    	fire(i)
@@ -35,7 +36,7 @@ strategy Default
     end
 end
 
-function myAddFunction (int a, int b) return int
+function myAddFunction (int a, int b)
 		int res = a + b
 		res++
 	return res

@@ -22,15 +22,27 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
         progNode.AdoptChildren(visit(ctx.setup()));
         progNode.AdoptChildren(visit(ctx.gameloop()));
 
-        List<antlrParser.StrategyContext> strats = ctx.strategy();
-        if (!strats.isEmpty()) {
-            for(antlrParser.StrategyContext strat : strats) {
-                progNode.AdoptChildren(visit(strat));
+
+
+        List<antlrParser.SmContext> sms = ctx.sm();
+        if (!sms.isEmpty()) {
+            for(antlrParser.SmContext sm : sms) {
+                if(sm.method()!=null){
+                    progNode.AdoptChildren(visit(sm.method()));
+                }
+                else if(sm.strategy() != null){
+                    progNode.AdoptChildren(visit(sm.strategy()));
+                }
             }
         }
         
 
         return progNode;
+    }
+
+    @Override
+    public Node visitSm(antlrParser.SmContext ctx) {
+        return super.visitSm(ctx);
     }
 
     @Override
@@ -136,6 +148,11 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
     @Override
     public Node visitAssign(antlrParser.AssignContext ctx) {
         return super.visitAssign(ctx);
+    }
+
+    @Override
+    public Node visitAndorexpr(antlrParser.AndorexprContext ctx) {
+        return super.visitAndorexpr(ctx);
     }
 
     @Override

@@ -1,5 +1,7 @@
 grammar antlr;
-prog      : predcl* setup pik=gameloop last=(strategy | method)*
+prog      : predcl* setup gameloop sm* EOF
+          ;
+sm        : strategy | method
           ;
 setup     : 'setup' block
           ;
@@ -16,16 +18,16 @@ stmt      : dcl NEWLINE+                                                        
           | assign NEWLINE+                                                             #assignStmt
           | action NEWLINE+                                                             #actionStmt
           | 'if' '(' aoexpr ')' block ('else' 'if' '(' aoexpr ')' block )* ('else' block)?  #ifStmt
-          | 'do' '(' assign ',' aoexpr ',' aoexpr ',' aoexpr ')' block                        #doStmt
+          | 'do' '(' argmnt',' aoexpr ',' aoexpr ',' aoexpr ')' block                        #doStmt
           | 'while''(' aoexpr ')' block                                                   #whileStmt
-          | 'return' expr                                                               #returnStmt
+          | 'return' expr NEWLINE+                                                               #returnStmt
           ;
 
 action    : ID ( '.' ID )* '.' fcall
           | fcall
           ;
 
-strategy  : 'strategy' ID NEWLINE+ behavior+
+strategy  : 'strategy' ID NEWLINE+ behavior+ 'end' NEWLINE+
           ;
 behavior  : 'behavior' ID block
           ;
@@ -44,6 +46,7 @@ ref       : ID
           ;
 
 assign    :ref '=' expr
+          |ref('++'|'--')
           ;
 
 aoexpr     : bexpr ( '&&' | '||' ) aoexpr                             #andorexpr

@@ -1,4 +1,4 @@
-// Generated from C:/Users/mark/Documents/GitHub/P4/antlr/src\antlr.g4 by ANTLR 4.7
+// Generated from C:/Users/Casper/Documents/GitHub/P4/antlr/src\antlr.g4 by ANTLR 4.7
 package antlr;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -17,6 +17,16 @@ public interface antlrListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitProg(antlrParser.ProgContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link antlrParser#sm}.
+	 * @param ctx the parse tree
+	 */
+	void enterSm(antlrParser.SmContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link antlrParser#sm}.
+	 * @param ctx the parse tree
+	 */
+	void exitSm(antlrParser.SmContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link antlrParser#setup}.
 	 * @param ctx the parse tree
@@ -242,62 +252,62 @@ public interface antlrListener extends ParseTreeListener {
 	 */
 	void exitAssign(antlrParser.AssignContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code aoexpr}
-	 * labeled alternative in {@link antlrParser#bexpr}.
+	 * Enter a parse tree produced by the {@code andorexpr}
+	 * labeled alternative in {@link antlrParser#aoexpr}.
 	 * @param ctx the parse tree
 	 */
-	void enterAoexpr(antlrParser.AoexprContext ctx);
+	void enterAndorexpr(antlrParser.AndorexprContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code aoexpr}
-	 * labeled alternative in {@link antlrParser#bexpr}.
+	 * Exit a parse tree produced by the {@code andorexpr}
+	 * labeled alternative in {@link antlrParser#aoexpr}.
 	 * @param ctx the parse tree
 	 */
-	void exitAoexpr(antlrParser.AoexprContext ctx);
+	void exitAndorexpr(antlrParser.AndorexprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code emptyaoexpr}
-	 * labeled alternative in {@link antlrParser#bexpr}.
+	 * labeled alternative in {@link antlrParser#aoexpr}.
 	 * @param ctx the parse tree
 	 */
 	void enterEmptyaoexpr(antlrParser.EmptyaoexprContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code emptyaoexpr}
-	 * labeled alternative in {@link antlrParser#bexpr}.
+	 * labeled alternative in {@link antlrParser#aoexpr}.
 	 * @param ctx the parse tree
 	 */
 	void exitEmptyaoexpr(antlrParser.EmptyaoexprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code boolexpr}
-	 * labeled alternative in {@link antlrParser#b2expr}.
+	 * labeled alternative in {@link antlrParser#bexpr}.
 	 * @param ctx the parse tree
 	 */
 	void enterBoolexpr(antlrParser.BoolexprContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code boolexpr}
-	 * labeled alternative in {@link antlrParser#b2expr}.
+	 * labeled alternative in {@link antlrParser#bexpr}.
 	 * @param ctx the parse tree
 	 */
 	void exitBoolexpr(antlrParser.BoolexprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code notexpr}
-	 * labeled alternative in {@link antlrParser#b2expr}.
+	 * labeled alternative in {@link antlrParser#bexpr}.
 	 * @param ctx the parse tree
 	 */
 	void enterNotexpr(antlrParser.NotexprContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code notexpr}
-	 * labeled alternative in {@link antlrParser#b2expr}.
+	 * labeled alternative in {@link antlrParser#bexpr}.
 	 * @param ctx the parse tree
 	 */
 	void exitNotexpr(antlrParser.NotexprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code emptyboolexpr}
-	 * labeled alternative in {@link antlrParser#b2expr}.
+	 * labeled alternative in {@link antlrParser#bexpr}.
 	 * @param ctx the parse tree
 	 */
 	void enterEmptyboolexpr(antlrParser.EmptyboolexprContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code emptyboolexpr}
-	 * labeled alternative in {@link antlrParser#b2expr}.
+	 * labeled alternative in {@link antlrParser#bexpr}.
 	 * @param ctx the parse tree
 	 */
 	void exitEmptyboolexpr(antlrParser.EmptyboolexprContext ctx);
