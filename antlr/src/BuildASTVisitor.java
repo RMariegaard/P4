@@ -1,12 +1,36 @@
+import Nodes.AddExprNode;
 import Nodes.Node;
+import Nodes.ProgNode;
 import antlr.*;
+import org.antlr.v4.runtime.tree.ParseTree;
+
+import java.util.List;
 
 public class BuildASTVisitor extends antlrBaseVisitor<Node>
 {
 
     @Override
     public Node visitProg(antlrParser.ProgContext ctx) {
-        return super.visitProg(ctx);
+        Node progNode = new ProgNode();
+
+        List<antlrParser.PredclContext> preDcls = ctx.predcl();
+        if (!preDcls.isEmpty()) {
+            for(antlrParser.PredclContext preDcl : preDcls) {
+                progNode.AdoptChildren(visit(preDcl));
+            }
+        }
+        progNode.AdoptChildren(visit(ctx.setup()));
+        progNode.AdoptChildren(visit(ctx.gameloop()));
+
+        List<antlrParser.StrategyContext> strats = ctx.strategy();
+        if (!strats.isEmpty()) {
+            for(antlrParser.StrategyContext strat : strats) {
+                progNode.AdoptChildren(visit(strat));
+            }
+        }
+        
+
+        return progNode;
     }
 
     @Override

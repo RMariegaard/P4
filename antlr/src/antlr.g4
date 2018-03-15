@@ -1,5 +1,5 @@
 grammar antlr;
-prog      : predcl* setup gameloop (strategy | method)*
+prog      : predcl* setup pik=gameloop last=(strategy | method)*
           ;
 setup     : 'setup' block
           ;
