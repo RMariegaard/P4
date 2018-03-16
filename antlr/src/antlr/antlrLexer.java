@@ -1,4 +1,4 @@
-// Generated from C:/Users/caspe/Documents/GitHub/P4/antlr/src\antlr.g4 by ANTLR 4.7
+// Generated from C:/Users/mark/Documents/GitHub/P4/antlr/src\antlr.g4 by ANTLR 4.7
 package antlr;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
@@ -21,8 +21,8 @@ public class antlrLexer extends Lexer {
 		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
 		T__17=18, T__18=19, T__19=20, T__20=21, T__21=22, T__22=23, T__23=24, 
 		T__24=25, T__25=26, T__26=27, T__27=28, T__28=29, T__29=30, T__30=31, 
-		T__31=32, T__32=33, T__33=34, T__34=35, T__35=36, T__36=37, T__37=38, 
-		T__38=39, NEWLINE=40, ID=41, BOOL_VALUE=42, INT_NUM=43, DECIMAL_NUM=44, 
+		T__31=32, T__32=33, OP_ADD=34, OP_SUB=35, OP_UADD=36, OP_USUB=37, OP_MUL=38, 
+		OP_DIV=39, NEWLINE=40, ID=41, BOOL_VALUE=42, INT_NUM=43, DECIMAL_NUM=44, 
 		CHAR_VALUE=45, WS=46, COMMENTS=47;
 	public static String[] channelNames = {
 		"DEFAULT_TOKEN_CHANNEL", "HIDDEN"
@@ -37,23 +37,23 @@ public class antlrLexer extends Lexer {
 		"T__9", "T__10", "T__11", "T__12", "T__13", "T__14", "T__15", "T__16", 
 		"T__17", "T__18", "T__19", "T__20", "T__21", "T__22", "T__23", "T__24", 
 		"T__25", "T__26", "T__27", "T__28", "T__29", "T__30", "T__31", "T__32", 
-		"T__33", "T__34", "T__35", "T__36", "T__37", "T__38", "NEWLINE", "ID", 
-		"BOOL_VALUE", "INT_NUM", "DECIMAL_NUM", "CHAR_VALUE", "WS", "COMMENTS"
+		"OP_ADD", "OP_SUB", "OP_UADD", "OP_USUB", "OP_MUL", "OP_DIV", "NEWLINE", 
+		"ID", "BOOL_VALUE", "INT_NUM", "DECIMAL_NUM", "CHAR_VALUE", "WS", "COMMENTS"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
 		null, "'setup'", "'game-loop'", "'function'", "'('", "','", "')'", "'event'", 
 		"'->'", "'end'", "'if'", "'else'", "'do'", "'while'", "'return'", "'.'", 
 		"'strategy'", "'behavior'", "'bool'", "'int'", "'text'", "'char'", "'decimal'", 
-		"'['", "']'", "'='", "'++'", "'--'", "'&&'", "'||'", "'=='", "'>='", "'<='", 
-		"'<'", "'>'", "'!'", "'+'", "'-'", "'*'", "'/'", "'\n'"
+		"'['", "']'", "'='", "'&&'", "'||'", "'=='", "'>='", "'<='", "'<'", "'>'", 
+		"'!'", "'+'", "'-'", "'++'", "'--'", "'*'", "'/'", "'\n'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
 		null, null, null, null, null, null, null, null, null, null, null, null, 
 		null, null, null, null, null, null, null, null, null, null, null, null, 
-		null, null, null, null, null, null, null, null, null, null, null, null, 
-		null, null, null, null, "NEWLINE", "ID", "BOOL_VALUE", "INT_NUM", "DECIMAL_NUM", 
-		"CHAR_VALUE", "WS", "COMMENTS"
+		null, null, null, null, null, null, null, null, null, null, "OP_ADD", 
+		"OP_SUB", "OP_UADD", "OP_USUB", "OP_MUL", "OP_DIV", "NEWLINE", "ID", "BOOL_VALUE", 
+		"INT_NUM", "DECIMAL_NUM", "CHAR_VALUE", "WS", "COMMENTS"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -128,8 +128,8 @@ public class antlrLexer extends Lexer {
 		"\3\22\3\23\3\23\3\23\3\23\3\23\3\24\3\24\3\24\3\24\3\25\3\25\3\25\3\25"+
 		"\3\25\3\26\3\26\3\26\3\26\3\26\3\27\3\27\3\27\3\27\3\27\3\27\3\27\3\27"+
 		"\3\30\3\30\3\31\3\31\3\32\3\32\3\33\3\33\3\33\3\34\3\34\3\34\3\35\3\35"+
-		"\3\35\3\36\3\36\3\36\3\37\3\37\3\37\3 \3 \3 \3!\3!\3!\3\"\3\"\3#\3#\3"+
-		"$\3$\3%\3%\3&\3&\3\'\3\'\3(\3(\3)\3)\3*\6*\u0101\n*\r*\16*\u0102\3*\7"+
+		"\3\35\3\36\3\36\3\36\3\37\3\37\3\37\3 \3 \3!\3!\3\"\3\"\3#\3#\3$\3$\3"+
+		"%\3%\3%\3&\3&\3&\3\'\3\'\3(\3(\3)\3)\3*\6*\u0101\n*\r*\16*\u0102\3*\7"+
 		"*\u0106\n*\f*\16*\u0109\13*\3+\3+\3+\3+\3+\3+\3+\3+\3+\5+\u0114\n+\3,"+
 		"\6,\u0117\n,\r,\16,\u0118\3-\6-\u011c\n-\r-\16-\u011d\3-\3-\6-\u0122\n"+
 		"-\r-\16-\u0123\5-\u0126\n-\3.\3.\3.\3.\3/\3/\3/\3/\3\60\3\60\3\60\3\60"+
@@ -152,8 +152,8 @@ public class antlrLexer extends Lexer {
 		"%\u00b9\3\2\2\2\'\u00be\3\2\2\2)\u00c2\3\2\2\2+\u00c7\3\2\2\2-\u00cc\3"+
 		"\2\2\2/\u00d4\3\2\2\2\61\u00d6\3\2\2\2\63\u00d8\3\2\2\2\65\u00da\3\2\2"+
 		"\2\67\u00dd\3\2\2\29\u00e0\3\2\2\2;\u00e3\3\2\2\2=\u00e6\3\2\2\2?\u00e9"+
-		"\3\2\2\2A\u00ec\3\2\2\2C\u00ef\3\2\2\2E\u00f1\3\2\2\2G\u00f3\3\2\2\2I"+
-		"\u00f5\3\2\2\2K\u00f7\3\2\2\2M\u00f9\3\2\2\2O\u00fb\3\2\2\2Q\u00fd\3\2"+
+		"\3\2\2\2A\u00eb\3\2\2\2C\u00ed\3\2\2\2E\u00ef\3\2\2\2G\u00f1\3\2\2\2I"+
+		"\u00f3\3\2\2\2K\u00f6\3\2\2\2M\u00f9\3\2\2\2O\u00fb\3\2\2\2Q\u00fd\3\2"+
 		"\2\2S\u0100\3\2\2\2U\u0113\3\2\2\2W\u0116\3\2\2\2Y\u011b\3\2\2\2[\u0127"+
 		"\3\2\2\2]\u012b\3\2\2\2_\u012f\3\2\2\2ab\7u\2\2bc\7g\2\2cd\7v\2\2de\7"+
 		"w\2\2ef\7r\2\2f\4\3\2\2\2gh\7i\2\2hi\7c\2\2ij\7o\2\2jk\7g\2\2kl\7/\2\2"+
@@ -183,16 +183,16 @@ public class antlrLexer extends Lexer {
 		"g\2\2\u00ce\u00cf\7e\2\2\u00cf\u00d0\7k\2\2\u00d0\u00d1\7o\2\2\u00d1\u00d2"+
 		"\7c\2\2\u00d2\u00d3\7n\2\2\u00d3.\3\2\2\2\u00d4\u00d5\7]\2\2\u00d5\60"+
 		"\3\2\2\2\u00d6\u00d7\7_\2\2\u00d7\62\3\2\2\2\u00d8\u00d9\7?\2\2\u00d9"+
-		"\64\3\2\2\2\u00da\u00db\7-\2\2\u00db\u00dc\7-\2\2\u00dc\66\3\2\2\2\u00dd"+
-		"\u00de\7/\2\2\u00de\u00df\7/\2\2\u00df8\3\2\2\2\u00e0\u00e1\7(\2\2\u00e1"+
-		"\u00e2\7(\2\2\u00e2:\3\2\2\2\u00e3\u00e4\7~\2\2\u00e4\u00e5\7~\2\2\u00e5"+
-		"<\3\2\2\2\u00e6\u00e7\7?\2\2\u00e7\u00e8\7?\2\2\u00e8>\3\2\2\2\u00e9\u00ea"+
-		"\7@\2\2\u00ea\u00eb\7?\2\2\u00eb@\3\2\2\2\u00ec\u00ed\7>\2\2\u00ed\u00ee"+
-		"\7?\2\2\u00eeB\3\2\2\2\u00ef\u00f0\7>\2\2\u00f0D\3\2\2\2\u00f1\u00f2\7"+
-		"@\2\2\u00f2F\3\2\2\2\u00f3\u00f4\7#\2\2\u00f4H\3\2\2\2\u00f5\u00f6\7-"+
-		"\2\2\u00f6J\3\2\2\2\u00f7\u00f8\7/\2\2\u00f8L\3\2\2\2\u00f9\u00fa\7,\2"+
-		"\2\u00faN\3\2\2\2\u00fb\u00fc\7\61\2\2\u00fcP\3\2\2\2\u00fd\u00fe\7\f"+
-		"\2\2\u00feR\3\2\2\2\u00ff\u0101\t\2\2\2\u0100\u00ff\3\2\2\2\u0101\u0102"+
+		"\64\3\2\2\2\u00da\u00db\7(\2\2\u00db\u00dc\7(\2\2\u00dc\66\3\2\2\2\u00dd"+
+		"\u00de\7~\2\2\u00de\u00df\7~\2\2\u00df8\3\2\2\2\u00e0\u00e1\7?\2\2\u00e1"+
+		"\u00e2\7?\2\2\u00e2:\3\2\2\2\u00e3\u00e4\7@\2\2\u00e4\u00e5\7?\2\2\u00e5"+
+		"<\3\2\2\2\u00e6\u00e7\7>\2\2\u00e7\u00e8\7?\2\2\u00e8>\3\2\2\2\u00e9\u00ea"+
+		"\7>\2\2\u00ea@\3\2\2\2\u00eb\u00ec\7@\2\2\u00ecB\3\2\2\2\u00ed\u00ee\7"+
+		"#\2\2\u00eeD\3\2\2\2\u00ef\u00f0\7-\2\2\u00f0F\3\2\2\2\u00f1\u00f2\7/"+
+		"\2\2\u00f2H\3\2\2\2\u00f3\u00f4\7-\2\2\u00f4\u00f5\7-\2\2\u00f5J\3\2\2"+
+		"\2\u00f6\u00f7\7/\2\2\u00f7\u00f8\7/\2\2\u00f8L\3\2\2\2\u00f9\u00fa\7"+
+		",\2\2\u00faN\3\2\2\2\u00fb\u00fc\7\61\2\2\u00fcP\3\2\2\2\u00fd\u00fe\7"+
+		"\f\2\2\u00feR\3\2\2\2\u00ff\u0101\t\2\2\2\u0100\u00ff\3\2\2\2\u0101\u0102"+
 		"\3\2\2\2\u0102\u0100\3\2\2\2\u0102\u0103\3\2\2\2\u0103\u0107\3\2\2\2\u0104"+
 		"\u0106\t\3\2\2\u0105\u0104\3\2\2\2\u0106\u0109\3\2\2\2\u0107\u0105\3\2"+
 		"\2\2\u0107\u0108\3\2\2\2\u0108T\3\2\2\2\u0109\u0107\3\2\2\2\u010a\u010b"+

@@ -1,4 +1,4 @@
-// Generated from C:/Users/caspe/Documents/GitHub/P4/antlr/src\antlr.g4 by ANTLR 4.7
+// Generated from C:/Users/mark/Documents/GitHub/P4/antlr/src\antlr.g4 by ANTLR 4.7
 package antlr;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -21,8 +21,8 @@ public class antlrParser extends Parser {
 		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
 		T__17=18, T__18=19, T__19=20, T__20=21, T__21=22, T__22=23, T__23=24, 
 		T__24=25, T__25=26, T__26=27, T__27=28, T__28=29, T__29=30, T__30=31, 
-		T__31=32, T__32=33, T__33=34, T__34=35, T__35=36, T__36=37, T__37=38, 
-		T__38=39, NEWLINE=40, ID=41, BOOL_VALUE=42, INT_NUM=43, DECIMAL_NUM=44, 
+		T__31=32, T__32=33, OP_ADD=34, OP_SUB=35, OP_UADD=36, OP_USUB=37, OP_MUL=38, 
+		OP_DIV=39, NEWLINE=40, ID=41, BOOL_VALUE=42, INT_NUM=43, DECIMAL_NUM=44, 
 		CHAR_VALUE=45, WS=46, COMMENTS=47;
 	public static final int
 		RULE_prog = 0, RULE_sm = 1, RULE_setup = 2, RULE_gameloop = 3, RULE_method = 4, 
@@ -40,15 +40,15 @@ public class antlrParser extends Parser {
 		null, "'setup'", "'game-loop'", "'function'", "'('", "','", "')'", "'event'", 
 		"'->'", "'end'", "'if'", "'else'", "'do'", "'while'", "'return'", "'.'", 
 		"'strategy'", "'behavior'", "'bool'", "'int'", "'text'", "'char'", "'decimal'", 
-		"'['", "']'", "'='", "'++'", "'--'", "'&&'", "'||'", "'=='", "'>='", "'<='", 
-		"'<'", "'>'", "'!'", "'+'", "'-'", "'*'", "'/'", "'\n'"
+		"'['", "']'", "'='", "'&&'", "'||'", "'=='", "'>='", "'<='", "'<'", "'>'", 
+		"'!'", "'+'", "'-'", "'++'", "'--'", "'*'", "'/'", "'\n'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
 		null, null, null, null, null, null, null, null, null, null, null, null, 
 		null, null, null, null, null, null, null, null, null, null, null, null, 
-		null, null, null, null, null, null, null, null, null, null, null, null, 
-		null, null, null, null, "NEWLINE", "ID", "BOOL_VALUE", "INT_NUM", "DECIMAL_NUM", 
-		"CHAR_VALUE", "WS", "COMMENTS"
+		null, null, null, null, null, null, null, null, null, null, "OP_ADD", 
+		"OP_SUB", "OP_UADD", "OP_USUB", "OP_MUL", "OP_DIV", "NEWLINE", "ID", "BOOL_VALUE", 
+		"INT_NUM", "DECIMAL_NUM", "CHAR_VALUE", "WS", "COMMENTS"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -1677,7 +1677,7 @@ public class antlrParser extends Parser {
 				ref();
 				setState(266);
 				_la = _input.LA(1);
-				if ( !(_la==T__25 || _la==T__26) ) {
+				if ( !(_la==OP_UADD || _la==OP_USUB) ) {
 				_errHandler.recoverInline(this);
 				}
 				else {
@@ -1741,7 +1741,7 @@ public class antlrParser extends Parser {
 				bexpr();
 				setState(271);
 				_la = _input.LA(1);
-				if ( !(_la==T__27 || _la==T__28) ) {
+				if ( !(_la==T__25 || _la==T__26) ) {
 				_errHandler.recoverInline(this);
 				}
 				else {
@@ -1861,7 +1861,7 @@ public class antlrParser extends Parser {
 				expr();
 				setState(278);
 				_la = _input.LA(1);
-				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__29) | (1L << T__30) | (1L << T__31) | (1L << T__32) | (1L << T__33))) != 0)) ) {
+				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__27) | (1L << T__28) | (1L << T__29) | (1L << T__30) | (1L << T__31))) != 0)) ) {
 				_errHandler.recoverInline(this);
 				}
 				else {
@@ -1878,7 +1878,7 @@ public class antlrParser extends Parser {
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(281);
-				match(T__34);
+				match(T__32);
 				setState(282);
 				expr();
 				}
@@ -1935,6 +1935,7 @@ public class antlrParser extends Parser {
 		}
 	}
 	public static class InfixExprContext extends ExprContext {
+		public Token op;
 		public TermContext term() {
 			return getRuleContext(TermContext.class,0);
 		}
@@ -1957,6 +1958,7 @@ public class antlrParser extends Parser {
 		}
 	}
 	public static class UnaryExprContext extends ExprContext {
+		public Token op;
 		public FactorContext factor() {
 			return getRuleContext(FactorContext.class,0);
 		}
@@ -2030,9 +2032,10 @@ public class antlrParser extends Parser {
 				setState(286);
 				term();
 				setState(287);
+				((InfixExprContext)_localctx).op = _input.LT(1);
 				_la = _input.LA(1);
-				if ( !(_la==T__35 || _la==T__36) ) {
-				_errHandler.recoverInline(this);
+				if ( !(_la==OP_ADD || _la==OP_SUB) ) {
+					((InfixExprContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 				}
 				else {
 					if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -2080,9 +2083,10 @@ public class antlrParser extends Parser {
 				setState(297);
 				factor();
 				setState(298);
+				((UnaryExprContext)_localctx).op = _input.LT(1);
 				_la = _input.LA(1);
-				if ( !(_la==T__25 || _la==T__26) ) {
-				_errHandler.recoverInline(this);
+				if ( !(_la==OP_UADD || _la==OP_USUB) ) {
+					((UnaryExprContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 				}
 				else {
 					if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -2105,6 +2109,7 @@ public class antlrParser extends Parser {
 	}
 
 	public static class TermContext extends ParserRuleContext {
+		public Token op;
 		public FactorContext factor() {
 			return getRuleContext(FactorContext.class,0);
 		}
@@ -2144,9 +2149,10 @@ public class antlrParser extends Parser {
 				setState(302);
 				factor();
 				setState(303);
+				((TermContext)_localctx).op = _input.LT(1);
 				_la = _input.LA(1);
-				if ( !(_la==T__37 || _la==T__38) ) {
-				_errHandler.recoverInline(this);
+				if ( !(_la==OP_MUL || _la==OP_DIV) ) {
+					((TermContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 				}
 				else {
 					if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -2178,6 +2184,7 @@ public class antlrParser extends Parser {
 	}
 
 	public static class FactorContext extends ParserRuleContext {
+		public Token op;
 		public AoexprContext aoexpr() {
 			return getRuleContext(AoexprContext.class,0);
 		}
@@ -2232,9 +2239,10 @@ public class antlrParser extends Parser {
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(313);
+				((FactorContext)_localctx).op = _input.LT(1);
 				_la = _input.LA(1);
 				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << ID) | (1L << BOOL_VALUE) | (1L << INT_NUM) | (1L << DECIMAL_NUM) | (1L << CHAR_VALUE))) != 0)) ) {
-				_errHandler.recoverInline(this);
+					((FactorContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 				}
 				else {
 					if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -2284,8 +2292,8 @@ public class antlrParser extends Parser {
 		"\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\5\26\u012f\n\26"+
 		"\3\27\3\27\3\27\3\27\3\27\5\27\u0136\n\27\3\30\3\30\3\30\3\30\3\30\5\30"+
 		"\u013d\n\30\3\30\2\2\31\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*"+
-		",.\2\t\3\2\24\30\3\2\34\35\3\2\36\37\3\2 $\3\2&\'\3\2()\3\2+/\2\u0151"+
-		"\2\63\3\2\2\2\4B\3\2\2\2\6D\3\2\2\2\bG\3\2\2\2\nJ\3\2\2\2\fk\3\2\2\2\16"+
+		",.\2\t\3\2\24\30\3\2&\'\3\2\34\35\3\2\36\"\3\2$%\3\2()\3\2+/\2\u0151\2"+
+		"\63\3\2\2\2\4B\3\2\2\2\6D\3\2\2\2\bG\3\2\2\2\nJ\3\2\2\2\fk\3\2\2\2\16"+
 		"n\3\2\2\2\20\u00b8\3\2\2\2\22\u00ba\3\2\2\2\24\u00cc\3\2\2\2\26\u00ce"+
 		"\3\2\2\2\30\u00e0\3\2\2\2\32\u00e4\3\2\2\2\34\u00f8\3\2\2\2\36\u00fa\3"+
 		"\2\2\2 \u00fd\3\2\2\2\"\u0105\3\2\2\2$\u010e\3\2\2\2&\u0115\3\2\2\2(\u011e"+
@@ -2353,7 +2361,7 @@ public class antlrParser extends Parser {
 		"\3\2\2\2\u010f%\3\2\2\2\u0110\u0111\5(\25\2\u0111\u0112\t\4\2\2\u0112"+
 		"\u0113\5&\24\2\u0113\u0116\3\2\2\2\u0114\u0116\5(\25\2\u0115\u0110\3\2"+
 		"\2\2\u0115\u0114\3\2\2\2\u0116\'\3\2\2\2\u0117\u0118\5*\26\2\u0118\u0119"+
-		"\t\5\2\2\u0119\u011a\5(\25\2\u011a\u011f\3\2\2\2\u011b\u011c\7%\2\2\u011c"+
+		"\t\5\2\2\u0119\u011a\5(\25\2\u011a\u011f\3\2\2\2\u011b\u011c\7#\2\2\u011c"+
 		"\u011f\5*\26\2\u011d\u011f\5*\26\2\u011e\u0117\3\2\2\2\u011e\u011b\3\2"+
 		"\2\2\u011e\u011d\3\2\2\2\u011f)\3\2\2\2\u0120\u0121\5,\27\2\u0121\u0122"+
 		"\t\6\2\2\u0122\u0123\5*\26\2\u0123\u012f\3\2\2\2\u0124\u012f\5,\27\2\u0125"+

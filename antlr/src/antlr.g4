@@ -60,18 +60,25 @@ bexpr    : expr ( '==' | '>=' | '<=' | '<' | '>') bexpr               #boolexpr
           |'!' expr                                                   #notexpr
           | expr                                                      #emptyboolexpr
           ;
-expr      : term( '+' | '-' ) expr                                    #infixExpr
+expr      : term op=( '+' | '-' ) expr                                #infixExpr
           | term                                                      #termExpr
           | ID '[' expr ']'                                           #arrayExpr
           | action                                                    #actionExpr
-          |factor('++'|'--')                                          #unaryExpr
+          |factor op=('++'|'--')                                          #unaryExpr
           ;
-term      : factor ('*' | '/') term
+term      : factor op=('*' | '/') term
           | factor
           ;
 factor    : '(' aoexpr ')'
-          | (ID | INT_NUM |BOOL_VALUE | DECIMAL_NUM | CHAR_VALUE)
+          | op=(ID | INT_NUM |BOOL_VALUE | DECIMAL_NUM | CHAR_VALUE)
           ;
+
+OP_ADD : '+';
+OP_SUB : '-';
+OP_UADD : '++';
+OP_USUB : '--';
+OP_MUL : '*';
+OP_DIV : '/';
 
 NEWLINE: '\n';
 ID: [a-zA-Z]+ ([a-zA-Z0-9])*;

@@ -1,8 +1,9 @@
 import Nodes.*;
+import Nodes.expr.*;
+import Nodes.values.*;
 import antlr.*;
-import org.antlr.intellij.adaptor.parser.AntlrParser;
-import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
+import java.lang.*;
 
 import java.util.List;
 
@@ -54,7 +55,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
     public Node visitMethod(antlrParser.MethodContext ctx) {
         Node methodNode = new MethodNode();
 
-        methodNode.AdoptChildren(visit(ctx.ID()));
+        methodNode.AdoptChildren(new IDNode(ctx.ID().getText()));
 
         List<antlrParser.ArgmntContext> arguments = ctx.argmnt();
         if (!arguments.isEmpty()){
@@ -77,6 +78,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
         }
         else if (ctx.aoexpr() != null){
             predclNode.AdoptChildren(visit(ctx.aoexpr()));
+            predclNode.AdoptChildren(new IDNode(ctx.ID().getText()));
         }
 
         return predclNode;
@@ -131,7 +133,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
         ifStmtNode.AdoptChildren(visit(ctx.firstBlock));
 
         List<antlrParser.ElseifContext> elseIfs = ctx.elseif();
-        if (elseIfs.isEmpty()) {
+        if (!elseIfs.isEmpty()) {
             for (antlrParser.ElseifContext elseIf : elseIfs) {
                 ifStmtNode.AdoptChildren(visit(elseIf));
             }
@@ -183,7 +185,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
         if (!ctx.ID().isEmpty()){
             List<TerminalNode> ids = ctx.ID();
             for (TerminalNode id : ids){
-                actionNode.AdoptChildren(visit(id));
+                actionNode.AdoptChildren(new IDNode(id.getText()));
             }
             actionNode.AdoptChildren(visit(ctx.fcall()));
         }
@@ -198,7 +200,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
     public Node visitStrategy(antlrParser.StrategyContext ctx) {
         Node strategyNode = new StrategyNode();
 
-        strategyNode.AdoptChildren(visit(ctx.ID()));
+        strategyNode.AdoptChildren(new IDNode(ctx.ID().getText()));
 
         List<antlrParser.BehaviorContext> behaviors = ctx.behavior();
 
@@ -215,7 +217,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
     public Node visitBehavior(antlrParser.BehaviorContext ctx) {
         Node behaviorNode = new BehaviorNode();
 
-        behaviorNode.AdoptChildren(visit(ctx.ID()));
+        behaviorNode.AdoptChildren(new IDNode(ctx.ID().getText()));
         behaviorNode.AdoptChildren(visit(ctx.block()));
 
         return behaviorNode;
@@ -225,7 +227,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
     public Node visitFcall(antlrParser.FcallContext ctx) {
         Node fcallNode = new FcallNode();
 
-        fcallNode.AdoptChildren(visit(ctx.ID()));
+        fcallNode.AdoptChildren(new IDNode(ctx.ID().getText()));
 
         List<antlrParser.ExprContext> exprs = ctx.expr();
         if (!exprs.isEmpty()){
@@ -265,7 +267,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
     public Node visitRef(antlrParser.RefContext ctx) {
         Node refNode = new RefNode();
 
-        refNode.AdoptChildren(visit(ctx.ID()));
+        refNode.AdoptChildren(new IDNode(ctx.ID().getText()));
 
         if (ctx.expr() != null){
             refNode.AdoptChildren(visit(ctx.expr()));
@@ -329,36 +331,111 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
     @Override
     public Node visitInfixExpr(antlrParser.InfixExprContext ctx) {
-        return super.visitInfixExpr(ctx);
+        Node infixNode;
+        switch (ctx.op.getType()){
+            case antlrParser.OP_ADD:
+                infixNode = new AddExprNode();
+                break;
+
+            case antlrParser.OP_SUB:
+                infixNode = new SubExprNode();
+                break;
+            default:
+                //throw an exeption or some shit.
+                infixNode = new NullNode(); //this is not something that should be used.
+        }
+        infixNode.AdoptChildren(visit(ctx.term()));
+        infixNode.AdoptChildren(visit(ctx.expr()));
+
+        return infixNode;
+
     }
 
     @Override
     public Node visitTermExpr(antlrParser.TermExprContext ctx) {
-        return super.visitTermExpr(ctx);
+        return visitTerm(ctx.term());
     }
 
     @Override
     public Node visitArrayExpr(antlrParser.ArrayExprContext ctx) {
-        return super.visitArrayExpr(ctx);
+        Node arrayExprNode = new ArrayExprNode();
+        arrayExprNode.AdoptChildren(new IDNode(ctx.ID().getText()));
+        arrayExprNode.AdoptChildren(visit(ctx.expr()));
+
+        return arrayExprNode;
     }
 
     @Override
     public Node visitActionExpr(antlrParser.ActionExprContext ctx) {
-        return super.visitActionExpr(ctx);
+        return visitAction(ctx.action());
     }
 
     @Override
     public Node visitUnaryExpr(antlrParser.UnaryExprContext ctx) {
-        return super.visitUnaryExpr(ctx);
+        Node unaryNode;
+        switch (ctx.op.getType()){
+            case antlrParser.OP_UADD:
+                unaryNode = new UAddNode();
+                break;
+            case antlrParser.OP_USUB:
+                unaryNode = new UsubNode();
+                break;
+            default:
+                unaryNode = new NullNode(); //This is not supposed to be there call exception instead
+                //idk where to catch it tho, and in java u have to catch it.
+        }
+
+        return unaryNode.AdoptChildren(visit(ctx.factor()));
     }
 
     @Override
     public Node visitTerm(antlrParser.TermContext ctx) {
-        return super.visitTerm(ctx);
+        if (!ctx.term().isEmpty()) {
+            Node infixNode;
+            switch (ctx.op.getType()){
+                case antlrParser.OP_MUL:
+                    infixNode = new MulExprNode();
+                    break;
+
+                case antlrParser.OP_DIV:
+                    infixNode = new DivExprNode();
+                    break;
+                default:
+                    //throw an exeption or some shit.
+                    infixNode = new NullNode(); //this is not something that should be used.
+            }
+            infixNode.AdoptChildren(visit(ctx.factor()));
+            infixNode.AdoptChildren(visit(ctx.term()));
+
+            return infixNode;
+        }
+        else
+            return visitFactor(ctx.factor());
+
     }
 
     @Override
     public Node visitFactor(antlrParser.FactorContext ctx) {
-        return super.visitFactor(ctx);
+        if(!ctx.aoexpr().isEmpty()){
+            return visit(ctx.aoexpr());
+        }
+        else
+            switch (ctx.op.getType()){
+                case antlrParser.ID:
+                    return new IDNode(ctx.ID().getText());
+                case antlrParser.INT_NUM:
+                    return new IntNode(Integer.parseInt(ctx.INT_NUM().getText()));
+                case antlrParser.BOOL_VALUE:
+                    return new BoolNode(Boolean.parseBoolean(ctx.BOOL_VALUE().getText()));
+                case antlrParser.CHAR_VALUE:
+                    char x = ctx.CHAR_VALUE().getText().charAt(0);
+                    return new CharNode(x);
+                case antlrParser.DECIMAL_NUM:
+                    return new DecimalNode(Double.parseDouble(ctx.DECIMAL_NUM().getText()));
+                default:
+                    return new NullNode(); //should not call this, exeptions instead
+
+            }
+
     }
 }
