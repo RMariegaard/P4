@@ -1,10 +1,10 @@
 package com.company;
-import antlr.*;
+import Nodes.Node;
+import antlr.antlrLexer;
+import antlr.antlrParser;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
-import java.nio.file.*;
-
 import java.io.IOException;
 
 
@@ -18,8 +18,9 @@ public class Main {
             CommonTokenStream tokenStream = new CommonTokenStream(lexer);
             antlrParser parser = new antlrParser(tokenStream);
 
-            parser.prog();
-
+            antlrParser.ProgContext cst = parser.prog();
+            Node ast = new com.company.BuildASTVisitor().visitProg(cst);
+            ast.makeNode();
 
         }catch (IOException e){
             System.out.println(e.getMessage() + " ERROR" );

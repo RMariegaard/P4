@@ -1,9 +1,12 @@
+package com.company;
+
 import Nodes.*;
 import Nodes.expr.*;
 import Nodes.values.*;
 import antlr.*;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import java.lang.*;
+import org.antlr.runtime.*;
 
 import java.util.List;
 
@@ -281,7 +284,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
         Node assignNode = new AssignNode();
 
         assignNode.AdoptChildren(visit(ctx.ref()));
-        if (ctx.ref() != null){
+        if (ctx.expr() != null){
             assignNode.AdoptChildren(visit(ctx.expr()));
         }
 
@@ -390,7 +393,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
     @Override
     public Node visitTerm(antlrParser.TermContext ctx) {
-        if (!ctx.term().isEmpty()) {
+        if (ctx.term() != null) {
             Node infixNode;
             switch (ctx.op.getType()){
                 case antlrParser.OP_MUL:
@@ -416,7 +419,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
     @Override
     public Node visitFactor(antlrParser.FactorContext ctx) {
-        if(!ctx.aoexpr().isEmpty()){
+        if(ctx.aoexpr() != null){
             return visit(ctx.aoexpr());
         }
         else

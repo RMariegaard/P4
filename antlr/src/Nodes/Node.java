@@ -12,10 +12,17 @@ public abstract class Node{
 
     //Ifølge bogen skal de alle sammen returnere node...
     public Node MakeSiblings(Node y){
-        Node xSibs = RightSibling;
-        while(xSibs.RightSibling != null){
-            xSibs = xSibs.RightSibling;
+
+        Node xSibs;
+        if (RightSibling != null) {
+            xSibs = RightSibling;
+            while(xSibs.RightSibling != null){
+                xSibs = xSibs.RightSibling;
+            }
         }
+        else
+            xSibs = this;
+
         Node ySibs = y.LeftmostSibling;
         xSibs.RightSibling = ySibs;
 
@@ -33,6 +40,8 @@ public abstract class Node{
     //Ifølge bogen skal de alle sammen returnere node... Her siger de ikke hvad der skal returneres.
     public Node AdoptChildren(Node y) {
         Node ySibs;
+        if(y.LeftmostSibling == null)
+            y.LeftmostSibling = y;
         if (this.LeftmostChild != null)
             this.LeftmostChild.MakeSiblings(y);
         else {
