@@ -21,6 +21,7 @@ public class Main {
             antlrParser.ProgContext cst = parser.prog();
             Node ast = new com.company.BuildASTVisitor().visitProg(cst);
             ast.makeNode();
+            ASTPrinter.PrintTree((ast));
 
         }catch (IOException e){
             System.out.println(e.getMessage() + " ERROR" );
