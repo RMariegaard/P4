@@ -1,4 +1,4 @@
-// Generated from C:/Users/mark/Documents/GitHub/P4/antlr/src\antlr.g4 by ANTLR 4.7
+// Generated from C:/Users/Casper/Documents/GitHub/P4/antlr/src\antlr.g4 by ANTLR 4.7
 package antlr;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -275,6 +275,18 @@ public class antlrBaseListener implements antlrListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitType(antlrParser.TypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterRtype(antlrParser.RtypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRtype(antlrParser.RtypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

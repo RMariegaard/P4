@@ -1,4 +1,4 @@
-// Generated from C:/Users/mark/Documents/GitHub/P4/antlr/src\antlr.g4 by ANTLR 4.7
+// Generated from C:/Users/Casper/Documents/GitHub/P4/antlr/src\antlr.g4 by ANTLR 4.7
 package antlr;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -149,6 +149,12 @@ public interface antlrVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitType(antlrParser.TypeContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link antlrParser#rtype}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRtype(antlrParser.RtypeContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link antlrParser#ref}.
 	 * @param ctx the parse tree

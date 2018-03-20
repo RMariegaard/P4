@@ -1,4 +1,4 @@
-// Generated from C:/Users/mark/Documents/GitHub/P4/antlr/src\antlr.g4 by ANTLR 4.7
+// Generated from C:/Users/Casper/Documents/GitHub/P4/antlr/src\antlr.g4 by ANTLR 4.7
 package antlr;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -241,6 +241,16 @@ public interface antlrListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitType(antlrParser.TypeContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link antlrParser#rtype}.
+	 * @param ctx the parse tree
+	 */
+	void enterRtype(antlrParser.RtypeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link antlrParser#rtype}.
+	 * @param ctx the parse tree
+	 */
+	void exitRtype(antlrParser.RtypeContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link antlrParser#ref}.
 	 * @param ctx the parse tree

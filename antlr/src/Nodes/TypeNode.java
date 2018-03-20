@@ -1,14 +1,11 @@
 package Nodes;
 
-public class TypeNode extends Node{
+public class TypeNode extends RTypeNode{
 
 
-    @Override
-    public String toString() {
-        return "Type";
-
+    public TypeNode(String typeString) {
+        super(typeString);
     }
-
 }
 
 

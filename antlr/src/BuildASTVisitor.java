@@ -59,7 +59,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
         Node methodNode = new MethodNode();
 
         methodNode.AdoptChildren(new IDNode(ctx.ID().getText()));
-
+        methodNode.AdoptChildren(new RTypeNode(ctx.rtype().getText()));
         List<antlrParser.ArgmntContext> arguments = ctx.argmnt();
         if (!arguments.isEmpty()){
             for(antlrParser.ArgmntContext argument : arguments) {

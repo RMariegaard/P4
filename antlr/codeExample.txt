@@ -36,8 +36,8 @@ strategy Default
     end
 end
 
-function myAddFunction (int a, int b)
-		int res = a + b
-		res++
+function int myAddFunction (int a, int b)
+	int res = a + b
+	res++
 	return res
 end

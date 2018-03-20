@@ -7,7 +7,7 @@ setup     : 'setup' block
           ;
 gameloop  : 'game-loop' block
           ;
-method    : 'function' ID '(' (argmnt( ',' argmnt)*)? ')' block
+method    : 'function' rtype ID '(' (argmnt( ',' argmnt)*)? ')' block
           ;
 predcl    : dcl NEWLINE+
           | 'event' '('aoexpr')' '->' ID NEWLINE+
@@ -45,6 +45,10 @@ argmnt    : type ref
 
 type      : ('bool' | 'int' | 'text' | 'char' | 'decimal')
           ;
+
+rtype     : 'void' | type
+          ;
+
 ref       : ID
           | ID '[' expr ']'
           ;

@@ -1,13 +1,16 @@
 grammar antlr;
-prog      : predcl* setup gameloop (strategy | method)*
+prog      : predcl* setup gameloop sm* EOF
+          ;
+sm        : strategy | method
           ;
 setup     : 'setup' block
           ;
 gameloop  : 'game-loop' block
           ;
-method    : 'function' ID '(' (dcl( ',' dcl)*)? ')' block
+method    : 'function' rtype ID '(' (argmnt( ',' argmnt)*)? ')' block
           ;
-predcl    : dcl NEWLINE+ | 'event' '('expr')' '->' ID NEWLINE+
+predcl    : dcl NEWLINE+
+          | 'event' '('aoexpr')' '->' ID NEWLINE+
           ;
 
 block     : NEWLINE+ stmt* 'end' NEWLINE+
@@ -15,17 +18,20 @@ block     : NEWLINE+ stmt* 'end' NEWLINE+
 stmt      : dcl NEWLINE+                                                                #dclStmt
           | assign NEWLINE+                                                             #assignStmt
           | action NEWLINE+                                                             #actionStmt
-          | 'if' '(' expr ')' block ('else' 'if' '(' expr ')' block )* ('else' block)?  #ifStmt
-          | 'do' '(' dcl ',' expr ',' expr ',' expr ')' block                           #doStmt
-          | 'while''(' expr ')' block                                                   #whileStmt
-          | 'return' expr                                                               #returnStmt
+          | 'if' '(' first=aoexpr ')' firstBlock=block (elseif)* ('else' secondBlock=block)?  #ifStmt
+          | 'do' '(' argmnt',' firstAo=aoexpr ',' secondAo=aoexpr ',' thirdAo=aoexpr ')' block                 #doStmt
+          | 'while''(' aoexpr ')' block                                                   #whileStmt
+          | 'return' expr NEWLINE+                                                               #returnStmt
+          ;
+
+elseif    : 'else' 'if' '(' aoexpr ')' block
           ;
 
 action    : ID ( '.' ID )* '.' fcall
           | fcall
           ;
 
-strategy  : 'strategy' ID NEWLINE+ behavior+
+strategy  : 'strategy' ID NEWLINE+ behavior+ 'end' NEWLINE+
           ;
 behavior  : 'behavior' ID block
           ;
@@ -34,28 +40,49 @@ fcall     : ID '(' (expr (',' expr)*)? ')'
 dcl       : type assign
           | type ref
           ;
+argmnt    : type ref
+          ;
+
 type      : ('bool' | 'int' | 'text' | 'char' | 'decimal')
           ;
+
+rtype     : 'void' | type
+          ;
+
 ref       : ID
           | ID '[' expr ']'
           ;
+
 assign    :ref '=' expr
+          |ref('++'|'--')
           ;
-expr      : term( '+' | '-' ) expr                                    #infixExpr
+
+aoexpr     : bexpr ( '&&' | '||' ) aoexpr
+          | bexpr
+          ;
+bexpr    : expr ( '==' | '>=' | '<=' | '<' | '>') bexpr               #boolexpr
+          |'!' expr                                                   #notexpr
+          | expr                                                      #emptyboolexpr
+          ;
+expr      : term op=( '+' | '-' ) expr                                #infixExpr
           | term                                                      #termExpr
           | ID '[' expr ']'                                           #arrayExpr
-          | (term | action) ( '==' | '>=' | '<=' | '<' | '>') expr    #boolExpr
           | action                                                    #actionExpr
-          | term ( '&&' | '||' ) expr                                 #andOrExpr
-          |'!'expr                                                    #notExpr
-          |factor('++'|'--')                                          #unaryExpr
+          |factor op=('++'|'--')                                          #unaryExpr
           ;
-term      : factor ('*' | '/') term
+term      : factor op=('*' | '/') term
           | factor
           ;
-factor    : '(' expr ')'
-          | (ID | INT_NUM |BOOL_VALUE | DECIMAL_NUM | CHAR_VALUE)
+factor    : '(' aoexpr ')'
+          | op=(ID | INT_NUM |BOOL_VALUE | DECIMAL_NUM | CHAR_VALUE)
           ;
+
+OP_ADD : '+';
+OP_SUB : '-';
+OP_UADD : '++';
+OP_USUB : '--';
+OP_MUL : '*';
+OP_DIV : '/';
 
 NEWLINE: '\n';
 ID: [a-zA-Z]+ ([a-zA-Z0-9])*;
