@@ -22,10 +22,12 @@ public class ASTPrinter {
 
                 if(n.LeftmostChild != null){
                     Node v = n.LeftmostChild;
+                    v.Distance = n.Distance + 1;
+
                     do{
                         q.enqueue(v);
                         v = v.RightSibling;
-                        if(v !=null)
+                        if(v != null)
                             v.Distance = n.Distance + 1;
                     }while (v != null);
                 }
