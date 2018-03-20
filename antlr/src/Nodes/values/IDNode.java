@@ -8,4 +8,10 @@ public class IDNode extends Node {
     public IDNode(String idString) {
         this.idString = idString;
     }
+
+
+    @Override
+    public String toString() {
+        return "ID";
+    }
 }

@@ -4,7 +4,11 @@ import Nodes.Node;
 
 public abstract class ExprNode extends Node {
 
-    //Den skal vel bare være tom?
+
+    @Override
+    public String toString() {
+        return "ExprNode";
+    }
 
 }
 

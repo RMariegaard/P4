@@ -6,6 +6,8 @@ public abstract class Node{
     public Node LeftmostSibling;
     public Node RightSibling;
     public Node LeftmostChild;
+    public int Distance;
+
 
     public Node(){}
 
@@ -81,6 +83,11 @@ public abstract class Node{
         }
 
         return makeNode().AdoptChildren(kids[0]);
+    }
+
+    @Override
+    public String toString() {
+        return "Node";
     }
 }
 

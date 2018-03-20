@@ -8,4 +8,10 @@ public class CharNode extends Node {
     public CharNode(char value) {
         this.value = value;
     }
+
+
+    @Override
+    public String toString() {
+        return "Char";
+    }
 }
