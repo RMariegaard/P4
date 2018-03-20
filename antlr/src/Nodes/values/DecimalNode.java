@@ -12,6 +12,6 @@ public class DecimalNode extends Node {
 
     @Override
     public String toString() {
-        return "Decimal";
+        return Double.toString(value);
     }
 }

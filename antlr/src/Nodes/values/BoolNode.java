@@ -12,6 +12,6 @@ public class BoolNode extends Node {
 
     @Override
     public String toString() {
-        return "Bool";
+        return value ? "true": "false";
     }
 }

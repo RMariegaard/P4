@@ -12,6 +12,6 @@ public class CharNode extends Node {
 
     @Override
     public String toString() {
-        return "Char";
+        return Character.toString(value);
     }
 }

@@ -12,6 +12,6 @@ public class IDNode extends Node {
 
     @Override
     public String toString() {
-        return "ID";
+        return idString;
     }
 }

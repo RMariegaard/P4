@@ -10,6 +10,6 @@ public class IntNode extends Node {
 
     @Override
     public String toString() {
-        return "Int";
+        return Integer.toString(value);
     }
 }
