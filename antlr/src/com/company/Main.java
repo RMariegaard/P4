@@ -21,6 +21,7 @@ public class Main {
             antlrParser.ProgContext cst = parser.prog();
             Node ast = new com.company.BuildASTVisitor().visitProg(cst);
             ast.makeNode();
+            ast.hashCode();
             ASTPrinter.PrintTree((ast));
 
         }catch (IOException e){
