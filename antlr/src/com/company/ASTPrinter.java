@@ -37,7 +37,7 @@ public class ASTPrinter {
         catch (java.lang.InterruptedException e){
             System.out.println("error in printing");
         }
-
+        System.out.println();
     }
 
 }
