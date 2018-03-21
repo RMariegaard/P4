@@ -438,6 +438,41 @@ public class antlrParser extends Parser {
 	}
 
 	public static class PredclContext extends ParserRuleContext {
+		public PredclContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_predcl; }
+	 
+		public PredclContext() { }
+		public void copyFrom(PredclContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class EventDclContext extends PredclContext {
+		public AoexprContext aoexpr() {
+			return getRuleContext(AoexprContext.class,0);
+		}
+		public TerminalNode ID() { return getToken(antlrParser.ID, 0); }
+		public List<TerminalNode> NEWLINE() { return getTokens(antlrParser.NEWLINE); }
+		public TerminalNode NEWLINE(int i) {
+			return getToken(antlrParser.NEWLINE, i);
+		}
+		public EventDclContext(PredclContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof antlrListener ) ((antlrListener)listener).enterEventDcl(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof antlrListener ) ((antlrListener)listener).exitEventDcl(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof antlrVisitor ) return ((antlrVisitor<? extends T>)visitor).visitEventDcl(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class PdclContext extends PredclContext {
 		public DclContext dcl() {
 			return getRuleContext(DclContext.class,0);
 		}
@@ -445,25 +480,18 @@ public class antlrParser extends Parser {
 		public TerminalNode NEWLINE(int i) {
 			return getToken(antlrParser.NEWLINE, i);
 		}
-		public AoexprContext aoexpr() {
-			return getRuleContext(AoexprContext.class,0);
-		}
-		public TerminalNode ID() { return getToken(antlrParser.ID, 0); }
-		public PredclContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_predcl; }
+		public PdclContext(PredclContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof antlrListener ) ((antlrListener)listener).enterPredcl(this);
+			if ( listener instanceof antlrListener ) ((antlrListener)listener).enterPdcl(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof antlrListener ) ((antlrListener)listener).exitPredcl(this);
+			if ( listener instanceof antlrListener ) ((antlrListener)listener).exitPdcl(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof antlrVisitor ) return ((antlrVisitor<? extends T>)visitor).visitPredcl(this);
+			if ( visitor instanceof antlrVisitor ) return ((antlrVisitor<? extends T>)visitor).visitPdcl(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -481,6 +509,7 @@ public class antlrParser extends Parser {
 			case T__19:
 			case T__20:
 			case T__21:
+				_localctx = new PdclContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(91);
@@ -502,6 +531,7 @@ public class antlrParser extends Parser {
 				}
 				break;
 			case T__6:
+				_localctx = new EventDclContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(97);

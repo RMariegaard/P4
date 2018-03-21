@@ -29,6 +29,8 @@ strategy Default
     behavior OnScannedRobot
 	    Tank.TurnRight(Enemy.GetBearing())
     end
+
+
     behavior WhenEnergyIs40
 	    do(int i, 0, 5, i++)
 	    	fire(i)

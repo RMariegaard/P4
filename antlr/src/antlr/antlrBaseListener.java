@@ -76,13 +76,25 @@ public class antlrBaseListener implements antlrListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPredcl(antlrParser.PredclContext ctx) { }
+	@Override public void enterPdcl(antlrParser.PdclContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitPredcl(antlrParser.PredclContext ctx) { }
+	@Override public void exitPdcl(antlrParser.PdclContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterEventDcl(antlrParser.EventDclContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEventDcl(antlrParser.EventDclContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

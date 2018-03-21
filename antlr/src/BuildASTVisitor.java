@@ -6,7 +6,6 @@ import Nodes.values.*;
 import antlr.*;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import java.lang.*;
-import org.antlr.runtime.*;
 
 import java.util.List;
 
@@ -73,19 +72,18 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
     }
 
     @Override
-    public Node visitPredcl(antlrParser.PredclContext ctx) {
-        Node predclNode = new PredclNode();
-
-        if (ctx.dcl() != null){
-            predclNode.AdoptChildren(visit(ctx.dcl()));
-        }
-        else if (ctx.aoexpr() != null){
-            predclNode.AdoptChildren(visit(ctx.aoexpr()));
-            predclNode.AdoptChildren(new IDNode(ctx.ID().getText()));
-        }
-
-        return predclNode;
+    public Node visitPdcl(antlrParser.PdclContext ctx) {
+        return visit(ctx.dcl());
     }
+
+    @Override
+    public Node visitEventDcl(antlrParser.EventDclContext ctx) {
+        Node eventNode = new EventNode();
+        eventNode.AdoptChildren(visit(ctx.aoexpr()));
+        eventNode.AdoptChildren(new IDNode(ctx.ID().getText()));
+        return eventNode;
+    }
+
 
     @Override
     public Node visitBlock(antlrParser.BlockContext ctx) {
@@ -263,13 +261,14 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
     @Override
     public Node visitRef(antlrParser.RefContext ctx) {
 
+        Node IDNode = new IDNode(ctx.ID().getText());
+
         if (ctx.expr() != null){
             Node RefNode = new RefNode();
             RefNode.AdoptChildren(IDNode.MakeSiblings(visit(ctx.expr())));
             return RefNode;
         }
         else {
-            Node IDNode = new IDNode(ctx.ID().getText());
             return IDNode;
         }
     }

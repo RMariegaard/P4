@@ -9,8 +9,8 @@ gameloop  : 'game-loop' block
           ;
 method    : 'function' rtype ID '(' (argmnt( ',' argmnt)*)? ')' block
           ;
-predcl    : dcl NEWLINE+
-          | 'event' '('aoexpr')' '->' ID NEWLINE+
+predcl    : dcl NEWLINE+                                                                #pdcl
+          | 'event' '('aoexpr')' '->' ID NEWLINE+                                       #eventDcl
           ;
 
 block     : NEWLINE+ stmt* 'end' NEWLINE+

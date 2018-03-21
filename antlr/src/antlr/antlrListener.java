@@ -58,15 +58,29 @@ public interface antlrListener extends ParseTreeListener {
 	 */
 	void exitMethod(antlrParser.MethodContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link antlrParser#predcl}.
+	 * Enter a parse tree produced by the {@code pdcl}
+	 * labeled alternative in {@link antlrParser#predcl}.
 	 * @param ctx the parse tree
 	 */
-	void enterPredcl(antlrParser.PredclContext ctx);
+	void enterPdcl(antlrParser.PdclContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link antlrParser#predcl}.
+	 * Exit a parse tree produced by the {@code pdcl}
+	 * labeled alternative in {@link antlrParser#predcl}.
 	 * @param ctx the parse tree
 	 */
-	void exitPredcl(antlrParser.PredclContext ctx);
+	void exitPdcl(antlrParser.PdclContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code eventDcl}
+	 * labeled alternative in {@link antlrParser#predcl}.
+	 * @param ctx the parse tree
+	 */
+	void enterEventDcl(antlrParser.EventDclContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code eventDcl}
+	 * labeled alternative in {@link antlrParser#predcl}.
+	 * @param ctx the parse tree
+	 */
+	void exitEventDcl(antlrParser.EventDclContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link antlrParser#block}.
 	 * @param ctx the parse tree

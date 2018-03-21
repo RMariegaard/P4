@@ -41,11 +41,19 @@ public interface antlrVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitMethod(antlrParser.MethodContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link antlrParser#predcl}.
+	 * Visit a parse tree produced by the {@code pdcl}
+	 * labeled alternative in {@link antlrParser#predcl}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitPredcl(antlrParser.PredclContext ctx);
+	T visitPdcl(antlrParser.PdclContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code eventDcl}
+	 * labeled alternative in {@link antlrParser#predcl}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEventDcl(antlrParser.EventDclContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link antlrParser#block}.
 	 * @param ctx the parse tree

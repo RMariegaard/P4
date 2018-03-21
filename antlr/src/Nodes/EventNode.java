@@ -1,6 +1,6 @@
 package Nodes;
 
-public class PredclNode extends Node {
+public class EventNode extends Node {
 
 
     @Override
