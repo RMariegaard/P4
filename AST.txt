@@ -1,0 +1,10 @@
+               										   Prog  
+Predcl  	Predcl  		        	Setup  			  						GameLoop 							 																Strategy  																	Method  
+Dcl  		AndOr WhenEnergyIs40     		Block  									Block  	 																							"Default"  Behaviour  							Behaviour 					 			"myAddFunction"  int  Arg  Arg     Block  			
+Assign  	BoolExpr        			ActionStmt           ActionStmt    	 ActionStmt 			ActionStmt  	  ActionStmt  	        If  																				   "OnScannedRobot" Block  					"WhenEnergyIs40"  Block  								      Ref  Ref     DclStmt  	AssignStmt  Return  		
+Ref  40  	Action       EmptyExpr  		Action               Action      	 Action  			Action 		  Action  		AndOr      			Block      		 		Block 	  		 		Block       		 			  	      	    ActionStmt  					   	  Do  									       a    b      Dcl      	Assign      res  
+target  	Tank  Fcall  	40  			Tank  Fcall          Tank  Fcall  	 Tank  Fcall  			Tank  Fcall       Gun  Fcall  		BoolExpr   			ActionStmt  	ActionStmt  		ActionStmt      ActionStmt  		ActionStmt  	ActionStmt  					    Action 				 			  Arg  AndOr  	  AndOr      AndOr  	 Block 		 			           Assign   	Ref  
+		      getEnergy  			setBodyColor  white  setGunColor  white  setRadarColor  white 		      Ahead  123      TurnLeft  123  	Action          EmptyExpr  	Action  	Action  		Action          Action  		Action      	Action  					Tank  Fcall 			 				  Ref  EmptyExpr  EmptyExpr  EmptyExpr 	 ActionStmt  				           Ref    +  	res  
+																					Game  Fcall     10  		Tank  Fcall  	Radar  Fcall  	    	Tank  Fcall     Radar  Fcall 		Tank  Fcall 	Radar  Fcall  			   		    "TurnRight" Action 						  i     0 	   5      	++ 	 Action  				     	   res    a  b  
+																					  getRoundNumber  		     Fire  2  	    TurnRight  200 	     Fire  1 	   TurnRight  100  	    Fire  3     TurnRight  50  			   		    		Enemy  Fcall 			 		        			i 	 Fcall  
+																																								           		       			GetBearing 		 							 fire  i  
