@@ -121,11 +121,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
     @Override
     public Node visitActionStmt(antlrParser.ActionStmtContext ctx) {
-        Node actionStmtNode = new ActionStmtNode();
-
-        actionStmtNode.AdoptChildren(visit(ctx.action()));
-
-        return actionStmtNode;
+        return visit(ctx.action());
     }
 
     @Override
@@ -228,18 +224,16 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
     @Override
     public Node visitFcall(antlrParser.FcallContext ctx) {
-        Node fcallNode = new FcallNode();
-
-        fcallNode.AdoptChildren(new IDNode(ctx.ID().getText()));
+        Node IDNode = new IDNode(ctx.ID().getText());
 
         List<antlrParser.ExprContext> exprs = ctx.expr();
         if (!exprs.isEmpty()){
             for (antlrParser.ExprContext expr : exprs){
-                fcallNode.AdoptChildren(visit(expr));
+                IDNode.AdoptChildren(visit(expr));
             }
         }
 
-        return fcallNode;
+        return IDNode;
     }
 
     @Override
@@ -268,15 +262,16 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
     @Override
     public Node visitRef(antlrParser.RefContext ctx) {
-        Node refNode = new RefNode();
-
-        refNode.AdoptChildren(new IDNode(ctx.ID().getText()));
 
         if (ctx.expr() != null){
-            refNode.AdoptChildren(visit(ctx.expr()));
+            Node RefNode = new RefNode();
+            RefNode.AdoptChildren(IDNode.MakeSiblings(visit(ctx.expr())));
+            return RefNode;
         }
-
-        return refNode;
+        else {
+            Node IDNode = new IDNode(ctx.ID().getText());
+            return IDNode;
+        }
     }
 
     @Override
