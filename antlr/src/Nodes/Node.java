@@ -57,6 +57,13 @@ public abstract class Node{
         return this;   //idk hvad man skal returnere
     }
 
+    public Node AdoptChildren(Node... ys){
+        for (Node y: ys) {
+            AdoptChildren(y);
+        }
+        return this;
+    }
+
 
 
 

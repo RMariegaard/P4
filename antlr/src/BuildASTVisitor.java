@@ -176,6 +176,16 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
     }
 
     @Override
+    public Node visitElseif(antlrParser.ElseifContext ctx) {
+        Node ElseIfNode = new ElseIfNode();
+
+        ElseIfNode.AdoptChildren(visit(ctx.aoexpr()), visit(ctx.block()));
+
+        return ElseIfNode;
+
+    }
+
+    @Override
     public Node visitAction(antlrParser.ActionContext ctx) {
         Node actionNode = new ActionNode();
 
@@ -319,11 +329,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
     @Override
     public Node visitEmptyboolexpr(antlrParser.EmptyboolexprContext ctx) {
-        Node emptyExprNode = new EmptyExprNode();
-
-        emptyExprNode.AdoptChildren(visit(ctx.expr()));
-
-        return emptyExprNode;
+        return visit(ctx.expr());
     }
 
     @Override
