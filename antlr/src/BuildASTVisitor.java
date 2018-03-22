@@ -109,11 +109,8 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
     @Override
     public Node visitAssignStmt(antlrParser.AssignStmtContext ctx) {
-        Node assignStmtNode = new AssignStmtNode();
 
-        assignStmtNode.AdoptChildren(visit(ctx.assign()));
-
-        return assignStmtNode;
+        return visit(ctx.assign());
     }
 
     @Override
@@ -265,8 +262,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
     @Override
     public Node visitDcl(antlrParser.DclContext ctx) {
-        Node dclNode = new DclNode();
-
+        Node dclNode = new DclNode(ctx.type().getText());
 
         if (ctx.assign() != null){
             dclNode.AdoptChildren(visit(ctx.assign()));
@@ -291,7 +287,6 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
     public Node visitRef(antlrParser.RefContext ctx) {
 
         Node IDNode = new IDNode(ctx.ID().getText());
-
         if (ctx.expr() != null){
             Node RefNode = new RefNode();
             RefNode.AdoptChildren(IDNode.MakeSiblings(visit(ctx.expr())));

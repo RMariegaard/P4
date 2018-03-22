@@ -33,7 +33,7 @@ strategy Default
     end
 end
 strategy lateGameStrat
-    behavior onScannedRobot
+    behavior  onScannedRobot
         fire(123)
     end
 end

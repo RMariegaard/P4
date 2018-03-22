@@ -1,0 +1,9 @@
+							Prog  
+		Event  			  	Setup  						GameLoop  															Strategy  														Strategy  								Method  
+	==  	round10Event 			 Block 				 		Block			  Default  			Behaviour  							Behaviour  							Behaviour  				lateGameStrat  		Behaviour 			 myAddFunction  int  Arg  Arg  					Block  
+   Action  10  			Action  	Action 		 Dcl 	 			While			 	 onScannedRobot  		Block 	 				onHitByRobot		       Block  					round10Event  Block  						onScannedRobot  Block 					       a  b  			 		If  
+getRoundNumber       This  Late  Main  peter    Tank  		Assign  		true  		Block  					  Action 	 Action  	  Dcl  	 ++ 					 	Do  							AssignStmt 							Action  					    < 	   Block     	 ElseIf	 		 ElseIf 		Else  
+							oldSchoolStuff  100  		 	 Action	    Action  				dothis 	    Tank  Fire  GG  	Assign   x  			   Arg  0  3  ++ 		 Block  					Assign  							fire  					      Action  123  Action  	<  	Block 		 <  	Block 	 	Block  
+											    dothis  NOW     alsoThis  						       12345  	x  34  				   q  		q   	   Action	  Action  		  CurrentStrategy  lateGameStrat  						123  					       late  	   goback     12  13  	Action      peter  12  Action  		Action  
+												     hej  																   fire       tank  Ahead  																						goHard  		goLeft  	doNothing  
+																													    q                100  																						 12  			angel  
