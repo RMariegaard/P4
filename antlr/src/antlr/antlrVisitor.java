@@ -110,6 +110,13 @@ public interface antlrVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitReturnStmt(antlrParser.ReturnStmtContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code incrStmt}
+	 * labeled alternative in {@link antlrParser#stmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIncrStmt(antlrParser.IncrStmtContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link antlrParser#elseif}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

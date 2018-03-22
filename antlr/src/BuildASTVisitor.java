@@ -4,6 +4,9 @@ import Nodes.*;
 import Nodes.expr.*;
 import Nodes.values.*;
 import antlr.*;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.Token;
+import org.antlr.v4.runtime.TokenSource;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import java.lang.*;
 
@@ -176,6 +179,24 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
     }
 
     @Override
+    public Node visitIncrStmt(antlrParser.IncrStmtContext ctx) {
+        Node unaryNode;
+        switch (ctx.op.getType()){
+            case antlrParser.OP_UADD:
+                unaryNode = new UAddNode();
+                break;
+            case antlrParser.OP_USUB:
+                unaryNode = new UsubNode();
+                break;
+            default:
+                unaryNode = new NullNode(); //This is not supposed to be there call exception instead
+                //idk where to catch it tho, and in java u have to catch it.
+        }
+
+        return unaryNode.AdoptChildren(visit(ctx.ref()));
+    }
+
+    @Override
     public Node visitElseif(antlrParser.ElseifContext ctx) {
         Node ElseIfNode = new ElseIfNode();
 
@@ -297,12 +318,26 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
     @Override
     public Node visitAoexpr(antlrParser.AoexprContext ctx) {
-        Node andOrExprNode = new AndorExprNode();
+        Node andOrExprNode;
+        if(ctx.op != null) {
+            switch (ctx.op.getType()) {
 
-        andOrExprNode.AdoptChildren(visit(ctx.bexpr()));
-
-        if (ctx.aoexpr() != null){
-            andOrExprNode.AdoptChildren(visit(ctx.aoexpr()));
+                case antlrParser.OP_AND:
+                    andOrExprNode = new AndNode();
+                    andOrExprNode.AdoptChildren(visit(ctx.bexpr()));
+                    andOrExprNode.AdoptChildren(visit(ctx.aoexpr()));
+                    break;
+                case antlrParser.OP_OR:
+                    andOrExprNode = new OrNode();
+                    andOrExprNode.AdoptChildren(visit(ctx.bexpr()));
+                    andOrExprNode.AdoptChildren(visit(ctx.aoexpr()));
+                    break;
+                default:
+                    andOrExprNode = new NullNode();
+            }
+        }
+        else{
+            andOrExprNode = visit(ctx.bexpr());
         }
 
         return andOrExprNode;
@@ -310,10 +345,39 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
     @Override
     public Node visitBoolexpr(antlrParser.BoolexprContext ctx) {
-        Node boolExpr = new BoolExprNode();
+        Node boolExpr;
 
-        boolExpr.AdoptChildren(visit(ctx.expr()));
-        boolExpr.AdoptChildren(visit(ctx.bexpr()));
+        switch (ctx.op.getType()){
+            case antlrParser.OP_GREATER:
+                boolExpr = new GreaterNode();
+                boolExpr.AdoptChildren(visit(ctx.expr()));
+                boolExpr.AdoptChildren(visit(ctx.bexpr()));
+                break;
+            case antlrParser.OP_LESS:
+                boolExpr = new LessNode();
+                boolExpr.AdoptChildren(visit(ctx.expr()));
+                boolExpr.AdoptChildren(visit(ctx.bexpr()));
+                break;
+            case antlrParser.OP_EQUAL:
+                boolExpr = new EqualNode();
+                boolExpr.AdoptChildren(visit(ctx.expr()));
+                boolExpr.AdoptChildren(visit(ctx.bexpr()));
+                break;
+            case antlrParser.OP_GREATEREQUAL:
+                boolExpr = new GreaterEqualNode();
+                boolExpr.AdoptChildren(visit(ctx.expr()));
+                boolExpr.AdoptChildren(visit(ctx.bexpr()));
+                break;
+            case antlrParser.OP_LESSEQUAL:
+                boolExpr = new LessEqualNode();
+                boolExpr.AdoptChildren(visit(ctx.expr()));
+                boolExpr.AdoptChildren(visit(ctx.bexpr()));
+                break;
+            default:
+                boolExpr = new NullNode();
+        }
+
+
 
         return boolExpr;
     }

@@ -176,6 +176,18 @@ public interface antlrListener extends ParseTreeListener {
 	 */
 	void exitReturnStmt(antlrParser.ReturnStmtContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code incrStmt}
+	 * labeled alternative in {@link antlrParser#stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterIncrStmt(antlrParser.IncrStmtContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code incrStmt}
+	 * labeled alternative in {@link antlrParser#stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitIncrStmt(antlrParser.IncrStmtContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link antlrParser#elseif}.
 	 * @param ctx the parse tree
 	 */

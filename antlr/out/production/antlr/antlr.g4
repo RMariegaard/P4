@@ -22,6 +22,7 @@ stmt      : dcl NEWLINE+                                                        
           | 'do' '(' argmnt',' firstAo=aoexpr ',' secondAo=aoexpr ',' thirdAo=aoexpr ')' block                 #doStmt
           | 'while''(' aoexpr ')' block                                                   #whileStmt
           | 'return' expr NEWLINE+                                                               #returnStmt
+          | ref op=('++'|'--') NEWLINE+                                                          #incrStmt
           ;
 
 elseif    : 'else' 'if' '(' aoexpr ')' block
@@ -54,13 +55,12 @@ ref       : ID
           ;
 
 assign    :ref '=' expr
-          |ref('++'|'--')
           ;
 
-aoexpr     : bexpr ( '&&' | '||' ) aoexpr
+aoexpr     : bexpr op=( '&&' | '||' ) aoexpr
           | bexpr
           ;
-bexpr    : expr ( '==' | '>=' | '<=' | '<' | '>') bexpr               #boolexpr
+bexpr    : expr op=( '==' | '>=' | '<=' | '<' | '>') bexpr               #boolexpr
           |'!' expr                                                   #notexpr
           | expr                                                      #emptyboolexpr
           ;
@@ -83,6 +83,13 @@ OP_UADD : '++';
 OP_USUB : '--';
 OP_MUL : '*';
 OP_DIV : '/';
+OP_AND : '&&';
+OP_OR : '||';
+OP_GREATER : '>';
+OP_LESS : '<';
+OP_EQUAL : '==';
+OP_GREATEREQUAL : '>=';
+OP_LESSEQUAL: '<=';
 
 NEWLINE: '\n';
 ID: [a-zA-Z]+ ([a-zA-Z0-9])*;
