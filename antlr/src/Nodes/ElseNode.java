@@ -1,11 +1,9 @@
 package Nodes;
 
-public class EventNode extends Node {
-
+public class ElseNode extends Node{
 
     @Override
     public String toString() {
-        return "Event";
+        return "Else";
     }
-
 }

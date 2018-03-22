@@ -104,11 +104,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
     @Override
     public Node visitDclStmt(antlrParser.DclStmtContext ctx) {
-        Node dclStmtNode = new DclStmtNode();
-
-        dclStmtNode.AdoptChildren(visit(ctx.dcl()));
-
-        return dclStmtNode;
+        return visit(ctx.dcl());
     }
 
     @Override
@@ -140,7 +136,9 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
         }
 
         if (ctx.secondBlock != null) {
-            ifStmtNode.AdoptChildren(visit(ctx.secondBlock));
+            Node elseN = new ElseNode();
+            elseN.AdoptChildren(visit(ctx.secondBlock));
+            ifStmtNode.AdoptChildren(elseN);
         }
 
         return ifStmtNode;
