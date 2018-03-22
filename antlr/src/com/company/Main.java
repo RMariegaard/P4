@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] args) {
 	// write your code here
         try {
-            CharStream input = CharStreams.fromFileName("codeExample.txt");
+            CharStream input = CharStreams.fromFileName("example2.txt");
             antlrLexer lexer = new antlrLexer(input);
             CommonTokenStream tokenStream = new CommonTokenStream(lexer);
             antlrParser parser = new antlrParser(tokenStream);

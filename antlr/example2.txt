@@ -1,0 +1,54 @@
+event(getRoundNumber() == 10) -> round10Event
+//test
+setup
+	This.Late.Main.peter()
+	Tank()
+	int oldSchoolStuff = 100
+end
+
+game-loop
+    while(true)
+        dothis.NOW(hej)
+        alsoThis()
+    end
+
+end
+
+
+strategy Default
+    behavior onScannedRobot
+        dothis()
+        Tank.Fire.GG(12345)
+        int x = 34
+        x++
+    end
+    behavior onHitByRobot
+        do(int q, 0, 3, q++)
+            fire(q)
+            tank.Ahead(100)
+        end
+    end
+    behavior round10Event
+        CurrentStrategy = lateGameStrat
+    end
+end
+strategy lateGameStrat
+    behavior onScannedRobot
+        fire(123)
+    end
+end
+
+function int myAddFunction (int a, int b)
+	if(late() < 123)
+	    goback()
+	end
+    else if(12 < 13)
+        goHard(12)
+    end
+    else if(peter < 12)
+        goLeft(angel)
+    end
+    else
+        doNothing()
+    end
+end
