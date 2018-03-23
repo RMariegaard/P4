@@ -21,7 +21,37 @@ public class SymbolTable {
     }
 
     public void BuildTable(Node root){
-        ProcessNode(root);
+        Node node = root.LeftmostChild;
+        //process predcls
+        while(!(node instanceof SetupNode)){
+            ProcessNode(node);
+            node = node.RightSibling;
+        }
+        //find first method block
+        Node method = node;
+        while(!(method instanceof MethodNode)){
+            method = node.RightSibling;
+        }
+        //process Method nodes without setup
+        while(method != null){
+            if(method instanceof MethodNode){
+                ProcessNode(method);
+            }
+            method = method.RightSibling;
+        }
+
+        while(node != null){
+            if(!(node instanceof MethodNode)){
+                ProcessNode(node);
+            }
+            node = node.RightSibling;
+        }
+
+
+
+
+
+
     }
 
     private void ProcessNode(Node node) {
@@ -31,13 +61,19 @@ public class SymbolTable {
          else if(node instanceof DclNode){
              this.EnterSymbol(node.LeftmostChild.LeftmostChild.LeftmostChild.toString(), ((DclNode) node).Type); //dcl -> assig/ref -> ID
 
-             System.out.println(node.LeftmostChild.LeftmostChild.LeftmostChild.toString());
          }
          else if(node instanceof RefNode) {
              SymbolClass sym = this.RetrieveSymbol(node.LeftmostChild.toString()); //ref -> ID
              if (sym == null) {
                  //error undeclared
              }
+         }
+         else if(node instanceof EventNode){
+             this.EnterSymbol(node.LeftmostChild.RightSibling.toString(), "Event");
+         }
+         else if(node instanceof StrategyNode){
+             this.EnterSymbol(node.LeftmostChild.toString(), "Strategy");
+
          }
 
          Node c = node.LeftmostChild;
