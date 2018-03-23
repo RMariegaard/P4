@@ -21,7 +21,7 @@ public class SymbolTable {
 
     public void OpenScope(){
         depth++;
-        scopeDisplay = null;
+        scopeDisplay.add(depth, null);
     }
 
     public void CloseScope(){
@@ -42,7 +42,7 @@ public class SymbolTable {
         if (sym != null){
             return sym;
         }
-        return null;
+        return null; //error symbol not found
     }
 
     public void EnterSymbol(String name, Type type){
@@ -53,9 +53,10 @@ public class SymbolTable {
         SymbolClass sym = new SymbolClass();
 
         //Add to scope display
-        //sym.Level = scopeDisplay[depth];
+        sym.Level = scopeDisplay.get(depth);
         sym.Name = name;
         sym.Depth = depth;
+        scopeDisplay.add(depth, sym);
 
         //Add to hash
         if (oldSym == null){
@@ -69,7 +70,8 @@ public class SymbolTable {
     }
 
     public boolean DeclaredLocally(String name){
-        return false; //Ikke lavet endnu, se side 292 i crafting a compiler.
+        return hashtable.get(name).Depth == depth;
+
     }
 
 }
