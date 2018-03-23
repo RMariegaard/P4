@@ -3,7 +3,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
-
+import Nodes.*;
+import jdk.nashorn.internal.ir.Block;
 /*
 * Der mangler en fucking masse...
 * Kan ikke lige finde ud af det så det må i gerne..
@@ -18,6 +19,36 @@ public class SymbolTable {
     public SymbolTable(){
 
     }
+
+    public void BuildTable(Node root){
+        ProcessNode(root);
+    }
+
+    private void ProcessNode(Node node) {
+         if(node instanceof BlockNode){
+             this.OpenScope();
+         }
+         else if(node instanceof DclNode){
+             this.EnterSymbol(node.LeftmostChild.LeftmostChild.toString(), ((DclNode) node).Type); //dcl -> assig/ref -> ID
+         }
+         else if(node instanceof RefNode){
+             SymbolClass sym = this.RetrieveSymbol(node.LeftmostChild.toString()); //ref -> ID
+             if(sym == null){
+                 //error undeclared
+             }
+         }
+
+         Node c = node.LeftmostChild;
+         while(c != null){
+             ProcessNode(c);
+             c = c.RightSibling;
+         }
+         if(node instanceof BlockNode){
+             this.CloseScope();
+         }
+
+    }
+
 
     public void OpenScope(){
         depth++;
@@ -45,7 +76,7 @@ public class SymbolTable {
         return null; //error symbol not found
     }
 
-    public void EnterSymbol(String name, Type type){
+    public void EnterSymbol(String name, String type){
         SymbolClass oldSym = hashtable.get(name);
         if (oldSym != null && oldSym.Depth == depth){
             //ERROR dublikering af navn
@@ -56,6 +87,7 @@ public class SymbolTable {
         sym.Level = scopeDisplay.get(depth);
         sym.Name = name;
         sym.Depth = depth;
+        sym.type = type;
         scopeDisplay.add(depth, sym);
 
         //Add to hash

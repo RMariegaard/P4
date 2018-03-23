@@ -286,15 +286,13 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
     @Override
     public Node visitRef(antlrParser.RefContext ctx) {
 
-        Node IDNode = new IDNode(ctx.ID().getText());
+        Node refNode = new RefNode();
+        Node idNode = new IDNode(ctx.ID().getText());
+        refNode.AdoptChildren(idNode);
         if (ctx.expr() != null){
-            Node RefNode = new RefNode();
-            RefNode.AdoptChildren(IDNode.MakeSiblings(visit(ctx.expr())));
-            return RefNode;
+            refNode.AdoptChildren(visit(ctx.expr()));
         }
-        else {
-            return IDNode;
-        }
+        return refNode;
     }
 
     @Override
