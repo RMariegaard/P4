@@ -1,6 +1,8 @@
 package com.company;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 
 /*
 * Der mangler en fucking masse...
@@ -10,6 +12,7 @@ import java.util.Hashtable;
 
 public class SymbolTable {
     private Hashtable<String, SymbolClass> hashtable = new Hashtable<>();
+    private List<SymbolClass> scopeDisplay = new ArrayList<>();
     private int depth;
 
     public SymbolTable(){
@@ -18,11 +21,20 @@ public class SymbolTable {
 
     public void OpenScope(){
         depth++;
-        //scopeDisplay[depth] = null;
+        scopeDisplay = null;
     }
 
     public void CloseScope(){
-
+        SymbolClass sym = scopeDisplay.get(depth);
+        while(sym != null){
+            SymbolClass prevsym = sym.Var;
+            hashtable.remove(sym);
+            if(prevsym != null){
+                hashtable.put(sym.Name, sym);
+            }
+            sym = sym.Level;
+        }
+        depth--;
     }
 
     public SymbolClass RetrieveSymbol(String name){

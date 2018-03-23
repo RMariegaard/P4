@@ -7,4 +7,5 @@ public class SymbolClass {
     public Type type;
     public int Depth;
     public SymbolClass Var;
+    public SymbolClass Level;
 }
