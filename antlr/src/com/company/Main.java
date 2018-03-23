@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] args) {
 	// write your code here
         try {
-            CharStream input = CharStreams.fromFileName("example2.txt");
+            CharStream input = CharStreams.fromFileName("codeExample.txt");
             antlrLexer lexer = new antlrLexer(input);
             CommonTokenStream tokenStream = new CommonTokenStream(lexer);
             antlrParser parser = new antlrParser(tokenStream);
@@ -22,8 +22,11 @@ public class Main {
             Node ast = new com.company.BuildASTVisitor().visitProg(cst);
             ast.makeNode();
             ast.hashCode();
-            ASTPrinter.PrintTree((ast));
 
+            SymbolTable table = new SymbolTable();
+            table.BuildTable(ast);
+            //ASTPrinter.PrintTree((ast));
+            table.hashCode();
         }catch (IOException e){
             System.out.println(e.getMessage() + " ERROR" );
         }

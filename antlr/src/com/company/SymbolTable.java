@@ -29,11 +29,13 @@ public class SymbolTable {
              this.OpenScope();
          }
          else if(node instanceof DclNode){
-             this.EnterSymbol(node.LeftmostChild.LeftmostChild.toString(), ((DclNode) node).Type); //dcl -> assig/ref -> ID
+             this.EnterSymbol(node.LeftmostChild.LeftmostChild.LeftmostChild.toString(), ((DclNode) node).Type); //dcl -> assig/ref -> ID
+
+             System.out.println(node.LeftmostChild.LeftmostChild.LeftmostChild.toString());
          }
-         else if(node instanceof RefNode){
+         else if(node instanceof RefNode) {
              SymbolClass sym = this.RetrieveSymbol(node.LeftmostChild.toString()); //ref -> ID
-             if(sym == null){
+             if (sym == null) {
                  //error undeclared
              }
          }
@@ -51,7 +53,7 @@ public class SymbolTable {
 
 
     public void OpenScope(){
-        depth++;
+        depth = depth > 0 ? depth + 1 : 0;
         scopeDisplay.add(depth, null);
     }
 
@@ -65,7 +67,7 @@ public class SymbolTable {
             }
             sym = sym.Level;
         }
-        depth--;
+        depth = depth > 0 ? depth - 1 : 0;
     }
 
     public SymbolClass RetrieveSymbol(String name){
@@ -84,7 +86,8 @@ public class SymbolTable {
         SymbolClass sym = new SymbolClass();
 
         //Add to scope display
-        sym.Level = scopeDisplay.get(depth);
+        if(!scopeDisplay.isEmpty()){
+        sym.Level = scopeDisplay.get(depth);}
         sym.Name = name;
         sym.Depth = depth;
         sym.type = type;
