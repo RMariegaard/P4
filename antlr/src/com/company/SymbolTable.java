@@ -30,7 +30,10 @@ public class SymbolTable {
         //find first method block
         Node method = node;
         while(!(method instanceof MethodNode)){
-            method = node.RightSibling;
+            method = method.RightSibling;
+           if(method == null){
+                break;
+            }
         }
         //process Method nodes without setup
         while(method != null){
@@ -75,6 +78,9 @@ public class SymbolTable {
              this.EnterSymbol(node.LeftmostChild.toString(), "Strategy");
 
          }
+         else if(node instanceof MethodNode){
+             this.EnterSymbol(node.LeftmostChild.toString(), "Method");
+         }
 
          Node c = node.LeftmostChild;
          while(c != null){
@@ -97,6 +103,7 @@ public class SymbolTable {
         SymbolClass sym = scopeDisplay.get(depth);
         while(sym != null){
             SymbolClass prevsym = sym.Var;
+
             hashtable.remove(sym);
             if(prevsym != null){
                 hashtable.put(sym.Name, sym);
@@ -128,6 +135,10 @@ public class SymbolTable {
         sym.Depth = depth;
         sym.type = type;
         scopeDisplay.add(depth, sym);
+
+        //prints to console
+        System.out.println(type + " " + name);
+
 
         //Add to hash
         if (oldSym == null){
