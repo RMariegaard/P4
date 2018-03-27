@@ -36,7 +36,6 @@ public abstract class Node{
             ySibs.Parent = xSibs.Parent;
         }
         return ySibs;
-
     }
 
     //Ifølge bogen skal de alle sammen returnere node... Her siger de ikke hvad der skal returneres.

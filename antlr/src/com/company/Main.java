@@ -30,7 +30,7 @@ public class Main {
         System.out.println("No Errors");
     }
 
-    public antlrParser.ProgContext getCST(String fileName) throws FileNotFoundException, IOException{
+    public static antlrParser.ProgContext getCST(String fileName) throws FileNotFoundException, IOException{
         CharStream input = CharStreams.fromFileName(fileName);
         antlrLexer lexer = new antlrLexer(input);
         CommonTokenStream tokenStream = new CommonTokenStream(lexer);
