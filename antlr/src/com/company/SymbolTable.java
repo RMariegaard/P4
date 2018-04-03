@@ -6,8 +6,6 @@ import java.util.List;
 import Nodes.*;
 import jdk.nashorn.internal.ir.Block;
 /*
-* Der mangler en fucking masse...
-* Kan ikke lige finde ud af det så det må i gerne..
 * Se side 192 i creating a compiler.
 * */
 
@@ -49,11 +47,6 @@ public class SymbolTable {
             }
             node = node.RightSibling;
         }
-
-
-
-
-
 
     }
 

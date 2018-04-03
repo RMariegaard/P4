@@ -137,5 +137,7 @@ public abstract class AstVisitor<T> {
         } else if(node instanceof BoolNode){
             return Visit((BoolNode) node);
         }
+        else
+            return null; //hvad skal vi ellers returnere...
     }
 }
