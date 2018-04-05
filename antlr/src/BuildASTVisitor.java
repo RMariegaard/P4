@@ -1,12 +1,9 @@
-package com.company;
+
 
 import Nodes.*;
 import Nodes.expr.*;
 import Nodes.values.*;
 import antlr.*;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.TokenSource;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import java.lang.*;
 
@@ -485,9 +482,9 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
                     return new IntNode(Integer.parseInt(ctx.INT_NUM().getText()));
                 case antlrParser.BOOL_VALUE:
                     return new BoolNode(Boolean.parseBoolean(ctx.BOOL_VALUE().getText()));
-                case antlrParser.CHAR_VALUE:
-                    char x = ctx.CHAR_VALUE().getText().charAt(0);
-                    return new CharNode(x);
+                case antlrParser.TEXT:
+                    String x = ctx.TEXT().getText();
+                    return new StringNode(x);
                 case antlrParser.DECIMAL_NUM:
                     return new DecimalNode(Double.parseDouble(ctx.DECIMAL_NUM().getText()));
                 default:

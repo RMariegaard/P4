@@ -209,7 +209,7 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
     }
 
     @Override
-    public Object Visit(CharNode node) {
+    public Object Visit(StringNode node) {
         return null;
     }
 

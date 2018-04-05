@@ -1,7 +1,6 @@
 import Nodes.*;
 import Nodes.expr.*;
 import Nodes.values.*;
-import antlr.antlrParser;
 
 public abstract class AstVisitor<T> {
     public abstract T Visit(WhileStmtNode node);
@@ -45,7 +44,7 @@ public abstract class AstVisitor<T> {
     public abstract T Visit(IntNode node);
     public abstract T Visit(IDNode node);
     public abstract T Visit(DecimalNode node);
-    public abstract T Visit(CharNode node);
+    public abstract T Visit(StringNode node);
     public abstract T Visit(BoolNode node);
 
 
@@ -132,8 +131,8 @@ public abstract class AstVisitor<T> {
             return Visit((IDNode) node);
         } else if(node instanceof DecimalNode){
             return Visit((DecimalNode) node);
-        } else if(node instanceof CharNode){
-            return Visit((CharNode) node);
+        } else if(node instanceof StringNode){
+            return Visit((StringNode) node);
         } else if(node instanceof BoolNode){
             return Visit((BoolNode) node);
         }

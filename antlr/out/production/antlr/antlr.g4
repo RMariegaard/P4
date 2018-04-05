@@ -44,7 +44,7 @@ dcl       : type assign
 argmnt    : type ref
           ;
 
-type      : ('bool' | 'int' | 'text' | 'char' | 'decimal')
+type      : ('bool' | 'int' | 'text' | 'decimal')
           ;
 
 rtype     : 'void' | type
@@ -74,7 +74,7 @@ term      : factor op=('*' | '/') term
           | factor
           ;
 factor    : '(' aoexpr ')'
-          | op=(ID | INT_NUM |BOOL_VALUE | DECIMAL_NUM | CHAR_VALUE)
+          | op=(ID | INT_NUM |BOOL_VALUE | DECIMAL_NUM | TEXT)
           ;
 
 OP_ADD : '+';
@@ -96,7 +96,7 @@ ID: [a-zA-Z]+ ([a-zA-Z0-9])*;
 BOOL_VALUE: 'true' | 'false';
 INT_NUM: [0-9]+ ;
 DECIMAL_NUM: [0-9]+ ('.' [0-9]+)? ;
-CHAR_VALUE: '"'.'"';
+TEXT: '"'.*?'"';
 
 
 WS: [ \t\r] ->skip;
