@@ -54,7 +54,7 @@ ref       : ID
           | ID '[' expr ']'
           ;
 
-assign    :ref '=' expr
+assign    :ref '=' aoexpr
           ;
 
 aoexpr     : bexpr op=( '&&' | '||' ) aoexpr

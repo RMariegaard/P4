@@ -1,4 +1,4 @@
-
+package com.company;
 
 import Nodes.*;
 import Nodes.expr.*;
@@ -297,8 +297,8 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
         Node assignNode = new AssignNode();
 
         assignNode.AdoptChildren(visit(ctx.ref()));
-        if (ctx.expr() != null){
-            assignNode.AdoptChildren(visit(ctx.expr()));
+        if (ctx.aoexpr() != null){
+            assignNode.AdoptChildren(visit(ctx.aoexpr()));
         }
 
         return assignNode;
