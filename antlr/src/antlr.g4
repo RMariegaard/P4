@@ -1,7 +1,5 @@
 grammar antlr;
-prog      : predcl* setup gameloop sm* EOF
-          ;
-sm        : strategy | method
+prog      : predcl* setup gameloop (strategy | method)* EOF
           ;
 setup     : 'setup' block
           ;

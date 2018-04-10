@@ -22,7 +22,7 @@ public class Main {
 
             SymbolTable table = new SymbolTable();
             table.BuildTable(ast);
-            //ASTPrinter.PrintTree((ast));
+            ASTPrinter.PrintTree((ast));
             table.hashCode();
         }catch (IOException e){
             System.out.println(e.getMessage() + " ERROR" );

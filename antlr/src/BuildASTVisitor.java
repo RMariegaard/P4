@@ -27,7 +27,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
 
 
-        List<antlrParser.SmContext> sms = ctx.sm();
+/*        List<antlrParser.SmContext> sms = ctx.sm();
         if (!sms.isEmpty()) {
             for(antlrParser.SmContext sm : sms) {
                 if(sm.method()!=null){
@@ -37,8 +37,26 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
                     progNode.AdoptChildren(visit(sm.strategy()));
                 }
             }
+        }*/
+
+
+
+
+        List<antlrParser.StrategyContext> strat = ctx.strategy();
+        if(!strat.isEmpty()){
+            for(antlrParser.StrategyContext s : strat){
+                progNode.AdoptChildren(visit(s));
+            }
         }
-        
+        List<antlrParser.MethodContext> meth = ctx.method();
+        if(!meth.isEmpty()){
+            for(antlrParser.MethodContext m : meth){
+                progNode.AdoptChildren(visit(m));
+            }
+        }
+
+
+
 
         return progNode;
     }

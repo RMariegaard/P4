@@ -40,7 +40,7 @@ public class SymbolTable {
             }
             method = method.RightSibling;
         }
-
+        //Starts from setup without methods
         while(node != null){
             if(!(node instanceof MethodNode)){
                 ProcessNode(node);

@@ -17,12 +17,6 @@ public interface antlrVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitProg(antlrParser.ProgContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link antlrParser#sm}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitSm(antlrParser.SmContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link antlrParser#setup}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

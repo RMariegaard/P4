@@ -28,18 +28,6 @@ public class antlrBaseListener implements antlrListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSm(antlrParser.SmContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitSm(antlrParser.SmContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterSetup(antlrParser.SetupContext ctx) { }
 	/**
 	 * {@inheritDoc}

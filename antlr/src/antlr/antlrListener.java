@@ -18,16 +18,6 @@ public interface antlrListener extends ParseTreeListener {
 	 */
 	void exitProg(antlrParser.ProgContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link antlrParser#sm}.
-	 * @param ctx the parse tree
-	 */
-	void enterSm(antlrParser.SmContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link antlrParser#sm}.
-	 * @param ctx the parse tree
-	 */
-	void exitSm(antlrParser.SmContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link antlrParser#setup}.
 	 * @param ctx the parse tree
 	 */
