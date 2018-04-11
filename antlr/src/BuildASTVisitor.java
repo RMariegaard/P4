@@ -291,7 +291,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
     @Override
     public Node visitArgmnt(antlrParser.ArgmntContext ctx) {
-        Node argumentNode = new ArgumentNode();
+        Node argumentNode = new ArgumentNode(ctx.type().getText());
 
         argumentNode.AdoptChildren(visit(ctx.ref()));
 
