@@ -94,7 +94,9 @@ ID: [a-zA-Z]+ ([a-zA-Z0-9])*;
 BOOL_VALUE: 'true' | 'false';
 INT_NUM: [0-9]+ ;
 DECIMAL_NUM: [0-9]+ ('.' [0-9]+)? ;
-TEXT: '"'.*?'"';
+
+ESC: '\\' [btnr"\\];
+TEXT: '"'(ESC|.)*?'"';
 
 
 WS: [ \t\r] ->skip;
