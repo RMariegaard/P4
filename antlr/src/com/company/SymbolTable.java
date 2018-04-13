@@ -148,5 +148,4 @@ public class SymbolTable {
         return hashtable.get(name).Depth == depth;
 
     }
-
 }

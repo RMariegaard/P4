@@ -1,21 +1,40 @@
 import Nodes.*;
 import Nodes.expr.*;
 import Nodes.values.*;
+import com.company.SymbolTable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TypeCheckerVisitor extends AstVisitor<Object> {
+    public List<String> ErrorList = new ArrayList<>();
+    public SymbolTable symbolTable = new SymbolTable();
+
     @Override
     public Object Visit(WhileStmtNode node) {
+        if(! (Visit(node.ConditionNode()) instanceof Boolean)){
+            ErrorList.add(node.toString() + "Condition not boolean");
+        }
+        Visit(node.BlockNode());
+
+
         return null;
     }
 
     @Override
     public Object Visit(UsubNode node) {
-        return null;
+        if(!(Visit(node.IDNode()) instanceof Integer)){
+            ErrorList.add(node.toString() + "USub not int");
+        }
+            return Integer.class;
     }
 
     @Override
     public Object Visit(UAddNode node) {
-        return null;
+        if(!(Visit(node.IDNode()) instanceof Integer)){
+            ErrorList.add(node.toString() + "UAdd not int");
+        }
+        return Integer.class;
     }
 
     @Override
