@@ -18,74 +18,6 @@ public class SymbolTable {
 
     }
 
-    public void BuildTable(Node root){
-        Node node = root.LeftmostChild;
-        //process predcls
-        while(!(node instanceof SetupNode)){
-            ProcessNode(node);
-            node = node.RightSibling;
-        }
-        //find first method block
-        Node method = node;
-        while(!(method instanceof MethodNode)){
-            method = method.RightSibling;
-           if(method == null){
-                break;
-            }
-        }
-        //process Method nodes without setup
-        while(method != null){
-            if(method instanceof MethodNode){
-                ProcessNode(method);
-            }
-            method = method.RightSibling;
-        }
-        //Starts from setup without methods
-        while(node != null){
-            if(!(node instanceof MethodNode)){
-                ProcessNode(node);
-            }
-            node = node.RightSibling;
-        }
-
-    }
-
-    private void ProcessNode(Node node) {
-         if(node instanceof BlockNode){
-             this.OpenScope();
-         }
-         else if(node instanceof DclNode){
-             this.EnterSymbol(node.LeftmostChild.LeftmostChild.LeftmostChild.toString(), ((DclNode) node).Type); //dcl -> assig/ref -> ID
-
-         }
-         else if(node instanceof RefNode) {
-             SymbolClass sym = this.RetrieveSymbol(node.LeftmostChild.toString()); //ref -> ID
-             if (sym == null) {
-                 //error undeclared
-             }
-         }
-         else if(node instanceof EventNode){
-             this.EnterSymbol(node.LeftmostChild.RightSibling.toString(), "Event");
-         }
-         else if(node instanceof StrategyNode){
-             this.EnterSymbol(node.LeftmostChild.toString(), "Strategy");
-
-         }
-         else if(node instanceof MethodNode){
-             this.EnterSymbol(node.LeftmostChild.toString(), "Method");
-         }
-
-         Node c = node.LeftmostChild;
-         while(c != null){
-             ProcessNode(c);
-             c = c.RightSibling;
-         }
-         if(node instanceof BlockNode){
-             this.CloseScope();
-         }
-
-    }
-
 
     public void OpenScope(){
         depth = depth > 0 ? depth + 1 : 0;
@@ -114,7 +46,7 @@ public class SymbolTable {
         return null; //error symbol not found
     }
 
-    public void EnterSymbol(String name, String type){
+    public void EnterSymbol(String name, Object type){
         SymbolClass oldSym = hashtable.get(name);
         if (oldSym != null && oldSym.Depth == depth){
             //ERROR dublikering af navn
@@ -130,7 +62,7 @@ public class SymbolTable {
         scopeDisplay.add(depth, sym);
 
         //prints to console
-        System.out.println(type + " " + name);
+        System.out.println(type.getClass().toString() + " " + name);
 
 
         //Add to hash
