@@ -1,6 +1,7 @@
 import Nodes.*;
 import Nodes.expr.*;
 import Nodes.values.*;
+import com.company.SymbolClass;
 import com.company.SymbolTable;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
         Visit(node.BlockNode());
 
 
-        return null;
+         return null;
     }
 
     @Override
@@ -204,36 +205,72 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(ArrayExprNode node) {
-        return null;
+        if(Visit(node.IDNode()) != null){
+            SymbolClass sym = symbolTable.RetrieveSymbol(node.IDNode().toString());
+            Object exprType = Visit(node.ExprNode()).getClass();
+            if(exprType.getClass().equals(int.class)){
+                return sym.type;
+            }
+            else {
+                ErrorList.add(String.format("Array can only be indexed with type Integer not with %s", exprType.getClass()));
+                return null;
+            }
+
+        }
+        else{
+            ErrorList.add(String.format("The array %s is not declared", node.IDNode()));
+            return null;
+        }
     }
 
     @Override
     public Object Visit(AddExprNode node) {
-        return null;
+        //Compares the class of the left node to the right node
+        Object leftNodeType = Visit(node.LeftNode());
+        Object rightNodeType = Visit(node.RightNode());
+        if(leftNodeType.getClass().equals(rightNodeType.getClass())){
+            if(leftNodeType.getClass().equals(int.class) || leftNodeType.getClass().equals(double.class)){
+                return leftNodeType;
+            }
+            else{
+                ErrorList.add(String.format("It is illegal to add two elements of type %s together", leftNodeType.toString()));
+            }
+        }
+        else{
+            ErrorList.add(String.format("You can't add to to elements of different types together.\nThe type of %s is %s, which doesn't match the type of %s, which is %s", node.LeftNode(), leftNodeType, node.RightNode(), rightNodeType));
+            return null;
+        }
     }
 
     @Override
     public Object Visit(IntNode node) {
-        return null;
+        return Integer.class;
     }
 
     @Override
     public Object Visit(IDNode node) {
-        return null;
+        SymbolClass sym = symbolTable.RetrieveSymbol(node.idString);
+        if(sym == null){
+            ErrorList.add(node.idString + " was not declared in this scope.");
+            return null;
+        }
+        else{
+            return sym.type;
+        }
     }
 
     @Override
     public Object Visit(DecimalNode node) {
-        return null;
+        return Double.class;
     }
 
     @Override
     public Object Visit(StringNode node) {
-        return null;
+        return String.class;
     }
 
     @Override
     public Object Visit(BoolNode node) {
-        return null;
+        return Boolean.class;
     }
 }
