@@ -4,7 +4,7 @@ public class DclNode extends Node {
     public String Type;
 
     public Node ChildNode(){
-        return this.LeftmostChild();
+        return LeftmostChild;
     }
 
     public DclNode(String type) {

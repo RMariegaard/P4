@@ -61,6 +61,7 @@ public class ProgNode extends Node {
             result++;
             node = node.RightSibling;
         }
+        return result;
     }
 
     public Node[] MethodNodes(){
