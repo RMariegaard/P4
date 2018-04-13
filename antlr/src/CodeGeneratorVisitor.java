@@ -12,7 +12,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
     public String Visit(WhileStmtNode node) {
         String someOutputPlaceIDK;
 
-        someOutputPlaceIDK = String.format("while(%s){%s}",Visit(node.ConditionNode()), Visit(node.BlockNode()));
+        someOutputPlaceIDK = String.format("while(%s)\n{\n%s}\n",Visit(node.ConditionNode()), Visit(node.BlockNode()));
         return someOutputPlaceIDK;
     }
 
