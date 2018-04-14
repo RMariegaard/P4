@@ -1,6 +1,4 @@
-package com.company;
-
-import java.lang.reflect.Type;
+package other;
 
 public class SymbolClass {
     public String Name;

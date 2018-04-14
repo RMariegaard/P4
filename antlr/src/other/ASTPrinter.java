@@ -1,4 +1,4 @@
-package com.company;
+package other;
 import Nodes.Node;
 import sun.misc.Queue;
 

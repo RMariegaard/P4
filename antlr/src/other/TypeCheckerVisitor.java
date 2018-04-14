@@ -1,8 +1,8 @@
+package other;
+
 import Nodes.*;
 import Nodes.expr.*;
 import Nodes.values.*;
-import com.company.SymbolClass;
-import com.company.SymbolTable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +28,8 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
             ErrorList.add(node.toString() + "USub not int");
         }
             return Integer.class;
+        //Returns integer even if an error occurs, so that the program can continue
+        //Ved ikke om dette er iorden, men hvis man returnere andet blever den jo ved med at lave fejl hele vejen op igennem træet
     }
 
     @Override
@@ -65,7 +67,17 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(ProgNode node) {
-        return null;
+        //Skal man starte med at åbne et scope??
+        //ellers besøger jeg vel bare alle børnene
+        symbolTable.OpenScope();
+        Node child = node.LeftmostChild;
+        while (child != null){
+            Visit(child);
+            child = child.RightSibling;
+        }
+
+        symbolTable.CloseScope();
+        return node; //idk
     }
 
     @Override
@@ -140,6 +152,12 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(DclNode node) {
+        if(symbolTable.DeclaredLocally(node.getID())){
+            ErrorList.add(node.toString() + "Duplicate decleration");
+            return null;
+        }
+        symbolTable.EnterSymbol(node.getID(), node.Type);
+        Visit(node.ChildNode());
         return null;
     }
 
@@ -155,6 +173,20 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(AssignNode node) {
+        try {
+            Object idType = Visit(node.IDNode());
+            Object valueType = Visit(node.ValueNode());
+            if (idType.equals(valueType)) {
+                return idType;
+            }
+            else{
+                ErrorList.add(String.format("assigning %s to type %s not possible", node.IDNode().toString(), valueType.toString()));
+            }
+        }catch (NullPointerException e){
+
+        }
+
+
         return null;
     }
 
@@ -200,6 +232,12 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(BoolExprNode node) {
+        Object leftNodeType = Visit(node.LeftNode());
+        Object rightNodeType = Visit(node.RightNode());
+        if(leftNodeType.getClass().equals(rightNodeType.getClass())){
+
+        }
+
         return null;
     }
 
@@ -228,16 +266,21 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
         //Compares the class of the left node to the right node
         Object leftNodeType = Visit(node.LeftNode());
         Object rightNodeType = Visit(node.RightNode());
-        if(leftNodeType.getClass().equals(rightNodeType.getClass())){
-            if(leftNodeType.getClass().equals(int.class) || leftNodeType.getClass().equals(double.class)){
-                return leftNodeType;
+        try{
+            if(leftNodeType.getClass().equals(rightNodeType.getClass())){
+                if(leftNodeType.getClass().equals(int.class) || leftNodeType.getClass().equals(double.class)){
+                    return leftNodeType;
+                }
+                else{
+                    ErrorList.add(String.format("It is illegal to add two elements of type %s together", leftNodeType.toString()));
+                }
             }
             else{
-                ErrorList.add(String.format("It is illegal to add two elements of type %s together", leftNodeType.toString()));
+                ErrorList.add(String.format("You can't add to to elements of different types together.\nThe type of %s is %s, which doesn't match the type of %s, which is %s", node.LeftNode(), leftNodeType, node.RightNode(), rightNodeType));
+
             }
-        }
-        else{
-            ErrorList.add(String.format("You can't add to to elements of different types together.\nThe type of %s is %s, which doesn't match the type of %s, which is %s", node.LeftNode(), leftNodeType, node.RightNode(), rightNodeType));
+            return null;
+        }catch (NullPointerException e){
             return null;
         }
     }

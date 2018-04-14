@@ -1,7 +1,7 @@
 package Nodes;
 
 public class DclNode extends Node {
-    public String Type;
+    public Object Type;
 
     public Node ChildNode(){
         return LeftmostChild;
@@ -9,12 +9,22 @@ public class DclNode extends Node {
 
     public DclNode(String type) {
         super();
-        Type = type;
-    }
+        if(type.equals("text"))
+            Type = String.class;
+        else if(type.equals("bool"))
+            Type = boolean.class;
+        else if(type.equals("int"))
+            Type = int.class;
+        else if (type.equals("decimal"))
+            Type = double.class;
 
+    }
+    public String getID(){
+        return ChildNode().LeftmostChild.LeftmostChild.toString();
+    }
     @Override
     public String toString() {
-        return Type + "Dcl";
+        return Type.toString() + "Dcl" + getID();
     }
 
 }

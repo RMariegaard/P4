@@ -1,10 +1,7 @@
-package com.company;
-import java.lang.reflect.Type;
+package other;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
-import Nodes.*;
-import jdk.nashorn.internal.ir.Block;
 /*
 * Se side 192 i creating a compiler.
 * */
@@ -17,8 +14,6 @@ public class SymbolTable {
     public SymbolTable(){
 
     }
-
-
     public void OpenScope(){
         depth = depth > 0 ? depth + 1 : 0;
         scopeDisplay.add(depth, null);
@@ -62,7 +57,7 @@ public class SymbolTable {
         scopeDisplay.add(depth, sym);
 
         //prints to console
-        System.out.println(type.getClass().toString() + " " + name);
+        System.out.println(type.toString() + " " + name);
 
 
         //Add to hash
@@ -77,7 +72,10 @@ public class SymbolTable {
     }
 
     public boolean DeclaredLocally(String name){
-        return hashtable.get(name).Depth == depth;
 
+        if(hashtable.get(name) != null)
+            return hashtable.get(name).Depth == depth;
+        else
+            return false;
     }
 }

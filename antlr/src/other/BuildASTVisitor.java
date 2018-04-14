@@ -1,4 +1,4 @@
-package com.company;
+package other;
 
 import Nodes.*;
 import Nodes.expr.*;
@@ -493,7 +493,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
             return visit(ctx.aoexpr());
         }
         else
-            switch (ctx.op.getType()){
+            switch (ctx.value.getType()){
                 case antlrParser.ID:
                     return new IDNode(ctx.ID().getText());
                 case antlrParser.INT_NUM:

@@ -5,6 +5,8 @@ import antlr.antlrParser;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
+import other.BuildASTVisitor;
+import other.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -15,18 +17,23 @@ public class Main {
 	// write your code here
         try {
             antlrParser.ProgContext cst = getCST("codeExample.txt");
-            Node ast = new com.company.BuildASTVisitor().visitProg(cst);
+            Node ast = new BuildASTVisitor().visitProg(cst);
             ast.makeNode();
-            ast.hashCode();
+            //ASTPrinter.PrintTree((ast));
 
-            SymbolTable table = new SymbolTable();
-            table.BuildTable(ast);
-            ASTPrinter.PrintTree((ast));
-            table.hashCode();
+            //SymbolTable table = new SymbolTable();
+            //table.BuildTable(ast);
+            //table.hashCode();
+
+            TypeCheckerVisitor typeChecker = new TypeCheckerVisitor();
+            Object errorFree = typeChecker.Visit(ast);
+            //ASTPrinter.PrintTree((Node)errorFree);
+
+
         }catch (IOException e){
             System.out.println(e.getMessage() + " ERROR" );
         }
-        System.out.println("No Errors");
+        System.out.println("COMPILED");
     }
 
     public static antlrParser.ProgContext getCST(String fileName) throws FileNotFoundException, IOException{
