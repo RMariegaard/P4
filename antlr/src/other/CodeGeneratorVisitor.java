@@ -47,11 +47,6 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
     }
 
     @Override
-    public String Visit(BoolExprNode node) {
-        return null;
-    }
-
-    @Override
     public String Visit(BoolNode node) {
         return null;
     }

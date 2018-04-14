@@ -28,12 +28,18 @@ public class Main {
             TypeCheckerVisitor typeChecker = new TypeCheckerVisitor();
             Object errorFree = typeChecker.Visit(ast);
             //ASTPrinter.PrintTree((Node)errorFree);
-
+            if (!typeChecker.ErrorList.isEmpty()) {
+                System.out.println("TYPECHECkER ERROR MESSAGES:");
+                for (String error : typeChecker.ErrorList) {
+                    System.out.println(error);
+                }
+        }
 
         }catch (IOException e){
             System.out.println(e.getMessage() + " ERROR" );
         }
-        System.out.println("COMPILED");
+        System.out.println("DONE");
+
     }
 
     public static antlrParser.ProgContext getCST(String fileName) throws FileNotFoundException, IOException{

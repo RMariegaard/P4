@@ -13,7 +13,6 @@ public abstract class AstVisitor<T> {
     public abstract T Visit(AssignNode node);
     public abstract T Visit(BehaviorNode node);
     public abstract T Visit(BlockNode node);
-    public abstract T Visit(BoolExprNode node);
     public abstract T Visit(BoolNode node);
     public abstract T Visit(DclNode node);
     public abstract T Visit(DecimalNode node);
@@ -121,8 +120,6 @@ public abstract class AstVisitor<T> {
             return Visit((InfixExprNode) node);
         } else if(node instanceof DivExprNode){
             return Visit((DivExprNode) node);
-        } else if(node instanceof BoolExprNode){
-            return Visit((BoolExprNode) node);
         } else if(node instanceof ArrayExprNode){
             return Visit((ArrayExprNode) node);
         } else if(node instanceof AddExprNode){

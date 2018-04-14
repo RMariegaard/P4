@@ -24,7 +24,7 @@ public class DclNode extends Node {
     }
     @Override
     public String toString() {
-        return Type.toString() + "Dcl" + getID();
+        return Type.toString() + " Dcl " + getID();
     }
 
 }

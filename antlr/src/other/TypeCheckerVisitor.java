@@ -3,6 +3,7 @@ package other;
 import Nodes.*;
 import Nodes.expr.*;
 import Nodes.values.*;
+import Types.EventType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +24,8 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
         Object leftNodeType = Visit(node.LeftNode());
         Object rightNodeType = Visit(node.RightNode());
         try{
-            if(leftNodeType.getClass().equals(rightNodeType.getClass())){
-                if(leftNodeType.getClass().equals(int.class) || leftNodeType.getClass().equals(double.class)){
+            if(leftNodeType.equals(rightNodeType)){
+                if(leftNodeType instanceof Integer || leftNodeType instanceof Double){ //ikke sikker på dette virker før var det "leftNodeType.getClass().equals(int.class)
                     return leftNodeType;
                 }
                 else{
@@ -32,7 +33,7 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
                 }
             }
             else{
-                ErrorList.add(String.format("You can't add to to elements of different types together.\nThe type of %s is %s, which doesn't match the type of %s, which is %s", node.LeftNode(), leftNodeType, node.RightNode(), rightNodeType));
+                ErrorList.add(String.format("You can't add two elements of different types together.\nThe type of %s is %s, which doesn't match the type of %s, which is %s", node.LeftNode(), leftNodeType, node.RightNode(), rightNodeType));
 
             }
             return null;
@@ -43,6 +44,19 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(AndNode node) {
+        Object leftNodeType = Visit(node.LeftNode());
+        Object rightNodeType = Visit(node.RightNode());
+        try {
+            if (leftNodeType instanceof Boolean && rightNodeType instanceof Boolean) {
+                return boolean.class;
+            }
+            else{
+                ErrorList.add("&& both arguments have to be of type Boolean");
+                //return bool or null?
+            }
+        }catch (NullPointerException e){
+            return null;
+        }
         return null;
     }
 
@@ -56,7 +70,7 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
         if(Visit(node.IDNode()) != null){
             SymbolClass sym = symbolTable.RetrieveSymbol(node.IDNode().toString());
             Object exprType = Visit(node.ExprNode()).getClass();
-            if(exprType.getClass().equals(int.class)){
+            if(exprType.equals(int.class)){
                 return sym.type;
             }
             else {
@@ -101,17 +115,6 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
     }
 
     @Override
-    public Object Visit(BoolExprNode node) {
-        Object leftNodeType = Visit(node.LeftNode());
-        Object rightNodeType = Visit(node.RightNode());
-        if(leftNodeType.getClass().equals(rightNodeType.getClass())){
-
-        }
-
-        return null;
-    }
-
-    @Override
     public Object Visit(BoolNode node) {
         return Boolean.class;
     }
@@ -119,7 +122,7 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
     @Override
     public Object Visit(DclNode node) {
         if(symbolTable.DeclaredLocally(node.getID())){
-            ErrorList.add(node.toString() + "Duplicate decleration");
+            ErrorList.add(node.toString() + ", It already exist");
             return null;
         }
         symbolTable.EnterSymbol(node.getID(), node.Type);
@@ -134,7 +137,27 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(DivExprNode node) {
-        return null;
+        //Compares the class of the left node to the right node
+        Object leftNodeType = Visit(node.LeftNode());
+        Object rightNodeType = Visit(node.RightNode());
+        try{
+            if(leftNodeType.equals(rightNodeType)){
+                if(leftNodeType instanceof Integer || leftNodeType instanceof Double){ //ikke sikker på dette virker før var det "leftNodeType.getClass().equals(int.class)
+                    //Hvordan fuck checker man for divide med 0??
+                    return leftNodeType;
+                }
+                else{
+                    ErrorList.add(String.format("It is illegal to divide two elements of type %s together", leftNodeType.toString()));
+                }
+            }
+            else{
+                ErrorList.add(String.format("You can't divide two elements of different types together.\nThe type of %s is %s, which doesn't match the type of %s, which is %s", node.LeftNode(), leftNodeType, node.RightNode(), rightNodeType));
+
+            }
+            return null;
+        }catch (NullPointerException e){
+            return null;
+        }
     }
 
     @Override
@@ -154,11 +177,31 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(EqualNode node) {
+        Object leftNodeType = Visit(node.LeftNode());
+        Object rightNodeType = Visit(node.RightNode());
+        try {
+            if (leftNodeType.equals(rightNodeType)) {
+                return boolean.class;
+                //skal man kunne sige string == string i vores sprog? kan man ikke i java så dette skal vi tage højde for når vi laver code generation.
+            }
+        }catch (NullPointerException e){
+            return null;
+        }
         return null;
     }
 
     @Override
     public Object Visit(EventNode node) {
+        if(symbolTable.DeclaredLocally(node.ID().toString())) {
+            ErrorList.add(String.format("Event with name %s already declared", node.ID().toString()));
+            return null;
+        }
+        Object condition = Visit(node.ExprNode());
+        if(condition instanceof Boolean)
+            symbolTable.EnterSymbol(node.ID().toString(), EventType.class);
+        else
+            ErrorList.add(String.format("The condition of event %s is not of type boolean", node.ID().toString()));
+        //Visit(node.ID()); Den skal vel ikke besøge ID, da vi lægger den ind her anyway.
         return null;
     }
 
@@ -221,7 +264,26 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(MulExprNode node) {
-        return null;
+        //Compares the class of the left node to the right node
+        Object leftNodeType = Visit(node.LeftNode());
+        Object rightNodeType = Visit(node.RightNode());
+        try{
+            if(leftNodeType.equals(rightNodeType)){
+                if(leftNodeType instanceof Integer || leftNodeType instanceof Double){ //ikke sikker på dette virker før var det "leftNodeType.getClass().equals(int.class)
+                    return leftNodeType;
+                }
+                else{
+                    ErrorList.add(String.format("It is illegal to multiply two elements of type %s together", leftNodeType.toString()));
+                }
+            }
+            else{
+                ErrorList.add(String.format("You can't multiply two elements of different types together.\nThe type of %s is %s, which doesn't match the type of %s, which is %s", node.LeftNode(), leftNodeType, node.RightNode(), rightNodeType));
+
+            }
+            return null;
+        }catch (NullPointerException e){
+            return null;
+        }
     }
 
     @Override
@@ -236,6 +298,16 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(OrNode node) {
+        Object leftNodeType = Visit(node.LeftNode());
+        Object rightNodeType = Visit(node.RightNode());
+        try {
+            if (leftNodeType instanceof Boolean && rightNodeType instanceof Boolean) {
+                return boolean.class;
+
+            }
+        }catch (NullPointerException e){
+            return null;
+        }
         return null;
     }
 
@@ -286,7 +358,26 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(SubExprNode node) {
-        return null;
+        //Compares the class of the left node to the right node
+        Object leftNodeType = Visit(node.LeftNode());
+        Object rightNodeType = Visit(node.RightNode());
+        try{
+            if(leftNodeType.equals(rightNodeType)){
+                if(leftNodeType instanceof Integer || leftNodeType instanceof Double){ //ikke sikker på dette virker før var det "leftNodeType.getClass().equals(int.class)
+                    return leftNodeType;
+                }
+                else{
+                    ErrorList.add(String.format("It is illegal to subtract two elements of type %s together", leftNodeType.toString()));
+                }
+            }
+            else{
+                ErrorList.add(String.format("You can't subtract two elements of different types together.\nThe type of %s is %s, which doesn't match the type of %s, which is %s", node.LeftNode(), leftNodeType, node.RightNode(), rightNodeType));
+
+            }
+            return null;
+        }catch (NullPointerException e){
+            return null;
+        }
     }
 
     @Override
