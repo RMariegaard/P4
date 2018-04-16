@@ -64,15 +64,15 @@ bexpr    : expr op=( '==' | '>=' | '<=' | '<' | '>') bexpr               #boolex
           ;
 expr      : term op=( '+' | '-' ) expr                                #infixExpr
           | term                                                      #termExpr
-          | ID '[' expr ']'                                           #arrayExpr
-          | action                                                    #actionExpr
-          |factor op=('++'|'--')                                          #unaryExpr
           ;
 term      : factor op=('*' | '/') term
           | factor
           ;
-factor    : '(' aoexpr ')'
-          | value=(ID | INT_NUM |BOOL_VALUE | DECIMAL_NUM | TEXT)
+factor    : '(' aoexpr ')'                                          #parenFactor
+          | value=( INT_NUM |BOOL_VALUE | DECIMAL_NUM | TEXT)       #valueFactor
+          | action                                                  #actionFactor
+          | ref                                                     #refFactor
+          | ref op=('++'|'--')                                      #unaryExpr
           ;
 
 OP_ADD : '+';
