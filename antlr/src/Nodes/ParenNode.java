@@ -1,7 +1,7 @@
 package Nodes;
 
 public class ParenNode extends Node{
-    public Node Aoexpr{
+    public Node Aoexpr(){
         return LeftmostChild;
     }
 }
