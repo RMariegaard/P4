@@ -429,19 +429,6 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
         return visitTerm(ctx.term());
     }
 
-    @Override
-    public Node visitArrayExpr(antlrParser.ArrayExprContext ctx) {
-        Node arrayExprNode = new ArrayExprNode();
-        arrayExprNode.AdoptChildren(new IDNode(ctx.ID().getText()));
-        arrayExprNode.AdoptChildren(visit(ctx.expr()));
-
-        return arrayExprNode;
-    }
-
-    @Override
-    public Node visitActionExpr(antlrParser.ActionExprContext ctx) {
-        return visitAction(ctx.action());
-    }
 
     @Override
     public Node visitUnaryExpr(antlrParser.UnaryExprContext ctx) {
@@ -458,7 +445,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
                 //idk where to catch it tho, and in java u have to catch it.
         }
 
-        return unaryNode.AdoptChildren(visit(ctx.factor()));
+        return unaryNode.AdoptChildren(visit(ctx.ref()));
     }
 
     @Override
@@ -483,32 +470,42 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
             return infixNode;
         }
         else
-            return visitFactor(ctx.factor());
+            return visit(ctx.factor());
 
     }
 
     @Override
-    public Node visitFactor(antlrParser.FactorContext ctx) {
-        if(ctx.aoexpr() != null){
-            return visit(ctx.aoexpr());
-        }
-        else
-            switch (ctx.value.getType()){
-                case antlrParser.ID:
-                    return new IDNode(ctx.ID().getText());
-                case antlrParser.INT_NUM:
-                    return new IntNode(Integer.parseInt(ctx.INT_NUM().getText()));
-                case antlrParser.BOOL_VALUE:
-                    return new BoolNode(Boolean.parseBoolean(ctx.BOOL_VALUE().getText()));
-                case antlrParser.TEXT:
-                    String x = ctx.TEXT().getText();
-                    return new StringNode(x);
-                case antlrParser.DECIMAL_NUM:
-                    return new DecimalNode(Double.parseDouble(ctx.DECIMAL_NUM().getText()));
-                default:
-                    return new NullNode(); //should not call this, exeptions instead
-
-            }
-
+    public Node visitParenFactor(antlrParser.ParenFactorContext ctx) {
+        return new ParenNode().AdoptChildren(visit(ctx.aoexpr()));
     }
+
+    @Override
+    public Node visitValueFactor(antlrParser.ValueFactorContext ctx) {
+        switch (ctx.value.getType()){
+            case antlrParser.INT_NUM:
+                return new IntNode(Integer.parseInt(ctx.INT_NUM().getText()));
+            case antlrParser.BOOL_VALUE:
+                return new BoolNode(Boolean.parseBoolean(ctx.BOOL_VALUE().getText()));
+            case antlrParser.TEXT:
+                String x = ctx.TEXT().getText();
+                return new StringNode(x);
+            case antlrParser.DECIMAL_NUM:
+                return new DecimalNode(Double.parseDouble(ctx.DECIMAL_NUM().getText()));
+            default:
+                return new NullNode(); //should not call this, exeptions instead
+
+        }
+    }
+
+    @Override
+    public Node visitActionFactor(antlrParser.ActionFactorContext ctx) {
+        return visit(ctx.action());
+    }
+
+    @Override
+    public Node visitRefFactor(antlrParser.RefFactorContext ctx) {
+        return visit(ctx.ref());
+    }
+
+
 }

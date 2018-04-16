@@ -1,4 +1,4 @@
-// Generated from C:/Users/mark/Documents/GitHub/P4/antlr/src\antlr.g4 by ANTLR 4.7
+// Generated from C:/Users/Casper/Documents/GitHub/P4/antlr/src\antlr.g4 by ANTLR 4.7
 package antlr;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -218,36 +218,44 @@ public interface antlrVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitTermExpr(antlrParser.TermExprContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code arrayExpr}
-	 * labeled alternative in {@link antlrParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitArrayExpr(antlrParser.ArrayExprContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code actionExpr}
-	 * labeled alternative in {@link antlrParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitActionExpr(antlrParser.ActionExprContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code unaryExpr}
-	 * labeled alternative in {@link antlrParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitUnaryExpr(antlrParser.UnaryExprContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link antlrParser#term}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitTerm(antlrParser.TermContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link antlrParser#factor}.
+	 * Visit a parse tree produced by the {@code parenFactor}
+	 * labeled alternative in {@link antlrParser#factor}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitFactor(antlrParser.FactorContext ctx);
+	T visitParenFactor(antlrParser.ParenFactorContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code valueFactor}
+	 * labeled alternative in {@link antlrParser#factor}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitValueFactor(antlrParser.ValueFactorContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code actionFactor}
+	 * labeled alternative in {@link antlrParser#factor}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitActionFactor(antlrParser.ActionFactorContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code refFactor}
+	 * labeled alternative in {@link antlrParser#factor}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRefFactor(antlrParser.RefFactorContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code unaryExpr}
+	 * labeled alternative in {@link antlrParser#factor}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitUnaryExpr(antlrParser.UnaryExprContext ctx);
 }

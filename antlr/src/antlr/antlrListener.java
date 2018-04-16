@@ -1,4 +1,4 @@
-// Generated from C:/Users/mark/Documents/GitHub/P4/antlr/src\antlr.g4 by ANTLR 4.7
+// Generated from C:/Users/Casper/Documents/GitHub/P4/antlr/src\antlr.g4 by ANTLR 4.7
 package antlr;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -358,42 +358,6 @@ public interface antlrListener extends ParseTreeListener {
 	 */
 	void exitTermExpr(antlrParser.TermExprContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code arrayExpr}
-	 * labeled alternative in {@link antlrParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterArrayExpr(antlrParser.ArrayExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code arrayExpr}
-	 * labeled alternative in {@link antlrParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitArrayExpr(antlrParser.ArrayExprContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code actionExpr}
-	 * labeled alternative in {@link antlrParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterActionExpr(antlrParser.ActionExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code actionExpr}
-	 * labeled alternative in {@link antlrParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitActionExpr(antlrParser.ActionExprContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code unaryExpr}
-	 * labeled alternative in {@link antlrParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterUnaryExpr(antlrParser.UnaryExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code unaryExpr}
-	 * labeled alternative in {@link antlrParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitUnaryExpr(antlrParser.UnaryExprContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link antlrParser#term}.
 	 * @param ctx the parse tree
 	 */
@@ -404,13 +368,63 @@ public interface antlrListener extends ParseTreeListener {
 	 */
 	void exitTerm(antlrParser.TermContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link antlrParser#factor}.
+	 * Enter a parse tree produced by the {@code parenFactor}
+	 * labeled alternative in {@link antlrParser#factor}.
 	 * @param ctx the parse tree
 	 */
-	void enterFactor(antlrParser.FactorContext ctx);
+	void enterParenFactor(antlrParser.ParenFactorContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link antlrParser#factor}.
+	 * Exit a parse tree produced by the {@code parenFactor}
+	 * labeled alternative in {@link antlrParser#factor}.
 	 * @param ctx the parse tree
 	 */
-	void exitFactor(antlrParser.FactorContext ctx);
+	void exitParenFactor(antlrParser.ParenFactorContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code valueFactor}
+	 * labeled alternative in {@link antlrParser#factor}.
+	 * @param ctx the parse tree
+	 */
+	void enterValueFactor(antlrParser.ValueFactorContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code valueFactor}
+	 * labeled alternative in {@link antlrParser#factor}.
+	 * @param ctx the parse tree
+	 */
+	void exitValueFactor(antlrParser.ValueFactorContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code actionFactor}
+	 * labeled alternative in {@link antlrParser#factor}.
+	 * @param ctx the parse tree
+	 */
+	void enterActionFactor(antlrParser.ActionFactorContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code actionFactor}
+	 * labeled alternative in {@link antlrParser#factor}.
+	 * @param ctx the parse tree
+	 */
+	void exitActionFactor(antlrParser.ActionFactorContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code refFactor}
+	 * labeled alternative in {@link antlrParser#factor}.
+	 * @param ctx the parse tree
+	 */
+	void enterRefFactor(antlrParser.RefFactorContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code refFactor}
+	 * labeled alternative in {@link antlrParser#factor}.
+	 * @param ctx the parse tree
+	 */
+	void exitRefFactor(antlrParser.RefFactorContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code unaryExpr}
+	 * labeled alternative in {@link antlrParser#factor}.
+	 * @param ctx the parse tree
+	 */
+	void enterUnaryExpr(antlrParser.UnaryExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code unaryExpr}
+	 * labeled alternative in {@link antlrParser#factor}.
+	 * @param ctx the parse tree
+	 */
+	void exitUnaryExpr(antlrParser.UnaryExprContext ctx);
 }
