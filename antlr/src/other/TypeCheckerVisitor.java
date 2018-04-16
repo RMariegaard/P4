@@ -106,11 +106,17 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(BehaviorNode node) {
+        Visit(node.IDNode()); //Vi skal have tilføjet alle behaviors til symboltable
+        Visit(node.BlockNode());
         return null;
     }
 
     @Override
     public Object Visit(BlockNode node) {
+        Node[] children = node.StmtNodes();
+        for(int i=0; i<children.length; i++){
+            Visit(children[i]);
+        }
         return null;
     }
 
@@ -143,7 +149,7 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
         try{
             if(leftNodeType.equals(rightNodeType)){
                 if(leftNodeType instanceof Integer || leftNodeType instanceof Double){ //ikke sikker på dette virker før var det "leftNodeType.getClass().equals(int.class)
-                    //Hvordan fuck checker man for divide med 0??
+                    //Hvordan fuck checker man for divide med 0?? svar: det her er jo typechecking. Det skal gøre et andet sted
                     return leftNodeType;
                 }
                 else{
@@ -167,6 +173,7 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(ElseNode node) {
+        Visit(node.Block());
         return null;
     }
 
