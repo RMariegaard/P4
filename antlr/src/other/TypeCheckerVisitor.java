@@ -308,7 +308,7 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
         }
         else {
             symbolTable.EnterSymbol(node.IDNode().toString(), typeNode.toString());
-            return typeNode.Typee;
+            return typeNode.Type;
         }
     }
 
@@ -385,7 +385,7 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(RTypeNode node) {
-        return node.Typee;
+        return node.Type;
     }
 
     @Override
