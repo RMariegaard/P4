@@ -299,7 +299,7 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(MethodNode node) {
-        RTypeNode typeNode = (RTypeNode) node.RTypeNode();
+        RTypeNode typeNode = node.RTypeNode();
         if(symbolTable.DeclaredLocally(node.IDNode().toString())){
             ErrorList.add(String.format("Line %s: The name %s is already used in this scope", node.FirstLinenumber, node.IDNode().toString()));
             return null;
@@ -441,7 +441,7 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(UsubNode node) {
-        if(!(Visit(node.IDNode()) instanceof Integer)){
+        if(!(Visit(node.RefNode()) instanceof Integer)){
             ErrorList.add(String.format("Line %s: ", node.FirstLinenumber) + node.toString() + "USub not int");
         }
         return Integer.class;
@@ -451,7 +451,7 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(UAddNode node) {
-        if(!(Visit(node.IDNode()) instanceof Integer)){
+        if(!(Visit(node.RefNode()) instanceof Integer)){
             ErrorList.add(String.format("Line %s: ", node.FirstLinenumber) + node.toString() + "UAdd not int");
         }
         return Integer.class;
