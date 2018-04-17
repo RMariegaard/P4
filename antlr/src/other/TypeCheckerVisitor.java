@@ -88,19 +88,17 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
     @Override
     public Object Visit(AssignNode node) {
         try {
-            Object idType = Visit(node.IDNode());
+            Object idType = Visit(node.RefNode());
             Object valueType = Visit(node.ValueNode());
             if (idType.equals(valueType)) {
                 return idType;
             }
             else{
-                ErrorList.add(String.format("assigning %s to type %s not possible", node.IDNode().toString(), valueType.toString()));
+                ErrorList.add(String.format("assigning %s to type %s not possible", node.RefNode().LeftmostChild.toString(), valueType.toString()));
             }
         }catch (NullPointerException e){
-
+            ErrorList.add(String.format("Variable %s does not exist, and cant be assigned to", node.RefNode().LeftmostChild.toString()));
         }
-
-
         return null;
     }
 
@@ -122,7 +120,7 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(BoolNode node) {
-        return Boolean.class;
+        return boolean.class;
     }
 
     @Override
@@ -133,22 +131,24 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
         }
         symbolTable.EnterSymbol(node.getID(), node.Type);
         Visit(node.ChildNode());
+        //if(node.Type.equals(Visit(node.ChildNode())))
+        //    symbolTable.EnterSymbol(node.getID(), node.Type);
         return null;
     }
 
     @Override
     public Object Visit(DecimalNode node) {
-        return Double.class;
+        return double.class;
     }
 
     @Override
     public Object Visit(DivExprNode node) {
-        //Compares the class of the left node to the right node
+        //Compares the object of the left node to the right node
         Object leftNodeType = Visit(node.LeftNode());
         Object rightNodeType = Visit(node.RightNode());
         try{
             if(leftNodeType.equals(rightNodeType)){
-                if(leftNodeType instanceof Integer || leftNodeType instanceof Double){ //ikke sikker på dette virker før var det "leftNodeType.getClass().equals(int.class)
+                if(leftNodeType instanceof Integer || leftNodeType instanceof Double){
                     //Hvordan fuck checker man for divide med 0?? svar: det her er jo typechecking. Det skal gøre et andet sted
                     return leftNodeType;
                 }
@@ -251,7 +251,7 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(IntNode node) {
-        return Integer.class;
+        return int.class;
     }
 
     @Override
@@ -345,7 +345,7 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(RefNode node) {
-        return null;
+        return Visit(node.IDNode());
     }
 
     @Override

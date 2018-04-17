@@ -2,11 +2,11 @@ package Nodes;
 
 public class AssignNode extends Node {
 
-    public Node IDNode(){
+    public Node RefNode(){
         return this.LeftmostChild;
     }
     public Node ValueNode(){
-        return this.IDNode().RightSibling;
+        return this.LeftmostChild.RightSibling;
     }
 
 

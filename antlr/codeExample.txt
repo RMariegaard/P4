@@ -1,5 +1,7 @@
 int target = 40
+int cool
 bool fun = 34 == 23
+int test = true
 event(Tank.getEnergy() == 40) -> WhenEnergyIs40
 setup
 	Tank.setBodyColor(white)

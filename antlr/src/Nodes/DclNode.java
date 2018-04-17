@@ -20,11 +20,13 @@ public class DclNode extends Node {
 
     }
     public String getID(){
-        return ChildNode().LeftmostChild.LeftmostChild.toString();
+        Node idNode = LeftmostChild;
+        while(idNode.LeftmostChild != null)
+            idNode = idNode.LeftmostChild;
+        return idNode.toString();
     }
     @Override
     public String toString() {
         return Type.toString() + " Dcl " + getID();
     }
-
 }

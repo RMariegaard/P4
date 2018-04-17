@@ -13,12 +13,12 @@ predcl    : dcl NEWLINE+                                                        
 
 block     : NEWLINE+ stmt* 'end' NEWLINE+
           ;
-stmt      : dcl NEWLINE+                                                                #dclStmt
-          | assign NEWLINE+                                                             #assignStmt
-          | action NEWLINE+                                                             #actionStmt
-          | 'if' '(' first=aoexpr ')' firstBlock=block (elseif)* ('else' secondBlock=block)?  #ifStmt
-          | 'do' '(' argmnt',' firstAo=aoexpr ',' secondAo=aoexpr ',' thirdAo=aoexpr ')' block                 #doStmt
-          | 'while''(' aoexpr ')' block                                                   #whileStmt
+stmt      : dcl NEWLINE+                                                                         #dclStmt
+          | assign NEWLINE+                                                                      #assignStmt
+          | action NEWLINE+                                                                      #actionStmt
+          | 'if' '(' first=aoexpr ')' firstBlock=block (elseif)* ('else' secondBlock=block)?     #ifStmt
+          | 'do' '(' argmnt',' firstAo=aoexpr ',' secondAo=aoexpr ',' thirdAo=aoexpr ')' block   #doStmt
+          | 'while''(' aoexpr ')' block                                                          #whileStmt
           | 'return' expr NEWLINE+                                                               #returnStmt
           | ref op=('++'|'--') NEWLINE+                                                          #incrStmt
           ;
@@ -90,8 +90,8 @@ OP_GREATEREQUAL : '>=';
 OP_LESSEQUAL: '<=';
 
 NEWLINE: '\n';
-ID: [a-zA-Z]+ ([a-zA-Z0-9])*;
 BOOL_VALUE: 'true' | 'false';
+ID: [a-zA-Z]+ ([a-zA-Z0-9])*;
 INT_NUM: [0-9]+ ;
 DECIMAL_NUM: [0-9]+ ('.' [0-9]+)? ;
 
@@ -101,3 +101,4 @@ TEXT: '"'(ESC|.)*?'"';
 
 WS: [ \t\r] ->skip;
 COMMENTS: '//' ~('\r' | '\n')* -> skip;
+

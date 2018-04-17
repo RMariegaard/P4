@@ -278,7 +278,6 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
     @Override
     public Node visitDcl(antlrParser.DclContext ctx) {
         Node dclNode = new DclNode(ctx.type().getText());
-
         if (ctx.assign() != null){
             dclNode.AdoptChildren(visit(ctx.assign()));
         }
