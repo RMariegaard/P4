@@ -2,6 +2,10 @@ package Nodes;
 
 public class AssignNode extends Node {
 
+    public AssignNode(int firstLinenumber) {
+        super(firstLinenumber);
+    }
+
     public Node IDNode(){
         return this.LeftmostChild;
     }

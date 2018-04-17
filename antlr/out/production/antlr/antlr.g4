@@ -64,15 +64,15 @@ bexpr    : expr op=( '==' | '>=' | '<=' | '<' | '>') bexpr               #boolex
           ;
 expr      : term op=( '+' | '-' ) expr                                #infixExpr
           | term                                                      #termExpr
-          | ID '[' expr ']'                                           #arrayExpr
-          | action                                                    #actionExpr
-          |factor op=('++'|'--')                                          #unaryExpr
           ;
 term      : factor op=('*' | '/') term
           | factor
           ;
-factor    : '(' aoexpr ')'
-          | op=(ID | INT_NUM |BOOL_VALUE | DECIMAL_NUM | TEXT)
+factor    : '(' aoexpr ')'                                          #parenFactor
+          | value=( INT_NUM |BOOL_VALUE | DECIMAL_NUM | TEXT)       #valueFactor
+          | action                                                  #actionFactor
+          | ref                                                     #refFactor
+          | ref op=('++'|'--')                                      #unaryExpr
           ;
 
 OP_ADD : '+';
@@ -94,7 +94,9 @@ ID: [a-zA-Z]+ ([a-zA-Z0-9])*;
 BOOL_VALUE: 'true' | 'false';
 INT_NUM: [0-9]+ ;
 DECIMAL_NUM: [0-9]+ ('.' [0-9]+)? ;
-TEXT: '"'.*?'"';
+
+ESC: '\\' [btnr"\\];
+TEXT: '"'(ESC|.)*?'"';
 
 
 WS: [ \t\r] ->skip;

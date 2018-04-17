@@ -7,7 +7,8 @@ public class StringNode extends Node {
 
 
 
-    public StringNode(String value) {
+    public StringNode(int firstLinenumber, String value) {
+        super(firstLinenumber);
         this.value = value;
     }
 

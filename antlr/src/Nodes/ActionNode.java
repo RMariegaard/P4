@@ -5,6 +5,10 @@ import Nodes.values.IDNode;
 public class ActionNode extends Node {
 
 
+    public ActionNode(int firstLinenumber) {
+        super(firstLinenumber);
+    }
+
     public int NumberOfIDNodes(){
         int result = 0;
         Node node = this.LeftmostChild;

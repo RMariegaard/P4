@@ -2,6 +2,10 @@ package Nodes;
 
 public class DoStmtNode extends Node {
 
+    public DoStmtNode(int firstLinenumber) {
+        super(firstLinenumber);
+    }
+
     public Node VariableNode(){
         return this.LeftmostChild;
     }

@@ -3,6 +3,10 @@ package Nodes;
 public class ElseIfNode extends Node {
 
 
+    public ElseIfNode(int firstLinenumber) {
+        super(firstLinenumber);
+    }
+
     public Node Condition(){
         return this.LeftmostChild;
     }

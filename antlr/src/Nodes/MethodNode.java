@@ -1,8 +1,10 @@
 package Nodes;
 
-import com.sun.xml.internal.bind.v2.model.core.ID;
-
 public class MethodNode extends Node {
+
+    public MethodNode(int firstLinenumber) {
+        super(firstLinenumber);
+    }
 
     public Node IDNode(){
         return this.LeftmostChild;

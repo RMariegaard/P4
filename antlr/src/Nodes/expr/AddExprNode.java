@@ -3,8 +3,12 @@ package Nodes.expr;
 import Nodes.Node;
 
 
-public class AddExprNode extends ExprNode {
+public class AddExprNode extends Node {
 
+
+    public AddExprNode(int firstLinenumber) {
+        super(firstLinenumber);
+    }
 
     public Node LeftNode(){
         return this.LeftmostChild;
