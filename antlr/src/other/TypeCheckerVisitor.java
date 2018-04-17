@@ -15,7 +15,12 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(ActionNode node) {
-        return null;
+        Node[] array = node.IDNodes();
+        Object type = null;
+        for(int i = 0; i<array.length; i++){
+            type = Visit(array[i]);
+        }
+        return type;
     }
 
     @Override
@@ -62,7 +67,16 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(ArgumentNode node) {
-        return null;
+        RefNode rNode = (RefNode) node.RefNode();
+        if(symbolTable.DeclaredLocally(rNode.IDNode().toString())){
+            ErrorList.add(String.format("Line %s: Argument %s is already declared in this scope", node.FirstLinenumber, rNode.IDNode()));
+            return null;
+        }
+        else{
+            symbolTable.EnterSymbol(rNode.IDNode().toString(), node.Type);
+            return node.Type;
+        }
+
     }
 
     @Override
@@ -74,7 +88,7 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
                 return sym.type;
             }
             else {
-                ErrorList.add(String.format("Line %s: Line %s: Array can only be indexed with type Integer not with %s",node.FirstLinenumber, exprType.getClass()));
+                ErrorList.add(String.format("Line %s: Array can only be indexed with type Integer not with %s",node.FirstLinenumber, exprType.getClass()));
                 return null;
             }
 
@@ -179,6 +193,8 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(ElseIfNode node) {
+        Visit(node.Condition());
+        Visit(node.Block());
         return null;
     }
 
@@ -214,6 +230,7 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(GameLoopNode node) {
+        Visit(node.Block());
         return null;
     }
 
@@ -241,6 +258,8 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(IfStmtNode node) {
+        Visit(node.Condition());
+        Visit(node.Block());
         return null;
     }
 
@@ -266,7 +285,15 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(MethodNode node) {
-        return null;
+        RTypeNode typeNode = (RTypeNode) node.RTypeNode();
+        if(symbolTable.DeclaredLocally(node.IDNode().toString())){
+            ErrorList.add(String.format("Line %s: The name %s is already used in this scope", node.FirstLinenumber, node.IDNode().toString()));
+            return null;
+        }
+        else {
+            symbolTable.EnterSymbol(node.IDNode().toString(), typeNode.toString());
+            return typeNode.Type;
+        }
     }
 
     @Override
@@ -295,7 +322,14 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(NotExprNode node) {
-        return null;
+        Object type = Visit(node.ExprNode());
+        if(type != boolean.class){
+            ErrorList.add(String.format("Line %s: The expression is not of type boolean", node.FirstLinenumber));
+            return null;
+        }
+        else{
+            return type;
+        }
     }
 
     @Override
@@ -335,12 +369,12 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(RTypeNode node) {
-        return null;
+        return node.Type;
     }
 
     @Override
     public Object Visit(ReturnStmtNode node) {
-        return null;
+        return Visit(node.ExprNode());
     }
 
     @Override
@@ -350,11 +384,15 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(SetupNode node) {
-        return null;
+        return Visit(node.BlockNode());
     }
 
     @Override
     public Object Visit(StrategyNode node) {
+        Visit(node.IDNode());
+        for(Node bnode : node.BehaviourNodes()){
+           Visit(bnode);
+        }
         return null;
     }
 

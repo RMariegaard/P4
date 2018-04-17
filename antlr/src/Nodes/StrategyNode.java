@@ -15,6 +15,7 @@ public class StrategyNode extends Node {
         int result = 0;
         Node node = this.IDNode();
         while(node.RightSibling != null){
+            node = node.RightSibling;
             result++;
         }
         return result;

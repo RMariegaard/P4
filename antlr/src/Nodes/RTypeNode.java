@@ -2,16 +2,25 @@ package Nodes;
 
 public class RTypeNode extends Node {
 
-    public String TypeString;
+    public Object Type;
 
-    public RTypeNode(int firstLinenumber, String typeString) {
+    public RTypeNode(int firstLinenumber, String type) {
         super(firstLinenumber);
-        this.TypeString = typeString;
+        if(type.equals("text"))
+            Type = String.class;
+        else if(type.equals("bool"))
+            Type = boolean.class;
+        else if(type.equals("int"))
+            Type = int.class;
+        else if (type.equals("decimal"))
+            Type = double.class;
+        else if (type.equals("void"))
+            Type = void.class;
     }
 
     @Override
     public String toString() {
-        return TypeString;
+        return Type.toString();
 
     }
 }

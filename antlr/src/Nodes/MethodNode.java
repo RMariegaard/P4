@@ -9,10 +9,11 @@ public class MethodNode extends Node {
     public Node IDNode(){
         return this.LeftmostChild;
     }
+    public Node RTypeNode(){ return this.IDNode().RightSibling;}
 
     public int NumberOfParameters(){
         int number = 0;
-        Node node = IDNode();
+        Node node = RTypeNode();
         while(!(node.RightSibling instanceof BlockNode)){
             number++;
         }
