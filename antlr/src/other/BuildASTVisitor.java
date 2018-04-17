@@ -14,7 +14,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
     @Override
     public Node visitProg(antlrParser.ProgContext ctx) {
-        Node progNode = new ProgNode();
+        Node progNode = new ProgNode(0);
 
         List<antlrParser.PredclContext> preDcls = ctx.predcl();
         if (!preDcls.isEmpty()) {
@@ -63,20 +63,21 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
     @Override
     public Node visitSetup(antlrParser.SetupContext ctx) {
-        return new SetupNode().AdoptChildren(visit(ctx.block()));
+        return new SetupNode(ctx.start.getLine()).AdoptChildren(visit(ctx.block()));
     }
 
     @Override
     public Node visitGameloop(antlrParser.GameloopContext ctx) {
-        return new GameLoopNode().AdoptChildren(visit(ctx.block()));
+        return new GameLoopNode(ctx.start.getLine()).AdoptChildren(visit(ctx.block()));
     }
 
     @Override
     public Node visitMethod(antlrParser.MethodContext ctx) {
-        Node methodNode = new MethodNode();
+        int linenumber = ctx.start.getLine();
+        Node methodNode = new MethodNode(linenumber);
 
-        methodNode.AdoptChildren(new IDNode(ctx.ID().getText()));
-        methodNode.AdoptChildren(new RTypeNode(ctx.rtype().getText()));
+        methodNode.AdoptChildren(new IDNode(linenumber, ctx.ID().getText()));
+        methodNode.AdoptChildren(new RTypeNode(linenumber, ctx.rtype().getText()));
         List<antlrParser.ArgmntContext> arguments = ctx.argmnt();
         if (!arguments.isEmpty()){
             for(antlrParser.ArgmntContext argument : arguments) {
@@ -96,16 +97,17 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
     @Override
     public Node visitEventDcl(antlrParser.EventDclContext ctx) {
-        Node eventNode = new EventNode();
+        int linenumber = ctx.start.getLine();
+        Node eventNode = new EventNode(linenumber);
         eventNode.AdoptChildren(visit(ctx.aoexpr()));
-        eventNode.AdoptChildren(new IDNode(ctx.ID().getText()));
+        eventNode.AdoptChildren(new IDNode(linenumber, ctx.ID().getText()));
         return eventNode;
     }
 
 
     @Override
     public Node visitBlock(antlrParser.BlockContext ctx) {
-        Node blockNode = new BlockNode();
+        Node blockNode = new BlockNode(ctx.start.getLine());
 
         List<antlrParser.StmtContext> stmts = ctx.stmt();
         if (!stmts.isEmpty()){
@@ -135,7 +137,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
     @Override
     public Node visitIfStmt(antlrParser.IfStmtContext ctx) {
-        Node ifStmtNode = new IfStmtNode();
+        Node ifStmtNode = new IfStmtNode(ctx.start.getLine());
 
         ifStmtNode.AdoptChildren(visit(ctx.first));
         ifStmtNode.AdoptChildren(visit(ctx.firstBlock));
@@ -148,7 +150,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
         }
 
         if (ctx.secondBlock != null) {
-            Node elseN = new ElseNode();
+            Node elseN = new ElseNode(ctx.secondBlock.start.getLine());
             elseN.AdoptChildren(visit(ctx.secondBlock));
             ifStmtNode.AdoptChildren(elseN);
         }
@@ -158,7 +160,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
     @Override
     public Node visitDoStmt(antlrParser.DoStmtContext ctx) {
-        Node doStmtNode = new DoStmtNode();
+        Node doStmtNode = new DoStmtNode(ctx.start.getLine());
 
         doStmtNode.AdoptChildren(visit(ctx.argmnt()));
         doStmtNode.AdoptChildren(visit(ctx.firstAo));
@@ -171,7 +173,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
     @Override
     public Node visitWhileStmt(antlrParser.WhileStmtContext ctx) {
-        Node whileStmtNode = new WhileStmtNode();
+        Node whileStmtNode = new WhileStmtNode(ctx.start.getLine());
 
         whileStmtNode.AdoptChildren(visit(ctx.aoexpr()));
         whileStmtNode.AdoptChildren(visit(ctx.block()));
@@ -181,7 +183,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
     @Override
     public Node visitReturnStmt(antlrParser.ReturnStmtContext ctx) {
-        Node returnStmtNode = new ReturnStmtNode();
+        Node returnStmtNode = new ReturnStmtNode(ctx.start.getLine());
 
         returnStmtNode.AdoptChildren(visit(ctx.expr()));
 
@@ -191,15 +193,16 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
     @Override
     public Node visitIncrStmt(antlrParser.IncrStmtContext ctx) {
         Node unaryNode;
+        int linenumber = ctx.start.getLine();
         switch (ctx.op.getType()){
             case antlrParser.OP_UADD:
-                unaryNode = new UAddNode();
+                unaryNode = new UAddNode(linenumber);
                 break;
             case antlrParser.OP_USUB:
-                unaryNode = new UsubNode();
+                unaryNode = new UsubNode(linenumber);
                 break;
             default:
-                unaryNode = new NullNode(); //This is not supposed to be there call exception instead
+                unaryNode = new NullNode(linenumber); //This is not supposed to be there call exception instead
                 //idk where to catch it tho, and in java u have to catch it.
         }
 
@@ -208,7 +211,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
     @Override
     public Node visitElseif(antlrParser.ElseifContext ctx) {
-        Node ElseIfNode = new ElseIfNode();
+        Node ElseIfNode = new ElseIfNode(ctx.start.getLine());
 
         ElseIfNode.AdoptChildren(visit(ctx.aoexpr()), visit(ctx.block()));
 
@@ -218,12 +221,12 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
     @Override
     public Node visitAction(antlrParser.ActionContext ctx) {
-        Node actionNode = new ActionNode();
+        Node actionNode = new ActionNode(ctx.start.getLine());
 
         if (!ctx.ID().isEmpty()){
             List<TerminalNode> ids = ctx.ID();
             for (TerminalNode id : ids){
-                actionNode.AdoptChildren(new IDNode(id.getText()));
+                actionNode.AdoptChildren(new IDNode(actionNode.FirstLinenumber, id.getText())); //functioncalls can only be on one line.
             }
             actionNode.AdoptChildren(visit(ctx.fcall()));
         }
@@ -236,9 +239,9 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
     @Override
     public Node visitStrategy(antlrParser.StrategyContext ctx) {
-        Node strategyNode = new StrategyNode();
+        Node strategyNode = new StrategyNode(ctx.start.getLine());
 
-        strategyNode.AdoptChildren(new IDNode(ctx.ID().getText()));
+        strategyNode.AdoptChildren(new IDNode(ctx.start.getLine(), ctx.ID().getText()));
 
         List<antlrParser.BehaviorContext> behaviors = ctx.behavior();
 
@@ -253,9 +256,10 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
     @Override
     public Node visitBehavior(antlrParser.BehaviorContext ctx) {
-        Node behaviorNode = new BehaviorNode();
+        int linenumber = ctx.start.getLine();
+        Node behaviorNode = new BehaviorNode(linenumber);
 
-        behaviorNode.AdoptChildren(new IDNode(ctx.ID().getText()));
+        behaviorNode.AdoptChildren(new IDNode(linenumber, ctx.ID().getText()));
         behaviorNode.AdoptChildren(visit(ctx.block()));
 
         return behaviorNode;
@@ -263,7 +267,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
     @Override
     public Node visitFcall(antlrParser.FcallContext ctx) {
-        Node IDNode = new IDNode(ctx.ID().getText());
+        Node IDNode = new IDNode(ctx.start.getLine(), ctx.ID().getText());
 
         List<antlrParser.ExprContext> exprs = ctx.expr();
         if (!exprs.isEmpty()){
@@ -277,7 +281,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
     @Override
     public Node visitDcl(antlrParser.DclContext ctx) {
-        Node dclNode = new DclNode(ctx.type().getText());
+        Node dclNode = new DclNode(ctx.start.getLine(), ctx.type().getText());
 
         if (ctx.assign() != null){
             dclNode.AdoptChildren(visit(ctx.assign()));
@@ -291,7 +295,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
     @Override
     public Node visitArgmnt(antlrParser.ArgmntContext ctx) {
-        Node argumentNode = new ArgumentNode(ctx.type().getText());
+        Node argumentNode = new ArgumentNode(ctx.start.getLine(), ctx.type().getText());
 
         argumentNode.AdoptChildren(visit(ctx.ref()));
 
@@ -301,8 +305,9 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
     @Override
     public Node visitRef(antlrParser.RefContext ctx) {
 
-        Node refNode = new RefNode();
-        Node idNode = new IDNode(ctx.ID().getText());
+        int linenumber = ctx.start.getLine();
+        Node refNode = new RefNode(linenumber);
+        Node idNode = new IDNode(linenumber, ctx.ID().getText());
         refNode.AdoptChildren(idNode);
         if (ctx.expr() != null){
             refNode.AdoptChildren(visit(ctx.expr()));
@@ -312,7 +317,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
     @Override
     public Node visitAssign(antlrParser.AssignContext ctx) {
-        Node assignNode = new AssignNode();
+        Node assignNode = new AssignNode(ctx.start.getLine());
 
         assignNode.AdoptChildren(visit(ctx.ref()));
         if (ctx.aoexpr() != null){
@@ -325,21 +330,22 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
     @Override
     public Node visitAoexpr(antlrParser.AoexprContext ctx) {
         Node andOrExprNode;
+        int linenumber = ctx.start.getLine();
         if(ctx.op != null) {
             switch (ctx.op.getType()) {
 
                 case antlrParser.OP_AND:
-                    andOrExprNode = new AndNode();
+                    andOrExprNode = new AndNode(linenumber);
                     andOrExprNode.AdoptChildren(visit(ctx.bexpr()));
                     andOrExprNode.AdoptChildren(visit(ctx.aoexpr()));
                     break;
                 case antlrParser.OP_OR:
-                    andOrExprNode = new OrNode();
+                    andOrExprNode = new OrNode(linenumber);
                     andOrExprNode.AdoptChildren(visit(ctx.bexpr()));
                     andOrExprNode.AdoptChildren(visit(ctx.aoexpr()));
                     break;
                 default:
-                    andOrExprNode = new NullNode();
+                    andOrExprNode = new NullNode(linenumber);
             }
         }
         else{
@@ -352,35 +358,36 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
     @Override
     public Node visitBoolexpr(antlrParser.BoolexprContext ctx) {
         Node boolExpr;
+        int linenumber = ctx.start.getLine();
 
         switch (ctx.op.getType()){
             case antlrParser.OP_GREATER:
-                boolExpr = new GreaterNode();
+                boolExpr = new GreaterNode(linenumber);
                 boolExpr.AdoptChildren(visit(ctx.expr()));
                 boolExpr.AdoptChildren(visit(ctx.bexpr()));
                 break;
             case antlrParser.OP_LESS:
-                boolExpr = new LessNode();
+                boolExpr = new LessNode(linenumber);
                 boolExpr.AdoptChildren(visit(ctx.expr()));
                 boolExpr.AdoptChildren(visit(ctx.bexpr()));
                 break;
             case antlrParser.OP_EQUAL:
-                boolExpr = new EqualNode();
+                boolExpr = new EqualNode(linenumber);
                 boolExpr.AdoptChildren(visit(ctx.expr()));
                 boolExpr.AdoptChildren(visit(ctx.bexpr()));
                 break;
             case antlrParser.OP_GREATEREQUAL:
-                boolExpr = new GreaterEqualNode();
+                boolExpr = new GreaterEqualNode(linenumber);
                 boolExpr.AdoptChildren(visit(ctx.expr()));
                 boolExpr.AdoptChildren(visit(ctx.bexpr()));
                 break;
             case antlrParser.OP_LESSEQUAL:
-                boolExpr = new LessEqualNode();
+                boolExpr = new LessEqualNode(linenumber);
                 boolExpr.AdoptChildren(visit(ctx.expr()));
                 boolExpr.AdoptChildren(visit(ctx.bexpr()));
                 break;
             default:
-                boolExpr = new NullNode();
+                boolExpr = new NullNode(linenumber);
         }
 
 
@@ -390,7 +397,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
     @Override
     public Node visitNotexpr(antlrParser.NotexprContext ctx) {
-        Node notExprNode = new NotExprNode();
+        Node notExprNode = new NotExprNode(ctx.start.getLine());
 
         notExprNode.AdoptChildren(visit(ctx.expr()));
 
@@ -405,17 +412,18 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
     @Override
     public Node visitInfixExpr(antlrParser.InfixExprContext ctx) {
         Node infixNode;
+        int linenumber = ctx.start.getLine();
         switch (ctx.op.getType()){
             case antlrParser.OP_ADD:
-                infixNode = new AddExprNode();
+                infixNode = new AddExprNode(linenumber);
                 break;
 
             case antlrParser.OP_SUB:
-                infixNode = new SubExprNode();
+                infixNode = new SubExprNode(linenumber);
                 break;
             default:
                 //throw an exeption or some shit.
-                infixNode = new NullNode(); //this is not something that should be used.
+                infixNode = new NullNode(linenumber); //this is not something that should be used.
         }
         infixNode.AdoptChildren(visit(ctx.term()));
         infixNode.AdoptChildren(visit(ctx.expr()));
@@ -433,15 +441,16 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
     @Override
     public Node visitUnaryExpr(antlrParser.UnaryExprContext ctx) {
         Node unaryNode;
+        int linenumber = ctx.start.getLine();
         switch (ctx.op.getType()){
             case antlrParser.OP_UADD:
-                unaryNode = new UAddNode();
+                unaryNode = new UAddNode(linenumber);
                 break;
             case antlrParser.OP_USUB:
-                unaryNode = new UsubNode();
+                unaryNode = new UsubNode(linenumber);
                 break;
             default:
-                unaryNode = new NullNode(); //This is not supposed to be there call exception instead
+                unaryNode = new NullNode(linenumber); //This is not supposed to be there call exception instead
                 //idk where to catch it tho, and in java u have to catch it.
         }
 
@@ -450,19 +459,20 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
     @Override
     public Node visitTerm(antlrParser.TermContext ctx) {
+        int linenumber = ctx.start.getLine();
         if (ctx.term() != null) {
             Node infixNode;
             switch (ctx.op.getType()){
                 case antlrParser.OP_MUL:
-                    infixNode = new MulExprNode();
+                    infixNode = new MulExprNode(linenumber);
                     break;
 
                 case antlrParser.OP_DIV:
-                    infixNode = new DivExprNode();
+                    infixNode = new DivExprNode(linenumber);
                     break;
                 default:
                     //throw an exeption or some shit.
-                    infixNode = new NullNode(); //this is not something that should be used.
+                    infixNode = new NullNode(linenumber); //this is not something that should be used.
             }
             infixNode.AdoptChildren(visit(ctx.factor()));
             infixNode.AdoptChildren(visit(ctx.term()));
@@ -476,23 +486,24 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
     @Override
     public Node visitParenFactor(antlrParser.ParenFactorContext ctx) {
-        return new ParenNode().AdoptChildren(visit(ctx.aoexpr()));
+        return new ParenNode(ctx.start.getLine()).AdoptChildren(visit(ctx.aoexpr()));
     }
 
     @Override
     public Node visitValueFactor(antlrParser.ValueFactorContext ctx) {
+        int linenumber = ctx.start.getLine();
         switch (ctx.value.getType()){
             case antlrParser.INT_NUM:
-                return new IntNode(Integer.parseInt(ctx.INT_NUM().getText()));
+                return new IntNode(linenumber, Integer.parseInt(ctx.INT_NUM().getText()));
             case antlrParser.BOOL_VALUE:
-                return new BoolNode(Boolean.parseBoolean(ctx.BOOL_VALUE().getText()));
+                return new BoolNode(linenumber, Boolean.parseBoolean(ctx.BOOL_VALUE().getText()));
             case antlrParser.TEXT:
                 String x = ctx.TEXT().getText();
-                return new StringNode(x);
+                return new StringNode(linenumber, x);
             case antlrParser.DECIMAL_NUM:
-                return new DecimalNode(Double.parseDouble(ctx.DECIMAL_NUM().getText()));
+                return new DecimalNode(linenumber, Double.parseDouble(ctx.DECIMAL_NUM().getText()));
             default:
-                return new NullNode(); //should not call this, exeptions instead
+                return new NullNode(linenumber); //should not call this, exeptions instead
 
         }
     }
