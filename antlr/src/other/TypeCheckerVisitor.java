@@ -29,11 +29,11 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
                     return leftNodeType;
                 }
                 else{
-                    ErrorList.add(String.format("It is illegal to add two elements of type %s together", leftNodeType.toString()));
+                    ErrorList.add(String.format("Line %s: Line %s It is illegal to add two elements of type %s together", node.FirstLinenumber, leftNodeType.toString()));
                 }
             }
             else{
-                ErrorList.add(String.format("You can't add two elements of different types together.\nThe type of %s is %s, which doesn't match the type of %s, which is %s", node.LeftNode(), leftNodeType, node.RightNode(), rightNodeType));
+                ErrorList.add(String.format("Line %s: Line %s: You can't add two elements of different types together.\nThe type of %s is %s, which doesn't match the type of %s, which is %s", node.FirstLinenumber,  node.LeftNode(), leftNodeType, node.RightNode(), rightNodeType));
 
             }
             return null;
@@ -51,7 +51,7 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
                 return boolean.class;
             }
             else{
-                ErrorList.add("&& both arguments have to be of type Boolean");
+                ErrorList.add(String.format("Line %s: ", node.FirstLinenumber) + "&& both arguments have to be of type Boolean");
                 //return bool or null?
             }
         }catch (NullPointerException e){
@@ -74,13 +74,13 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
                 return sym.type;
             }
             else {
-                ErrorList.add(String.format("Array can only be indexed with type Integer not with %s", exprType.getClass()));
+                ErrorList.add(String.format("Line %s: Line %s: Array can only be indexed with type Integer not with %s",node.FirstLinenumber, exprType.getClass()));
                 return null;
             }
 
         }
         else{
-            ErrorList.add(String.format("The array %s is not declared", node.IDNode()));
+            ErrorList.add(String.format("Line %s: The array %s is not declared", node.FirstLinenumber, node.IDNode()));
             return null;
         }
     }
@@ -94,10 +94,10 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
                 return idType;
             }
             else{
-                ErrorList.add(String.format("on line %s, assigning %s to type %s not possible", node.FirstLinenumber, valueType.toString(), idType.toString()));
+                ErrorList.add(String.format("Line %s: on line %s, assigning %s to type %s not possible", node.FirstLinenumber, node.FirstLinenumber, valueType.toString(), idType.toString()));
             }
         }catch (NullPointerException e){
-            ErrorList.add(String.format("Variable %s does not exist, and cant be assigned to", node.RefNode().LeftmostChild.toString()));
+            ErrorList.add(String.format("Line %s: Variable %s does not exist, and cant be assigned to", node.FirstLinenumber, node.RefNode().LeftmostChild.toString()));
         }
         return null;
     }
@@ -126,7 +126,7 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
     @Override
     public Object Visit(DclNode node) {
         if(symbolTable.DeclaredLocally(node.getID())){
-            ErrorList.add(node.toString() + ", It already exist");
+            ErrorList.add(String.format("Line %s: ", node.FirstLinenumber) + node.toString() + ", It already exist");
             return null;
         }
         symbolTable.EnterSymbol(node.getID(), node.Type);
@@ -153,11 +153,11 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
                     return leftNodeType;
                 }
                 else{
-                    ErrorList.add(String.format("It is illegal to divide two elements of type %s together", leftNodeType.toString()));
+                    ErrorList.add(String.format("Line %s: It is illegal to divide two elements of type %s together", node.FirstLinenumber, leftNodeType.toString()));
                 }
             }
             else{
-                ErrorList.add(String.format("You can't divide two elements of different types together.\nThe type of %s is %s, which doesn't match the type of %s, which is %s", node.LeftNode(), leftNodeType, node.RightNode(), rightNodeType));
+                ErrorList.add(String.format("Line %s: You can't divide two elements of different types together.\nThe type of %s is %s, which doesn't match the type of %s, which is %s", node.FirstLinenumber, node.LeftNode(), leftNodeType, node.RightNode(), rightNodeType));
 
             }
             return null;
@@ -200,14 +200,14 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
     @Override
     public Object Visit(EventNode node) {
         if(symbolTable.DeclaredLocally(node.ID().toString())) {
-            ErrorList.add(String.format("Event with name %s already declared", node.ID().toString()));
+            ErrorList.add(String.format("Line %s: Event with name %s already declared", node.FirstLinenumber, node.ID().toString()));
             return null;
         }
         Object condition = Visit(node.ExprNode());
         if(condition instanceof Boolean)
             symbolTable.EnterSymbol(node.ID().toString(), EventType.class);
         else
-            ErrorList.add(String.format("The condition of event %s is not of type boolean", node.ID().toString()));
+            ErrorList.add(String.format("Line %s: The condition of event %s is not of type boolean", node.FirstLinenumber, node.ID().toString()));
         //Visit(node.ID()); Den skal vel ikke besøge ID, da vi lægger den ind her anyway.
         return null;
     }
@@ -231,7 +231,7 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
     public Object Visit(IDNode node) {
         SymbolClass sym = symbolTable.RetrieveSymbol(node.idString);
         if(sym == null){
-            ErrorList.add(node.idString + " was not declared in this scope.");
+            ErrorList.add(String.format("Line %s: ", node.FirstLinenumber) + node.idString + " was not declared in this scope.");
             return null;
         }
         else{
@@ -280,11 +280,11 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
                     return leftNodeType;
                 }
                 else{
-                    ErrorList.add(String.format("It is illegal to multiply two elements of type %s together", leftNodeType.toString()));
+                    ErrorList.add(String.format("Line %s: It is illegal to multiply two elements of type %s together",node.FirstLinenumber,  leftNodeType.toString()));
                 }
             }
             else{
-                ErrorList.add(String.format("You can't multiply two elements of different types together.\nThe type of %s is %s, which doesn't match the type of %s, which is %s", node.LeftNode(), leftNodeType, node.RightNode(), rightNodeType));
+                ErrorList.add(String.format("Line %s: You can't multiply two elements of different types together.\nThe type of %s is %s, which doesn't match the type of %s, which is %s",node.FirstLinenumber,  node.LeftNode(), leftNodeType, node.RightNode(), rightNodeType));
 
             }
             return null;
@@ -374,11 +374,11 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
                     return leftNodeType;
                 }
                 else{
-                    ErrorList.add(String.format("It is illegal to subtract two elements of type %s together", leftNodeType.toString()));
+                    ErrorList.add(String.format("Line %s: It is illegal to subtract two elements of type %s together",node.FirstLinenumber,  leftNodeType.toString()));
                 }
             }
             else{
-                ErrorList.add(String.format("You can't subtract two elements of different types together.\nThe type of %s is %s, which doesn't match the type of %s, which is %s", node.LeftNode(), leftNodeType, node.RightNode(), rightNodeType));
+                ErrorList.add(String.format("Line %s: You can't subtract two elements of different types together.\nThe type of %s is %s, which doesn't match the type of %s, which is %s",node.FirstLinenumber,  node.LeftNode(), leftNodeType, node.RightNode(), rightNodeType));
 
             }
             return null;
@@ -390,7 +390,7 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
     @Override
     public Object Visit(UsubNode node) {
         if(!(Visit(node.IDNode()) instanceof Integer)){
-            ErrorList.add(node.toString() + "USub not int");
+            ErrorList.add(String.format("Line %s: ", node.FirstLinenumber) + node.toString() + "USub not int");
         }
         return Integer.class;
         //Returns integer even if an error occurs, so that the program can continue
@@ -400,7 +400,7 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
     @Override
     public Object Visit(UAddNode node) {
         if(!(Visit(node.IDNode()) instanceof Integer)){
-            ErrorList.add(node.toString() + "UAdd not int");
+            ErrorList.add(String.format("Line %s: ", node.FirstLinenumber) + node.toString() + "UAdd not int");
         }
         return Integer.class;
     }
@@ -408,7 +408,7 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
     @Override
     public Object Visit(WhileStmtNode node) {
         if(! (Visit(node.ConditionNode()) instanceof Boolean)){
-            ErrorList.add(node.toString() + "Condition not boolean");
+            ErrorList.add(String.format("Line %s: ", node.FirstLinenumber) + node.toString() + "Condition not boolean");
         }
         Visit(node.BlockNode());
 
