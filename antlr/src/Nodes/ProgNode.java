@@ -26,13 +26,13 @@ public class ProgNode extends Node {
         return array;
     }
 
-    public Node SetupNode(){
+    public SetupNode SetupNode(){
         Node[] array = PreDclNodes();
-        return array[array.length-1].RightSibling;
+        return (SetupNode) array[array.length-1].RightSibling;
     }
 
-    public Node GameLoopNode(){
-        return SetupNode().RightSibling;
+    public GameLoopNode GameLoopNode(){
+        return (GameLoopNode) SetupNode().RightSibling;
     }
 
     public int NumberOfStrategies(){
@@ -45,12 +45,12 @@ public class ProgNode extends Node {
         return result;
     }
 
-    public Node[] StrategyNodes(){
-        Node[] array = new Node[NumberOfStrategies()];
-        Node node = this.GameLoopNode();
+    public StrategyNode[] StrategyNodes(){
+        StrategyNode[] array = new StrategyNode[NumberOfStrategies()];
+        StrategyNode node = (StrategyNode) this.GameLoopNode().RightSibling;
         for(int i=0; i<array.length; i++){
             array[i] = node;
-            node = node.RightSibling;
+            node = (StrategyNode) node.RightSibling;
         }
         return array;
     }
@@ -66,12 +66,12 @@ public class ProgNode extends Node {
         return result;
     }
 
-    public Node[] MethodNodes(){
-        Node[] array = new Node[NumberOfMethods()];
-        Node node = StrategyNodes()[NumberOfStrategies()-1].RightSibling;
+    public MethodNode[] MethodNodes(){
+        MethodNode[] array = new MethodNode[NumberOfMethods()];
+        MethodNode node = (MethodNode) StrategyNodes()[NumberOfStrategies()-1].RightSibling;
         for(int i=0; i<array.length; i++){
             array[i] = node;
-            node = node.RightSibling;
+            node = (MethodNode) node.RightSibling;
         }
         return array;
     }

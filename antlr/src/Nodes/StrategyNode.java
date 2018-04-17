@@ -1,5 +1,7 @@
 package Nodes;
 
+import Nodes.values.IDNode;
+
 public class StrategyNode extends Node {
 
 
@@ -7,8 +9,8 @@ public class StrategyNode extends Node {
         super(firstLinenumber);
     }
 
-    public Node IDNode(){
-        return this.LeftmostChild;
+    public IDNode IDNode(){
+        return (IDNode) this.LeftmostChild;
     }
 
     public int NumberOfBehaviours(){
@@ -21,19 +23,16 @@ public class StrategyNode extends Node {
         return result;
     }
 
-    public Node[] BehaviourNodes(){
-        Node[] array = new Node[NumberOfBehaviours()];
+    public BehaviorNode[] BehaviourNodes(){
+        BehaviorNode[] array = new BehaviorNode[NumberOfBehaviours()];
         Node node = this.IDNode();
         for(int i=0; i<array.length; i++){
             node = node.RightSibling;
-            array[i] = node;
+            array[i] = (BehaviorNode) node;
         }
         return array;
     }
 
-    public Node BehaviourNode(){
-        return IDNode().RightSibling;
-    }
 
     @Override
     public String toString() {

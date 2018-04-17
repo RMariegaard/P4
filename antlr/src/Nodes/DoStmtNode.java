@@ -6,8 +6,8 @@ public class DoStmtNode extends Node {
         super(firstLinenumber);
     }
 
-    public Node VariableNode(){
-        return this.LeftmostChild;
+    public ArgumentNode VariableNode(){
+        return (ArgumentNode) this.LeftmostChild;
     }
 
     public Node StartValueNode(){
@@ -22,8 +22,8 @@ public class DoStmtNode extends Node {
         return EndValueNode().RightSibling;
     }
 
-    public Node BlockNode(){
-        return IncrementNode().RightSibling;
+    public BlockNode BlockNode(){
+        return (BlockNode) IncrementNode().RightSibling;
     }
 
 

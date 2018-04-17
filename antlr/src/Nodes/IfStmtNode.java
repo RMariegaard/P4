@@ -10,8 +10,8 @@ public class IfStmtNode extends Node {
         return this.LeftmostChild;
     }
 
-    public Node Block(){
-        return this.Condition().RightSibling;
+    public BlockNode Block(){
+        return (BlockNode) this.Condition().RightSibling;
     }
 
     public int NumberOfElseIf(){
@@ -25,12 +25,12 @@ public class IfStmtNode extends Node {
         return result == 0 ? 0 : result - 1;
     }
 
-    public Node[] ElseIf(){
-        Node[] array = new Node[NumberOfElseIf()];
+    public ElseIfNode[] ElseIf(){
+        ElseIfNode[] array = new ElseIfNode[NumberOfElseIf()];
         Node node = this.Block();
         for(int i=0; i<array.length; i++){
             node = node.RightSibling;
-            array[i] = node;
+            array[i] = (ElseIfNode) node;
         }
         return array;
     }

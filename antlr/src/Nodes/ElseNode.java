@@ -7,8 +7,8 @@ public class ElseNode extends Node{
         super(firstLinenumber);
     }
 
-    public Node Block(){
-        return this.LeftmostChild;
+    public BlockNode Block(){
+        return (BlockNode) this.LeftmostChild;
     }
     @Override
     public String toString() {

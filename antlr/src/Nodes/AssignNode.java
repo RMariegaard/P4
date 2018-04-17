@@ -2,8 +2,8 @@ package Nodes;
 
 public class AssignNode extends Node {
 
-    public Node RefNode(){
-        return this.LeftmostChild;
+    public RefNode RefNode(){
+        return (RefNode) this.LeftmostChild;
     }
 
     public AssignNode(int firstLinenumber) {

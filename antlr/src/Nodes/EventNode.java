@@ -1,5 +1,7 @@
 package Nodes;
 
+import Nodes.values.IDNode;
+
 public class EventNode extends Node {
 
     public EventNode(int firstLinenumber) {
@@ -9,8 +11,8 @@ public class EventNode extends Node {
     public Node ExprNode(){
         return this.LeftmostChild;
     }
-    public Node ID(){
-        return this.ExprNode().RightSibling;
+    public IDNode ID(){
+        return (IDNode) this.ExprNode().RightSibling;
     }
 
     @Override

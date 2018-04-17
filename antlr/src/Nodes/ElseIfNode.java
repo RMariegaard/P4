@@ -11,8 +11,8 @@ public class ElseIfNode extends Node {
         return this.LeftmostChild;
     }
 
-    public Node Block(){
-        return this.Condition().RightSibling;
+    public BlockNode Block(){
+        return (BlockNode) this.Condition().RightSibling;
     }
 
     @Override

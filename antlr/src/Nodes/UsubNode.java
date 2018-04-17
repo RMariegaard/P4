@@ -6,8 +6,8 @@ public class UsubNode extends Node {
         super(firstLinenumber);
     }
 
-    public Node IDNode(){
-        return LeftmostChild;
+    public RefNode RefNode(){
+        return (RefNode) LeftmostChild;
     }
 
     @Override

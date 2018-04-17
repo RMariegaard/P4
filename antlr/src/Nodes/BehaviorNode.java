@@ -1,16 +1,18 @@
 package Nodes;
 
+import Nodes.values.IDNode;
+
 public class BehaviorNode extends Node {
 
     public BehaviorNode(int firstLinenumber) {
         super(firstLinenumber);
     }
 
-    public Node IDNode(){
-        return this.LeftmostChild;
+    public IDNode IDNode(){
+        return (IDNode) this.LeftmostChild;
     }
-    public Node BlockNode(){
-        return this.IDNode().RightSibling;
+    public BlockNode BlockNode(){
+        return (BlockNode) this.IDNode().RightSibling;
     }
 
     @Override

@@ -1,15 +1,17 @@
 package Nodes;
 
+import Nodes.values.IDNode;
+
 public class MethodNode extends Node {
 
     public MethodNode(int firstLinenumber) {
         super(firstLinenumber);
     }
 
-    public Node IDNode(){
-        return this.LeftmostChild;
+    public IDNode IDNode(){
+        return (IDNode) this.LeftmostChild;
     }
-    public Node RTypeNode(){ return this.IDNode().RightSibling;}
+    public RTypeNode RTypeNode(){ return (RTypeNode) this.IDNode().RightSibling;}
 
     public int NumberOfParameters(){
         int number = 0;
@@ -20,19 +22,19 @@ public class MethodNode extends Node {
         return number;
     }
 
-    public Node[] Parameters(){
-        Node[] array = new Node[NumberOfParameters()];
+    public ArgumentNode[] Parameters(){
+        ArgumentNode[] array = new ArgumentNode[NumberOfParameters()];
         Node node = this.IDNode();
         for(int i=0; i<array.length; i++){
             node = node.RightSibling;
-            array[i] = node;
+            array[i] = (ArgumentNode) node;
         }
         return array;
     }
 
-    public Node BlockNode(){
+    public BlockNode BlockNode(){
         Node node = Parameters()[NumberOfParameters()-1];
-        return node.RightSibling;
+        return (BlockNode) node.RightSibling;
     }
 
     @Override

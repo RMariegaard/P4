@@ -1,5 +1,7 @@
 package Nodes;
 
+import Nodes.values.IDNode;
+
 public class RefNode extends Node {
 
     public RefNode(int firstLinenumber) {
@@ -9,8 +11,8 @@ public class RefNode extends Node {
     public boolean IsArrayRef(){
         return this.IDNode().RightSibling !=null;
     }
-    public Node IDNode(){
-        return this.LeftmostChild;
+    public IDNode IDNode(){
+        (IDNode) return this.LeftmostChild;
     }
     public Node ArrayIndexNode(){
         return this.IDNode().RightSibling;

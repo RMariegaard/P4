@@ -10,8 +10,8 @@ public class WhileStmtNode extends Node {
         return this.LeftmostChild;
     }
 
-    public Node BlockNode(){
-        return this.ConditionNode().RightSibling;
+    public BlockNode BlockNode(){
+        return (BlockNode) this.ConditionNode().RightSibling;
     }
 
 

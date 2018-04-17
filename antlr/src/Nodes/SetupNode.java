@@ -6,8 +6,8 @@ public class SetupNode extends Node {
         super(firstLinenumber);
     }
 
-    public Node BlockNode(){
-        return this.LeftmostChild;
+    public BlockNode BlockNode(){
+        return (BlockNode) this.LeftmostChild;
     }
 
     @Override

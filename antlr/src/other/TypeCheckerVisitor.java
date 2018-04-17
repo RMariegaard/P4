@@ -182,6 +182,13 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(DoStmtNode node) {
+        if (Visit(node.VariableNode()) != int.class) {
+            ErrorList.add(String.format("Line %s: the variable %s in Do construct has to be of type int", node.FirstLinenumber, node.VariableNode().RefNode().));
+        }
+        Visit(node.StartValueNode());
+        Visit(node.EndValueNode());
+        Visit(node.IncrementNode());
+        Visit(node.BlockNode());
         return null;
     }
 

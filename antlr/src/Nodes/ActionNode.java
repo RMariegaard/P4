@@ -20,12 +20,12 @@ public class ActionNode extends Node {
         return result;
     }
 
-    public Node[] IDNodes(){
-        Node[] array = new Node[NumberOfIDNodes()];
-        Node node = this.LeftmostChild;
+    public IDNode[] IDNodes(){
+        IDNode[] array = new IDNode[NumberOfIDNodes()];
+        IDNode node = (IDNode) this.LeftmostChild;
         for(int i = 0; i<array.length; i++){
             array[i] = node;
-            node = node.RightSibling;
+            node = (IDNode) node.RightSibling;
         }
         return array;
     }
