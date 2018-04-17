@@ -94,7 +94,7 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
                 return idType;
             }
             else{
-                ErrorList.add(String.format("assigning %s to type %s not possible", node.RefNode().LeftmostChild.toString(), valueType.toString()));
+                ErrorList.add(String.format("on line %s, assigning %s to type %s not possible", node.FirstLinenumber, valueType.toString(), idType.toString()));
             }
         }catch (NullPointerException e){
             ErrorList.add(String.format("Variable %s does not exist, and cant be assigned to", node.RefNode().LeftmostChild.toString()));
