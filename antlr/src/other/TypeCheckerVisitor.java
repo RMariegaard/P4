@@ -183,10 +183,17 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
     @Override
     public Object Visit(DoStmtNode node) {
         if (Visit(node.VariableNode()) != int.class) {
-            ErrorList.add(String.format("Line %s: the variable %s in Do construct has to be of type int", node.FirstLinenumber, node.VariableNode().RefNode().));
+            ErrorList.add(String.format("Line %s: the variable %s in Do construct has to be of type int", node.FirstLinenumber, node.VariableNode().RefNode().IDNode().toString()));
         }
-        Visit(node.StartValueNode());
-        Visit(node.EndValueNode());
+        Object sType = Visit(node.StartValueNode());
+        if(sType != int.class){
+            ErrorList.add(String.format("Line %s: the startvalue for the do loop has to be of type int and cant be %s", node.FirstLinenumber, sType));
+        }
+        Object eType = Visit(node.EndValueNode());
+        if(eType != int.class){
+            ErrorList.add(String.format("Line %s: the endvalue for the do loop has to be of type int and cant be %s", node.FirstLinenumber, eType));
+        }
+        //Jaaaaaaaaaaa- hvordan var det lige vores do loop var ??
         Visit(node.IncrementNode());
         Visit(node.BlockNode());
         return null;

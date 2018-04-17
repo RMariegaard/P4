@@ -12,7 +12,7 @@ public class RefNode extends Node {
         return this.IDNode().RightSibling !=null;
     }
     public IDNode IDNode(){
-        (IDNode) return this.LeftmostChild;
+        return (IDNode)this.LeftmostChild;
     }
     public Node ArrayIndexNode(){
         return this.IDNode().RightSibling;

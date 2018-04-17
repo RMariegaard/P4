@@ -13,12 +13,12 @@ predcl    : dcl NEWLINE+                                                        
 
 block     : NEWLINE+ stmt* 'end' NEWLINE+
           ;
-stmt      : dcl NEWLINE+                                                                #dclStmt
-          | assign NEWLINE+                                                             #assignStmt
-          | action NEWLINE+                                                             #actionStmt
-          | 'if' '(' first=aoexpr ')' firstBlock=block (elseif)* ('else' secondBlock=block)?  #ifStmt
-          | 'do' '(' argmnt',' firstAo=aoexpr ',' secondAo=aoexpr ',' thirdAo=aoexpr ')' block                 #doStmt
-          | 'while''(' aoexpr ')' block                                                   #whileStmt
+stmt      : dcl NEWLINE+                                                                         #dclStmt
+          | assign NEWLINE+                                                                      #assignStmt
+          | action NEWLINE+                                                                      #actionStmt
+          | 'if' '(' first=aoexpr ')' firstBlock=block (elseif)* ('else' secondBlock=block)?     #ifStmt
+          | 'do' '(' argmnt',' firstAo=aoexpr ',' secondAo=aoexpr ',' thirdAo=aoexpr ')' block   #doStmt
+          | 'while''(' aoexpr ')' block                                                          #whileStmt
           | 'return' expr NEWLINE+                                                               #returnStmt
           | ref op=('++'|'--') NEWLINE+                                                          #incrStmt
           ;
@@ -64,13 +64,15 @@ bexpr    : expr op=( '==' | '>=' | '<=' | '<' | '>') bexpr               #boolex
           ;
 expr      : term op=( '+' | '-' ) expr                                #infixExpr
           | term                                                      #termExpr
-          | ID '[' expr ']'                                           #arrayExpr
-          | action                                                    #actionExpr
-          |factor op=('++'|'--')                                          #unaryExpr
           ;
 term      : factor op=('*' | '/') term
           | factor
           ;
+factor    : '(' aoexpr ')'                                          #parenFactor
+          | value=( INT_NUM |BOOL_VALUE | DECIMAL_NUM | TEXT)       #valueFactor
+          | action                                                  #actionFactor
+          | ref                                                     #refFactor
+          | ref op=('++'|'--')                                      #unaryExpr
           ;
 
 OP_ADD : '+';
@@ -88,12 +90,15 @@ OP_GREATEREQUAL : '>=';
 OP_LESSEQUAL: '<=';
 
 NEWLINE: '\n';
-ID: [a-zA-Z]+ ([a-zA-Z0-9])*;
 BOOL_VALUE: 'true' | 'false';
+ID: [a-zA-Z]+ ([a-zA-Z0-9])*;
 INT_NUM: [0-9]+ ;
 DECIMAL_NUM: [0-9]+ ('.' [0-9]+)? ;
-TEXT: '"'.*?'"';
+
+ESC: '\\' [btnr"\\];
+TEXT: '"'(ESC|.)*?'"';
 
 
 WS: [ \t\r] ->skip;
 COMMENTS: '//' ~('\r' | '\n')* -> skip;
+
