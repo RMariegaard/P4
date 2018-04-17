@@ -443,7 +443,7 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(UsubNode node) {
-        if(!(Visit(node.RefNode()) instanceof Integer)){
+        if(Visit(node.RefNode()) != int.class){
             ErrorList.add(String.format("Line %s: ", node.FirstLinenumber) + node.toString() + "USub not int");
         }
         return Integer.class;
@@ -453,7 +453,7 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(UAddNode node) {
-        if(!(Visit(node.RefNode()) instanceof Integer)){
+        if(Visit(node.RefNode()) != int.class){
             ErrorList.add(String.format("Line %s: ", node.FirstLinenumber) + node.toString() + "UAdd not int");
         }
         return Integer.class;
