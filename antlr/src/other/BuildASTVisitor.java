@@ -14,7 +14,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
     @Override
     public Node visitProg(antlrParser.ProgContext ctx) {
-        Node progNode = new ProgNode();
+        Node progNode = new ProgNode(0);
 
         List<antlrParser.PredclContext> preDcls = ctx.predcl();
         if (!preDcls.isEmpty()) {
@@ -63,12 +63,12 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
     @Override
     public Node visitSetup(antlrParser.SetupContext ctx) {
-        return new SetupNode().AdoptChildren(visit(ctx.block()));
+        return new SetupNode(ctx.start.getLine()).AdoptChildren(visit(ctx.block()));
     }
 
     @Override
     public Node visitGameloop(antlrParser.GameloopContext ctx) {
-        return new GameLoopNode().AdoptChildren(visit(ctx.block()));
+        return new GameLoopNode(ctx.start.getLine()).AdoptChildren(visit(ctx.block()));
     }
 
     @Override
