@@ -2,14 +2,21 @@ package Nodes;
 
 public class ArgumentNode extends Node {
 
-    public String Type;
+    public Object Type;
 
     public RefNode RefNode(){
         return (RefNode) this.LeftmostChild;
     }
     public ArgumentNode(int firstLinenumber, String type) {
         super(firstLinenumber);
-        Type = type;
+        if(type.equals("text"))
+            Type = String.class;
+        else if(type.equals("bool"))
+            Type = boolean.class;
+        else if(type.equals("int"))
+            Type = int.class;
+        else if (type.equals("decimal"))
+            Type = double.class;
     }
 
     @Override

@@ -67,7 +67,7 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(ArgumentNode node) {
-        RefNode rNode = (RefNode) node.RefNode();
+        RefNode rNode = node.RefNode();
         if(symbolTable.DeclaredLocally(rNode.IDNode().toString())){
             ErrorList.add(String.format("Line %s: Argument %s is already declared in this scope", node.FirstLinenumber, rNode.IDNode()));
             return null;
@@ -182,6 +182,7 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(DoStmtNode node) {
+        symbolTable.OpenScope();
         if (Visit(node.VariableNode()) != int.class) {
             ErrorList.add(String.format("Line %s: the variable %s in Do construct has to be of type int", node.FirstLinenumber, node.VariableNode().RefNode().IDNode().toString()));
         }
@@ -196,6 +197,7 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
         //Jaaaaaaaaaaa- hvordan var det lige vores do loop var ??
         Visit(node.IncrementNode());
         Visit(node.BlockNode());
+        symbolTable.CloseScope();
         return null;
     }
 
@@ -306,7 +308,7 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
         }
         else {
             symbolTable.EnterSymbol(node.IDNode().toString(), typeNode.toString());
-            return typeNode.Type;
+            return typeNode.Typee;
         }
     }
 
@@ -383,7 +385,7 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
     @Override
     public Object Visit(RTypeNode node) {
-        return node.Type;
+        return node.Typee;
     }
 
     @Override
