@@ -3,6 +3,10 @@ package Nodes;
 public class BlockNode extends Node {
 
 
+    public BlockNode(int firstLinenumber) {
+        super(firstLinenumber);
+    }
+
     public int NumberOfStatements(){
         int result = 0;
         Node node = this.LeftmostChild;

@@ -7,9 +7,12 @@ public abstract class Node{
     public Node RightSibling;
     public Node LeftmostChild;
     public int Distance;
+    public int FirstLinenumber;
 
 
-    public Node(){}
+    public Node(int firstLinenumber){
+        this.FirstLinenumber = firstLinenumber;
+    }
 
 
     //Ifølge bogen skal de alle sammen returnere node...

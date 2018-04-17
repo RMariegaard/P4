@@ -4,7 +4,8 @@ public class RTypeNode extends Node {
 
     public String TypeString;
 
-    public RTypeNode(String typeString) {
+    public RTypeNode(int firstLinenumber, String typeString) {
+        super(firstLinenumber);
         this.TypeString = typeString;
     }
 

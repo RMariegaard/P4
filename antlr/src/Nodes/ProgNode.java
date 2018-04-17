@@ -1,8 +1,10 @@
 package Nodes;
 
-import java.util.Set;
-
 public class ProgNode extends Node {
+
+    public ProgNode(int firstLinenumber) {
+        super(firstLinenumber);
+    }
 
     public int NumberOfPreDcls(){
         int result = 0;

@@ -2,6 +2,10 @@ package Nodes;
 
 public class IfStmtNode extends Node {
 
+    public IfStmtNode(int firstLinenumber) {
+        super(firstLinenumber);
+    }
+
     public Node Condition(){
         return this.LeftmostChild;
     }

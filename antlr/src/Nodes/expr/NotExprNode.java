@@ -1,11 +1,13 @@
 package Nodes.expr;
 
-import Nodes.expr.ExprNode;
-
 import Nodes.Node;
 
 
-public class NotExprNode extends ExprNode {
+public class NotExprNode extends Node {
+
+    public NotExprNode(int firstLinenumber) {
+        super(firstLinenumber);
+    }
 
     public Node ExprNode(){
         return this.LeftmostChild;

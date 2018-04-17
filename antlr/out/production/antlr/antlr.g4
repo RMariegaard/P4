@@ -71,8 +71,6 @@ expr      : term op=( '+' | '-' ) expr                                #infixExpr
 term      : factor op=('*' | '/') term
           | factor
           ;
-factor    : '(' aoexpr ')'
-          | op=(ID | INT_NUM |BOOL_VALUE | DECIMAL_NUM | TEXT)
           ;
 
 OP_ADD : '+';

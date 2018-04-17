@@ -5,7 +5,8 @@ import Nodes.Node;
 public class BoolNode extends Node {
     public Boolean value;
 
-    public BoolNode(Boolean value) {
+    public BoolNode(int firstLinenumber, Boolean value) {
+        super(firstLinenumber);
         this.value = value;
     }
 

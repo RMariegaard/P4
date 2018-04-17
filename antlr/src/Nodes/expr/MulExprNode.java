@@ -1,11 +1,13 @@
 package Nodes.expr;
 
-import Nodes.expr.ExprNode;
-
 import Nodes.Node;
 
 
-public class MulExprNode extends ExprNode {
+public class MulExprNode extends Node {
+
+    public MulExprNode(int firstLinenumber) {
+        super(firstLinenumber);
+    }
 
     public Node LeftNode(){
         return this.LeftmostChild;

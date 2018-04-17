@@ -3,6 +3,10 @@ package Nodes;
 public class StrategyNode extends Node {
 
 
+    public StrategyNode(int firstLinenumber) {
+        super(firstLinenumber);
+    }
+
     public Node IDNode(){
         return this.LeftmostChild;
     }

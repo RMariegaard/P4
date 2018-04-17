@@ -2,6 +2,10 @@ package Nodes;
 
 public class RefNode extends Node {
 
+    public RefNode(int firstLinenumber) {
+        super(firstLinenumber);
+    }
+
     public boolean IsArrayRef(){
         return this.IDNode().RightSibling !=null;
     }

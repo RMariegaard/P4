@@ -7,8 +7,8 @@ public class ArgumentNode extends Node {
     public Node RefNode(){
         return this.LeftmostChild;
     }
-    public ArgumentNode(String type) {
-        super();
+    public ArgumentNode(int firstLinenumber, String type) {
+        super(firstLinenumber);
         Type = type;
     }
 

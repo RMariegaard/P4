@@ -2,7 +2,11 @@ package Nodes.expr;
 
 import Nodes.Node;
 
-public class SubExprNode extends ExprNode {
+public class SubExprNode extends Node {
+
+    public SubExprNode(int firstLinenumber) {
+        super(firstLinenumber);
+    }
 
     public Node LeftNode(){
         return this.LeftmostChild;

@@ -7,8 +7,8 @@ public class DclNode extends Node {
         return LeftmostChild;
     }
 
-    public DclNode(String type) {
-        super();
+    public DclNode(int firstLinenumber, String type) {
+        super(firstLinenumber);
         if(type.equals("text"))
             Type = String.class;
         else if(type.equals("bool"))

@@ -1,10 +1,12 @@
 package Nodes.expr;
 
-import Nodes.expr.ExprNode;
-
 import Nodes.Node;
 
-public class InfixExprNode extends ExprNode {
+public class InfixExprNode extends Node {
+
+    public InfixExprNode(int firstLinenumber) {
+        super(firstLinenumber);
+    }
 
     public Node LeftNode(){
         return this.LeftmostChild;
