@@ -16,11 +16,10 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
     @Override
     public Object Visit(ActionNode node) {
         Node[] array = node.IDNodes();
-        Object type = null;
         for(int i = 0; i<array.length; i++) {
-            type = Visit(array[i]);
+            Visit(array[i]);
         }
-        return type;
+        return Visit(node.Fcall());
     }
 
     @Override
@@ -252,15 +251,17 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
     public Object Visit(FcallNode node) {
         Object type = Visit(node.IDNode());
         SymbolClass sym = symbolTable.RetrieveSymbol(node.IDNode().idString);
-        int numberOfparams = sym.Parameters.length;
-        int numberOfargs = node.NumberOfArguments();
-        if(numberOfargs != numberOfparams){
-            ErrorList.add(String.format("Line %s: Number of arguments does not match the number of parameters for the method %s", node.FirstLinenumber, node.IDNode().toString()));
-        }
-        ArgumentNode[] arguments = node.ArgumentNodes();
-        for(int i = 0; i<numberOfparams; i++) {
-            if (sym.Parameters[i].Type != arguments[i]) {
-                ErrorList.add(String.format("Line %s, Argument number %s has to be of type %s", node.FirstLinenumber, i + 1, sym.Parameters[i].Type.toString()));
+        if(sym != null){
+            int numberOfparams = sym.Parameters != null ? sym.Parameters.length : 0;
+            int numberOfargs = node.NumberOfArguments();
+            if(numberOfargs != numberOfparams){
+                ErrorList.add(String.format("Line %s: Number of arguments does not match the number of parameters for the method %s", node.FirstLinenumber, node.IDNode().toString()));
+            }
+            ArgumentNode[] arguments = node.ArgumentNodes();
+            for(int i = 0; i<numberOfparams; i++) {
+                if (sym.Parameters[i].Type != arguments[i]) {
+                    ErrorList.add(String.format("Line %s, Argument number %s has to be of type %s", node.FirstLinenumber, i + 1, sym.Parameters[i].Type.toString()));
+                }
             }
         }
         return type;

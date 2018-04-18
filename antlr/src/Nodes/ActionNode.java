@@ -30,6 +30,15 @@ public class ActionNode extends Node {
         return array;
     }
 
+    public FcallNode Fcall(){
+        Node[] array = IDNodes();
+        if(array.length > 0){
+            return (FcallNode) array[array.length-1].RightSibling;
+        }
+        else{
+            return (FcallNode) this.LeftmostChild; //If the array is empty then the leftmost child most be the fcall
+        }
+    }
 
     @Override
     public String toString() {
