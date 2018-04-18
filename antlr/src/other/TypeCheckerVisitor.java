@@ -103,11 +103,15 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
         try {
             Object idType = Visit(node.RefNode());
             Object valueType = Visit(node.ValueNode());
-            if (idType.equals(valueType)) {
+            if(valueType == null){
+                //TODO: if valuetype is zero then another error has happen and has been reported. however should type null be written to the user?
+                return null;
+            }
+            else if (idType.equals(valueType)) {
                 return idType;
             }
             else{
-                ErrorList.add(String.format("Line %s: on line %s, assigning %s to type %s not possible", node.FirstLinenumber, node.FirstLinenumber, valueType.toString(), idType.toString()));
+                ErrorList.add(String.format("Line %s: assigning %s to type %s not possible", node.FirstLinenumber, node.FirstLinenumber, valueType.toString(), idType.toString()));
             }
         }catch (NullPointerException e){
             ErrorList.add(String.format("Line %s: Variable %s does not exist, and cant be assigned to", node.FirstLinenumber, node.RefNode().LeftmostChild.toString()));
