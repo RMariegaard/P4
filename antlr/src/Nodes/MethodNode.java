@@ -18,13 +18,14 @@ public class MethodNode extends Node {
         Node node = RTypeNode();
         while(!(node.RightSibling instanceof BlockNode)){
             number++;
+            node = node.RightSibling;
         }
         return number;
     }
 
     public ArgumentNode[] Parameters(){
         ArgumentNode[] array = new ArgumentNode[NumberOfParameters()];
-        Node node = this.IDNode();
+        Node node = this.RTypeNode();
         for(int i=0; i<array.length; i++){
             node = node.RightSibling;
             array[i] = (ArgumentNode) node;

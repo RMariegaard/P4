@@ -22,6 +22,7 @@ public abstract class AstVisitor<T> {
     public abstract T Visit(ElseIfNode node);
     public abstract T Visit(EqualNode node);
     public abstract T Visit(EventNode node);
+    public abstract T Visit(FcallNode node);
     public abstract T Visit(GameLoopNode node);
     public abstract T Visit(GreaterNode node);
     public abstract T Visit(GreaterEqualNode node);
@@ -47,6 +48,7 @@ public abstract class AstVisitor<T> {
     public abstract T Visit(UsubNode node);
     public abstract T Visit(UAddNode node);
     public abstract T Visit(WhileStmtNode node);
+
 
 
     public T Visit(Node node){
@@ -134,6 +136,8 @@ public abstract class AstVisitor<T> {
             return Visit((StringNode) node);
         } else if(node instanceof BoolNode){
             return Visit((BoolNode) node);
+        } else if(node instanceof FcallNode){
+            return Visit((FcallNode) node);
         }
         else
             return null; //hvad skal vi ellers returnere...

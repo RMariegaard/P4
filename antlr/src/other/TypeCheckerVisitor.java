@@ -227,7 +227,7 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
                 ErrorList.add(String.format("Line %s: Cannot compare type %s and %s, type must be the same",node.FirstLinenumber,leftNodeType, rightNodeType));
         }catch (NullPointerException e){
 
-            System.out.println("Something went wrong...");
+            System.out.println(String.format("Something went wrong... Left node on line %s was most likely type null", node.FirstLinenumber));
             return null;
         }
         return null;
@@ -246,6 +246,24 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
             ErrorList.add(String.format("Line %s: The condition of event %s is not of type boolean", node.FirstLinenumber, node.ID().toString()));
         //Visit(node.ID()); Den skal vel ikke besøge ID, da vi lægger den ind her anyway.
         return null;
+    }
+
+    @Override
+    public Object Visit(FcallNode node) {
+        Object type = Visit(node.IDNode());
+        SymbolClass sym = symbolTable.RetrieveSymbol(node.IDNode().idString);
+        int numberOfparams = sym.Parameters.length;
+        int numberOfargs = node.NumberOfArguments();
+        if(numberOfargs != numberOfparams){
+            ErrorList.add(String.format("Line %s: Number of arguments does not match the number of parameters for the method %s", node.FirstLinenumber, node.IDNode().toString()));
+        }
+        ArgumentNode[] arguments = node.ArgumentNodes();
+        for(int i = 0; i<numberOfparams; i++) {
+            if (sym.Parameters[i].Type != arguments[i]) {
+                ErrorList.add(String.format("Line %s, Argument number %s has to be of type %s", node.FirstLinenumber, i + 1, sym.Parameters[i].Type.toString()));
+            }
+        }
+        return type;
     }
 
     @Override
@@ -311,7 +329,7 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
             return null;
         }
         else {
-            symbolTable.EnterSymbol(node.IDNode().toString(), typeNode.toString());
+            symbolTable.EnterSymbol(node.IDNode().toString(), typeNode.toString(), node.Parameters());
             return typeNode.Type;
         }
     }

@@ -22,10 +22,10 @@ public class ActionNode extends Node {
 
     public IDNode[] IDNodes(){
         IDNode[] array = new IDNode[NumberOfIDNodes()];
-        IDNode node = (IDNode) this.LeftmostChild;
+        Node node = this.LeftmostChild;
         for(int i = 0; i<array.length; i++){
-            array[i] = node;
-            node = (IDNode) node.RightSibling;
+            array[i] = (IDNode) node;
+            node =  node.RightSibling;
         }
         return array;
     }

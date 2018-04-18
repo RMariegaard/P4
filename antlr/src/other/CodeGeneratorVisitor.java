@@ -92,6 +92,11 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
     }
 
     @Override
+    public String Visit(FcallNode node) {
+        return null;
+    }
+
+    @Override
     public String Visit(GameLoopNode node) {
         return null;
     }

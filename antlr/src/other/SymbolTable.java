@@ -1,4 +1,6 @@
 package other;
+import Nodes.ArgumentNode;
+
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -69,6 +71,13 @@ public class SymbolTable {
             hashtable.put(sym.Name, sym);
         }
         sym.Var = oldSym;
+    }
+
+    public void EnterSymbol(String name, Object type, ArgumentNode[] parameters){
+        EnterSymbol(name, type);
+        SymbolClass sym = RetrieveSymbol(name);
+        sym.Parameters = parameters;
+
     }
 
     public boolean DeclaredLocally(String name){

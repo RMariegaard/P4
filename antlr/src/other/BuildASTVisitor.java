@@ -267,12 +267,13 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
 
     @Override
     public Node visitFcall(antlrParser.FcallContext ctx) {
+        FcallNode fnode = new FcallNode(ctx.start.getLine());
         Node IDNode = new IDNode(ctx.start.getLine(), ctx.ID().getText());
-
+        fnode.AdoptChildren(IDNode);
         List<antlrParser.ExprContext> exprs = ctx.expr();
         if (!exprs.isEmpty()){
             for (antlrParser.ExprContext expr : exprs){
-                IDNode.AdoptChildren(visit(expr));
+                fnode.AdoptChildren(visit(expr));
             }
         }
 
