@@ -17,7 +17,7 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
     public Object Visit(ActionNode node) {
         Node[] array = node.IDNodes();
         Object type = null;
-        for(int i = 0; i<array.length; i++){
+        for(int i = 0; i<array.length; i++) {
             type = Visit(array[i]);
         }
         return type;

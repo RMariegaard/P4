@@ -30,4 +30,9 @@ public class FcallNode extends Node {
         }
         return array;
     }
+
+    @Override
+    public String toString() {
+        return "FCall";
+    }
 }

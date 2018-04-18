@@ -277,7 +277,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
             }
         }
 
-        return IDNode;
+        return fnode;
     }
 
     @Override
