@@ -223,7 +223,11 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
                 return boolean.class;
                 //skal man kunne sige string == string i vores sprog? kan man ikke i java så dette skal vi tage højde for når vi laver code generation.
             }
+            else
+                ErrorList.add(String.format("Line %s: Cannot compare type %s and %s, type must be the same",node.FirstLinenumber,leftNodeType, rightNodeType));
         }catch (NullPointerException e){
+
+            System.out.println("Something went wrong...");
             return null;
         }
         return null;
