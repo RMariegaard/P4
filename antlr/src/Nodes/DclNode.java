@@ -17,8 +17,8 @@ public class DclNode extends Node {
             Type = int.class;
         else if (type.equals("decimal"))
             Type = double.class;
-
     }
+
     public String getID(){
         Node idNode = LeftmostChild;
         while(idNode.LeftmostChild != null)
