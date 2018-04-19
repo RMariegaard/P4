@@ -5,6 +5,9 @@ import Nodes.expr.*;
 import Nodes.values.*;
 import Types.EventType;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -495,5 +498,41 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
 
 
         return null;
+    }
+
+    public void AddLibarytoSymbolTable(String... files) throws IOException {
+        for(String input : files){
+            List<String> content = Files.readAllLines(Paths.get(input));
+            String[] elements;
+            for(String line : content){
+                 elements = line.split("\\s+"); //RobocodeName - OurName - returnType - Parameter(max 1)/Can be none
+                Object type = FindType(elements[2]);
+                if(elements[3].equals("none"))
+                    symbolTable.EnterSymbol(elements[1], type);
+                else{
+                    ArgumentNode node = new ArgumentNode(0, elements[3]); //Has no refNode, might be a problem
+                    symbolTable.EnterSymbol(elements[1], type, new ArgumentNode[]{node});
+                }
+            }
+
+        }
+
+    }
+
+    private Object FindType(String type) {
+
+        if(type.equals("text"))
+             return String.class;
+        else if(type.equals("bool"))
+            return boolean.class;
+        else if(type.equals("int"))
+            return int.class;
+        else if (type.equals("decimal"))
+            return double.class;
+        else if (type.equals("void"))
+            return void.class;
+        else
+            return null;
+
     }
 }
