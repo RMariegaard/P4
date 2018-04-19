@@ -6,6 +6,8 @@ import Nodes.values.*;
 
 public class CodeGeneratorVisitor extends AstVisitor<String> {
 
+    public String Code;
+
     @Override
     public String Visit(ActionNode node) {
         return null;
@@ -171,6 +173,39 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     @Override
     public String Visit(ProgNode node) {
+        String string = "";
+
+
+        for(Node pnode : node.PreDclNodes())
+            string += Visit(pnode);
+        string += "public void run() {\n";
+        string += Visit(node.SetupNode());
+        string += "while(true) {\n";
+        string += Visit(node.GameLoopNode());
+        string += "}\n";
+
+        for(Node mnode : node.MethodNodes())
+            string += Visit(mnode);
+
+        String strategies = "";
+        //Der skal laves nye filer
+        for(Node snode : node.StrategyNodes()){
+            strategies += Visit(snode);
+        }
+
+        MakeRobotClass(string, strategies);
+
+        return string;
+    }
+
+    //The code has all imported libaries.
+    private String MakeRobotClass(String code, String strategies) {
+        String string = "";
+        string += ImportLibaries(strategies);
+        return null;
+    }
+
+    private String ImportLibaries(String strategies) {
         return null;
     }
 
