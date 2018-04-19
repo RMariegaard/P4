@@ -15,7 +15,7 @@ public class ArgumentNode extends Node {
             Type = boolean.class;
         else if(type.equals("int"))
             Type = int.class;
-        else if (type.equals("decimal"))
+        else if (type.equals("decimal") || type.equals("double"))
             Type = double.class;
     }
 

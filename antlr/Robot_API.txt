@@ -1,7 +1,6 @@
 ahead 				Tank.ahead 				void 		double
 back 				Tank.back 				void 		double
 doNothing 			Tank.doNothing 				void 		none
-fireBullet			Tank.Gun.fireBullet			Bullet		double
 getGunCoolingRate		Tank.Gun.getCoolingRate			double		none
 getGunHeading			Tank.Gun.getHeading			double		none
 getGunHeat			Tank.Gun.getnHeat			double		none
@@ -11,7 +10,6 @@ getOthers			Game.getOthers				int		none
 getNumSentries			Game.getNumSentries			int		none
 getRadarHeading			Tank.Radar.getHeading			double		none
 getRoundNum			Game.getRoundNum			int		none
-getTime				Game.getTime				long		none
 getVelocity			Tank.getVelocity			double		none
 scan				Tank.Radar.scan				void		none
 setAdjustGunForRobotTurn	Tank.Gun.setAdjustForRobotTurn		void		boolean
