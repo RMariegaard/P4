@@ -4,6 +4,8 @@ import Nodes.Node;
 import Nodes.expr.AddExprNode;
 import Nodes.values.DecimalNode;
 import Nodes.values.IntNode;
+import Nodes.values.StringNode;
+import Nodes.values.BoolNode;
 import other.SymbolTable;
 import other.TypeCheckerVisitor;
 
@@ -44,6 +46,34 @@ class TypeCheckerVisitorTest {
 
         assertSame(typeChecker.Visit(node), int.class);
     }
+    @org.junit.jupiter.api.Test
+    void visitAddExprDecimalAndDecimal() {
+        Node node = new AddExprNode(0);
+        node.AdoptChildren(new DecimalNode(0,2.5));
+        node.AdoptChildren(new DecimalNode(0,11.2));
+
+        assertSame(typeChecker.Visit(node), double.class);
+    }
+    @org.junit.jupiter.api.Test
+    void visitAddExprStringAndString() {
+        Node node = new AddExprNode(0);
+        node.AdoptChildren(new StringNode(0,"One String"));
+        node.AdoptChildren(new StringNode(0,"Two String"));
+
+        //Skal vi kunne gøre dette? så brug
+        //assertSame(typeChecker.Visit(node), String.class);
+
+        assertNull(typeChecker.Visit(node));
+    }
+    @org.junit.jupiter.api.Test
+    void visitAddExprBoolAndBool() {
+        Node node = new AddExprNode(0);
+        node.AdoptChildren(new BoolNode(0,true));
+        node.AdoptChildren(new BoolNode(0,true));
+
+        assertNull(typeChecker.Visit(node));
+    }
+
 
     @org.junit.jupiter.api.Test
     void visitAnd() {
