@@ -1,9 +1,22 @@
-package other;
+package Tests;
+
+import Nodes.Node;
+import Nodes.expr.AddExprNode;
+import Nodes.values.DecimalNode;
+import Nodes.values.IntNode;
+import other.SymbolTable;
+import other.TypeCheckerVisitor;
+
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 
 class TypeCheckerVisitorTest {
-
+    SymbolTable symbolTable;
+    TypeCheckerVisitor typeChecker;
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
+         symbolTable = new SymbolTable();
+         typeChecker = new TypeCheckerVisitor();
     }
 
     @org.junit.jupiter.api.AfterEach
@@ -11,27 +24,41 @@ class TypeCheckerVisitorTest {
     }
 
     @org.junit.jupiter.api.Test
-    void visit() {
+    void visitAction() {
     }
 
     @org.junit.jupiter.api.Test
-    void visit1() {
+    void visitAddExprIntAndDouble() {
+        Node node = new AddExprNode(0);
+        node.AdoptChildren(new IntNode(0,3));
+        node.AdoptChildren(new DecimalNode(0,2.2));
+
+        assertNull(typeChecker.Visit(node));
     }
 
     @org.junit.jupiter.api.Test
-    void visit2() {
+    void visitAddExprIntAndInt() {
+        Node node = new AddExprNode(0);
+        node.AdoptChildren(new IntNode(0,3));
+        node.AdoptChildren(new IntNode(0,2));
+
+        assertSame(typeChecker.Visit(node), int.class);
     }
 
     @org.junit.jupiter.api.Test
-    void visit3() {
+    void visitAnd() {
     }
 
     @org.junit.jupiter.api.Test
-    void visit4() {
+    void visitArgument() {
     }
 
     @org.junit.jupiter.api.Test
-    void visit5() {
+    void visitArrayExpr() {
+    }
+
+    @org.junit.jupiter.api.Test
+    void visitAssign() {
     }
 
     @org.junit.jupiter.api.Test

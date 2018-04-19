@@ -29,15 +29,15 @@ public class TypeCheckerVisitor extends AstVisitor<Object> {
         Object rightNodeType = Visit(node.RightNode());
         try{
             if(leftNodeType.equals(rightNodeType)){
-                if(leftNodeType instanceof Integer || leftNodeType instanceof Double){ //ikke sikker på dette virker før var det "leftNodeType.getClass().equals(int.class)
+                if(leftNodeType == int.class || leftNodeType == double.class){ //ikke sikker på dette virker før var det "leftNodeType.getClass().equals(int.class)
                     return leftNodeType;
                 }
                 else{
-                    ErrorList.add(String.format("Line %s: Line %s It is illegal to add two elements of type %s together", node.FirstLinenumber, leftNodeType.toString()));
+                    ErrorList.add(String.format("Line %s It is illegal to add two elements of type %s together", node.FirstLinenumber, leftNodeType.toString()));
                 }
             }
             else{
-                ErrorList.add(String.format("Line %s: Line %s: You can't add two elements of different types together.\nThe type of %s is %s, which doesn't match the type of %s, which is %s", node.FirstLinenumber,  node.LeftNode(), leftNodeType, node.RightNode(), rightNodeType));
+                ErrorList.add(String.format("Line %s: You can't add two elements of different types together.\nThe type of %s is %s, which doesn't match the type of %s, which is %s", node.FirstLinenumber,  node.LeftNode(), leftNodeType, node.RightNode(), rightNodeType));
 
             }
             return null;
