@@ -67,13 +67,16 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
     }
 
     @Override
-    public String Visit(DoStmtNode node) {
-        return null;
+    public String Visit(DoStmtNode node)
+    {
+        return String.format("for(%s = %s; %s < %s; %s = %s + %s){%s}"
+                , node.VariableNode(), node.StartValueNode(), node.VariableNode(), node.EndValueNode(), node.VariableNode(), node.VariableNode(), node.IncrementNode(), node.BlockNode());
     }
 
     @Override
-    public String Visit(ElseNode node) {
-        return null;
+    public String Visit(ElseNode node)
+    {
+        return String.format("else { %s }", node.Block());
     }
 
     @Override
