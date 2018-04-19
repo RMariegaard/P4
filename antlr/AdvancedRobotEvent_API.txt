@@ -1,0 +1,3 @@
+onCustomEvent		void		CustomEvent
+OnDeath			void		DeathEvent
+onSkippedTurn		void		SkippedTurnEvent
