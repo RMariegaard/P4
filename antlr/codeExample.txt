@@ -10,20 +10,20 @@ setup
 end
 
 game-loop
-    Tank.Ahead(123)
-    Gun.TurnLeft(123)
+    Tank.ahead(123)
+    Gun.turnLeft(123)
     if( Game.getRoundNumber() > 10)
-        Tank.Fire(2)
-        Radar.TurnRight(200)
+        Tank.fire(2)
+        Radar.turnRight(200)
     end
      
     else if (Game.getRoundNumber() > 5)
-		Tank.Fire(1)
-	    Radar.TurnRight(100)
+		Tank.fire(1)
+	    Radar.turnRight(100)
 	end
 	else
-        Tank.Fire(3)
-	    Radar.TurnRight(50)
+        Tank.fire(3)
+	    Radar.turnRight(50)
 	end
 end
 
@@ -35,7 +35,7 @@ end
 
 strategy Default
     behavior OnScannedRobot
-	    Tank.TurnRight(Enemy.GetBearing())
+	    Tank.turnRight(Enemy.GetBearing())
     end
 
 

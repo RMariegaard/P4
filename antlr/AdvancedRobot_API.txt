@@ -21,4 +21,3 @@ setTurnGunLeft			Tank.Gun.setTurnLeft			void		double
 setTurnGunRight			Tank.Gun.setTurnRight			void		double
 setTurnRadarLeft		Tank.Radar.setTurnLeft			void		double
 setTurnRadarRight		Tank.Radar.setTurnRight			void		double
-

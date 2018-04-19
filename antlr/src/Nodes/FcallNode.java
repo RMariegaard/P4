@@ -21,11 +21,11 @@ public class FcallNode extends Node {
         return result;
     }
 
-    public ArgumentNode[] ArgumentNodes(){
-        ArgumentNode[] array = new ArgumentNode[NumberOfArguments()];
+    public Node[] ArgumentNodes(){
+        Node[] array = new Node[NumberOfArguments()];
         Node node = IDNode().RightSibling;
         for(int i = 0; i<array.length; i++){
-            array[i] = (ArgumentNode) node;
+            array[i] = node;
             node = node.RightSibling;
         }
         return array;

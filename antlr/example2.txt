@@ -18,14 +18,14 @@ end
 strategy Default
     behavior onScannedRobot
         dothis()
-        Tank.Fire.GG(12345)
+        Tank.fire.GG(12345)
         int x = 34
         x++
     end
     behavior onHitByRobot
         do(int q, 0, 3, q++)
             fire(q)
-            tank.Ahead(100)
+            tank.ahead(100)
         end
     end
     behavior round10Event
