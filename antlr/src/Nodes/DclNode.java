@@ -1,7 +1,6 @@
 package Nodes;
 
 public class DclNode extends Node {
-    public Object Type;
 
     public Node ChildNode(){
         return LeftmostChild;

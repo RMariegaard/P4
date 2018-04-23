@@ -2,8 +2,6 @@ package Nodes;
 
 public class RTypeNode extends Node {
 
-    public Object Type;
-
     public RTypeNode(int firstLinenumber, String type) {
         super(firstLinenumber);
         if(type.equals("text"))

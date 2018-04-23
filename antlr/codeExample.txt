@@ -2,7 +2,7 @@ int target = 40
 int cool
 bool fun = 34 == true
 int test = true
-event(Tank.getEnergy() == 40) -> WhenEnergyIs40
+event(Tank.getEnergy() == 40.0) -> WhenEnergyIs40
 setup
 	Tank.setBodyColor(white)
 	Tank.setGunColor(white)

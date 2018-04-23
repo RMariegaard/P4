@@ -2,8 +2,6 @@ package Nodes;
 
 public class ArgumentNode extends Node {
 
-    public Object Type;
-
     public RefNode RefNode(){
         return (RefNode) this.LeftmostChild;
     }
