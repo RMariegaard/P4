@@ -10,7 +10,10 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     @Override
     public String Visit(ActionNode node) {
-        return null;
+        String string = "";
+        for(Node idnode : node.IDNodes())
+            string = String.format(string + "%s.", Visit(idnode));
+        return string + Visit(node.Fcall());
     }
 
     @Override
@@ -25,7 +28,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     @Override
     public String Visit(ArgumentNode node) {
-        return null;
+        return String.format("%s %s", node.Type.toString(), Visit(node.RefNode()));
     }
 
     @Override
@@ -35,7 +38,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     @Override
     public String Visit(AssignNode node) {
-        return null;
+        return String.format("%s = %s;", Visit(node.RefNode()), Visit(node.ValueNode()));
     }
 
     @Override
@@ -49,7 +52,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
         String result = "";
         for (int i = 0; i < node.NumberOfStatements(); i++)
         {
-            result = String.format(result + Visit(node.StmtNodes()[i]));
+            result = String.format(result + Visit(node.StmtNodes()[i]) + "\n");
         }
         return result;
     }
@@ -65,11 +68,11 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
     {
         if (node.ChildNode().RightSibling == null)
         {
-            return String.format("%s %s", node.Type, node.getID());
+            return String.format("%s %s;", node.Type, node.getID()); //burde ikke bare være visit(childnode)
         }
         else
         {
-            return String.format("%s %s = %s", node.Type, node.getID(), Visit(node.ChildNode().RightSibling));
+            return String.format("%s %s = %s;", node.Type, node.getID(), Visit(node.ChildNode().RightSibling));
         }
     }
 
@@ -80,7 +83,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     @Override
     public String Visit(DivExprNode node) {
-        return null;
+        return String.format("%s/%s", node.LeftNode(), node.RightNode());
     }
 
     @Override
@@ -113,9 +116,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
     }
 
     @Override
-    public String Visit(FcallNode node) {
-        return null;
-    }
+    public String Visit(FcallNode node) { return null;}
 
     @Override
     public String Visit(GameLoopNode node) {
