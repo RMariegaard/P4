@@ -54,15 +54,16 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
 
     @Override
     public Node Visit(AndNode node) {
-        Node leftNodeType = Visit(node.LeftNode());
-        Node rightNodeType = Visit(node.RightNode());
+        Node leftNode = Visit(node.LeftNode());
+        Node rightNode = Visit(node.RightNode());
         try {
-            if (leftNodeType == boolean.class && rightNodeType == boolean.class) {
-                return boolean.class;
+            if (leftNode.Type == boolean.class && rightNode.Type == boolean.class) {
+                node.Type = boolean.class;
             }
             else{
                 ErrorList.add(String.format("Line %s: ", node.FirstLinenumber) + "&& both arguments have to be of type Boolean");
-                return boolean.class;
+                node.Type = boolean.class;
+                node.
             }
         }catch (NullPointerException e){
             return boolean.class;

@@ -67,6 +67,7 @@ public abstract class Node{
     }
 
     public Object Type;
+    public boolean ErrorFlag = false;
 
 
 
