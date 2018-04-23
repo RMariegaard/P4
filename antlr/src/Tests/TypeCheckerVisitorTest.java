@@ -1,36 +1,39 @@
 package Tests;
 
+import Nodes.AndNode;
+import Nodes.ArgumentNode;
 import Nodes.Node;
+import Nodes.RefNode;
 import Nodes.expr.AddExprNode;
-import Nodes.values.DecimalNode;
-import Nodes.values.IntNode;
-import Nodes.values.StringNode;
-import Nodes.values.BoolNode;
-import other.SymbolTable;
+import Nodes.values.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import other.TypeCheckerVisitor;
 
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
 
 class TypeCheckerVisitorTest {
-    SymbolTable symbolTable;
     TypeCheckerVisitor typeChecker;
-    @org.junit.jupiter.api.BeforeEach
+
+    @BeforeEach
     void setUp() {
-         symbolTable = new SymbolTable();
          typeChecker = new TypeCheckerVisitor();
     }
 
-    @org.junit.jupiter.api.AfterEach
+    @AfterEach
     void tearDown() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void visitAction() {
     }
 
-    @org.junit.jupiter.api.Test
-    void visitAddExprIntAndDouble() {
+    @Test
+    void visitAddExprIntAndDecimal() {
         Node node = new AddExprNode(0);
         node.AdoptChildren(new IntNode(0,3));
         node.AdoptChildren(new DecimalNode(0,2.2));
@@ -38,7 +41,7 @@ class TypeCheckerVisitorTest {
         assertNull(typeChecker.Visit(node));
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void visitAddExprIntAndInt() {
         Node node = new AddExprNode(0);
         node.AdoptChildren(new IntNode(0,3));
@@ -46,7 +49,7 @@ class TypeCheckerVisitorTest {
 
         assertSame(typeChecker.Visit(node), int.class);
     }
-    @org.junit.jupiter.api.Test
+    @Test
     void visitAddExprDecimalAndDecimal() {
         Node node = new AddExprNode(0);
         node.AdoptChildren(new DecimalNode(0,2.5));
@@ -54,7 +57,7 @@ class TypeCheckerVisitorTest {
 
         assertSame(typeChecker.Visit(node), double.class);
     }
-    @org.junit.jupiter.api.Test
+    @Test
     void visitAddExprStringAndString() {
         Node node = new AddExprNode(0);
         node.AdoptChildren(new StringNode(0,"One String"));
@@ -65,7 +68,7 @@ class TypeCheckerVisitorTest {
 
         assertNull(typeChecker.Visit(node));
     }
-    @org.junit.jupiter.api.Test
+    @Test
     void visitAddExprBoolAndBool() {
         Node node = new AddExprNode(0);
         node.AdoptChildren(new BoolNode(0,true));
@@ -75,163 +78,61 @@ class TypeCheckerVisitorTest {
     }
 
 
-    @org.junit.jupiter.api.Test
-    void visitAnd() {
+    @Test
+    void visitAndWithBools() {
+        Node node = new AndNode(0);
+        node.AdoptChildren(new BoolNode(0,true));
+        node.AdoptChildren(new BoolNode(0,true));
+
+        assertSame( boolean.class, typeChecker.Visit(node));
     }
 
-    @org.junit.jupiter.api.Test
-    void visitArgument() {
+    @Test
+    void visitAndWithError() {
+        Node node = new AndNode(0);
+        node.AdoptChildren(new IntNode(0,12));
+        node.AdoptChildren(new BoolNode(0,true));
+        typeChecker.Visit(node);
+        assertTrue(!typeChecker.ErrorList.isEmpty());
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
+    void visitArgumentDublicateInSymbolTable() {
+        Node node = new ArgumentNode(0, "int");
+        Node refNode = new RefNode(0);
+        refNode.AdoptChildren(new IDNode(0, "Lars"));
+        node.AdoptChildren(refNode);
+
+        typeChecker.symbolTable.EnterSymbol("Lars", int.class);
+
+        assertNull(typeChecker.Visit(node));
+    }
+
+    @Test
+    void visitArgumentWithInt() {
+        Node node = new ArgumentNode(0, "int");
+        Node refNode = new RefNode(0);
+        refNode.AdoptChildren(new IDNode(0, "Lars"));
+        node.AdoptChildren(refNode);
+
+        assertSame(int.class, typeChecker.Visit(node));
+    }
+    @Test
+    void visitArgumentWithDecimal() {
+        Node node = new ArgumentNode(0, "decimal");
+        Node refNode = new RefNode(0);
+        refNode.AdoptChildren(new IDNode(0, "Lars"));
+        node.AdoptChildren(refNode);
+
+        assertSame(int.class, typeChecker.Visit(node));
+    }
+
+    @Test
     void visitArrayExpr() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void visitAssign() {
     }
 
-    @org.junit.jupiter.api.Test
-    void visit6() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit7() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit8() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit9() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit10() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit11() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit12() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit13() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit14() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit15() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit16() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit17() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit18() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit19() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit20() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit21() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit22() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit23() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit24() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit25() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit26() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit27() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit28() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit29() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit30() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit31() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit32() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit33() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit34() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit35() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit36() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit37() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit38() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit39() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit40() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void visit41() {
-    }
 }
