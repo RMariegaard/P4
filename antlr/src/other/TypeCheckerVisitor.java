@@ -22,8 +22,9 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
         for(int i = 0; i<array.length; i++) {
             Visit(array[i]);
         }
-        Visit(node.Fcall());
+        node.Type = Visit(node.Fcall()).Type;
         //TODO idk hvad denne skal have af extra information
+
         return node;
     }
 
