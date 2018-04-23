@@ -11,48 +11,51 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TypeCheckerVisitor extends AstVisitor<Object> {
+public class TypeCheckerVisitor extends AstVisitor<Node> {
     public List<String> ErrorList = new ArrayList<>();
     public SymbolTable symbolTable = new SymbolTable();
 
 
     @Override
-    public Object Visit(ActionNode node) {
+    public Node Visit(ActionNode node) {
         Node[] array = node.IDNodes();
         for(int i = 0; i<array.length; i++) {
             Visit(array[i]);
         }
-        return Visit(node.Fcall());
+        Visit(node.Fcall());
+        //TODO idk hvad denne skal have af extra information
+        return node;
     }
 
     @Override
-    public Object Visit(AddExprNode node) {
+    public Node Visit(AddExprNode node) {
         //Compares the class of the left node to the right node
-        Object leftNodeType = Visit(node.LeftNode());
-        Object rightNodeType = Visit(node.RightNode());
+        Node leftNode = Visit(node.LeftNode());
+        Node rightNode = Visit(node.RightNode());
         try{
-            if(leftNodeType.equals(rightNodeType)){
-                if(leftNodeType == int.class || leftNodeType == double.class){ //ikke sikker på dette virker før var det "leftNodeType.getClass().equals(int.class)
-                    return leftNodeType;
+            if(leftNode.Type.equals(rightNode.Type)){
+                if(leftNode.Type == int.class || leftNode.Type == double.class){
+                    node.Type = leftNode;
                 }
                 else{
-                    ErrorList.add(String.format("Line %s It is illegal to add two elements of type %s together", node.FirstLinenumber, leftNodeType.toString()));
+                    ErrorList.add(String.format("Line %s It is illegal to add two elements of type %s together", node.FirstLinenumber, leftNode.Type));
+                    node.ErrorOccured = true;
                 }
             }
             else{
-                ErrorList.add(String.format("Line %s: You can't add two elements of different types together.\nThe type of %s is %s, which doesn't match the type of %s, which is %s", node.FirstLinenumber,  node.LeftNode(), leftNodeType, node.RightNode(), rightNodeType));
-
+                ErrorList.add(String.format("Line %s: You can't add two elements of different types together.\nThe type of %s is %s, which doesn't match the type of %s, which is %s", node.FirstLinenumber,  node.LeftNode(), leftNode.Type, node.RightNode(), rightNode.Type));
+                node.ErrorOccured = true;
             }
-            return null;
+            return node;
         }catch (NullPointerException e){
-            return null;
+            return node;
         }
     }
 
     @Override
-    public Object Visit(AndNode node) {
-        Object leftNodeType = Visit(node.LeftNode());
-        Object rightNodeType = Visit(node.RightNode());
+    public Node Visit(AndNode node) {
+        Node leftNodeType = Visit(node.LeftNode());
+        Node rightNodeType = Visit(node.RightNode());
         try {
             if (leftNodeType == boolean.class && rightNodeType == boolean.class) {
                 return boolean.class;

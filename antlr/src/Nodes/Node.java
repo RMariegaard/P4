@@ -66,6 +66,8 @@ public abstract class Node{
         return this;
     }
 
+    public Object Type;
+
 
 
 

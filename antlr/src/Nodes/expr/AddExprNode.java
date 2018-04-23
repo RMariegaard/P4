@@ -16,7 +16,7 @@ public class AddExprNode extends Node {
     public Node RightNode(){
         return this.LeftNode().RightSibling;
     }
-
+    public boolean ErrorOccured = false;
     @Override
     public String toString() {
         return "+";
