@@ -19,6 +19,8 @@ public class MethodNode extends Node {
         while(!(node.RightSibling instanceof BlockNode)){
             number++;
             node = node.RightSibling;
+            if(node == null) //Methods imported from RoboCodeAPI doesn't have a blockNode
+                break;
         }
         return number;
     }
