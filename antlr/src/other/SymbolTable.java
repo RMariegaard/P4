@@ -1,5 +1,6 @@
 package other;
-import Nodes.ArgumentNode;
+
+import Nodes.Node;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -43,7 +44,7 @@ public class SymbolTable {
         return null; //error symbol not found
     }
 
-    public void EnterSymbol(String name, Object type){
+    public void EnterSymbol(String name, Node node){
         SymbolClass oldSym = hashtable.get(name);
         if (oldSym != null && oldSym.Depth == depth){
             //ERROR dublikering af navn
@@ -55,11 +56,11 @@ public class SymbolTable {
         sym.Level = scopeDisplay.get(depth);}
         sym.Name = name;
         sym.Depth = depth;
-        sym.type = type;
+        sym.Node = node;
         scopeDisplay.add(depth, sym);
 
         //prints to console
-        System.out.println(type.toString() + " " + name);
+        System.out.println(node.Type.toString() + " " + name);
 
 
         //Add to hash
@@ -73,12 +74,6 @@ public class SymbolTable {
         sym.Var = oldSym;
     }
 
-    public void EnterSymbol(String name, Object type, ArgumentNode[] parameters){
-        EnterSymbol(name, type);
-        SymbolClass sym = RetrieveSymbol(name);
-        sym.Parameters = parameters;
-
-    }
 
     public boolean DeclaredLocally(String name){
 

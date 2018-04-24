@@ -1,16 +1,11 @@
 package other;
-
-import Nodes.ArgumentNode;
-
-import java.util.ArrayList;
+import Nodes.Node;
 
 public class SymbolClass {
     public String Name;
-    public Object type;
+    public Node Node;
     public int Depth;
     public SymbolClass Var;
     public SymbolClass Level;
-    public ArgumentNode[] Parameters;
-    public ArrayList<String> IDs = new ArrayList<>();
 }
 

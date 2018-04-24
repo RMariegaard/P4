@@ -81,7 +81,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
             return node;
         }
         else{
-            symbolTable.EnterSymbol(rNode.IDNode().toString(), node.Type);
+            symbolTable.EnterSymbol(rNode.IDNode().toString(), node);
             return node;
         }
 
@@ -93,7 +93,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
             SymbolClass sym = symbolTable.RetrieveSymbol(node.IDNode().toString());
             Node exprType = Visit(node.ExprNode());
             if(exprType.Type.equals(int.class)){
-                node.Type = sym.type;
+                node.Type = sym.Node.Type;
                 return node;
             }
             else {
@@ -163,7 +163,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
             node.ErrorFlag = true;
             return null;
         }
-        symbolTable.EnterSymbol(node.getID(), node.Type);
+        symbolTable.EnterSymbol(node.getID(), node);
         Visit(node.ChildNode());
         //if(node.Type.equals(Visit(node.ChildNode())))
         //    symbolTable.EnterSymbol(node.getID(), node.Type);
@@ -271,8 +271,10 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
             return node;
         }
         Node condition = Visit(node.ExprNode());
-        if(condition.Type == boolean.class)
-            symbolTable.EnterSymbol(node.ID().toString(), EventType.class);
+        if(condition.Type == boolean.class){
+            node.Type = EventType.class;
+            symbolTable.EnterSymbol(node.ID().toString(), node);
+        }
         else {
             ErrorList.add(String.format("Line %s: The condition of event %s is not of type boolean", node.FirstLinenumber, node.ID().toString()));
             node.ErrorFlag = true;
