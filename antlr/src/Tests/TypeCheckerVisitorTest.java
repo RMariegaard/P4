@@ -204,13 +204,107 @@ class TypeCheckerVisitorTest {
     @Test
     void visitIntArrayExprWithIntIdentifier() {
         Node node = new ArrayExprNode(0);
+        Node exprNode = new IntNode(0, 1);
         Node idNode = new IDNode(0,"idNode");
+        node.AdoptChildren(idNode);
+        node.AdoptChildren(exprNode);
+
         idNode.Type = int.class;
-        //TODO: vent på Casper laver Symbol table
+        typeChecker.symbolTable.EnterSymbol( "idNode",idNode);
 
-        Node intNode = new IntNode(0, 1);
-
+        assertSame(int.class, typeChecker.Visit(node).Type);
     }
+    @Test
+    void visitDecimalArrayExprWithIntIdentifier() {
+        Node node = new ArrayExprNode(0);
+        Node exprNode = new IntNode(0, 1);
+        Node idNode = new IDNode(0,"idNode");
+        node.AdoptChildren(idNode);
+        node.AdoptChildren(exprNode);
+
+        idNode.Type = double.class;
+        typeChecker.symbolTable.EnterSymbol( "idNode",idNode);
+
+        assertSame(double.class, typeChecker.Visit(node).Type);
+    }
+    @Test
+    void visitBoolArrayExprWithIntIdentifier() {
+        Node node = new ArrayExprNode(0);
+        Node exprNode = new IntNode(0, 1);
+        Node idNode = new IDNode(0,"idNode");
+        node.AdoptChildren(idNode);
+        node.AdoptChildren(exprNode);
+
+        idNode.Type = boolean.class;
+        typeChecker.symbolTable.EnterSymbol( "idNode",idNode);
+
+        assertSame(boolean.class, typeChecker.Visit(node).Type);
+    }
+    @Test
+    void visitTextArrayExprWithIntIdentifier() {
+        Node node = new ArrayExprNode(0);
+        Node exprNode = new IntNode(0, 1);
+        Node idNode = new IDNode(0,"idNode");
+        node.AdoptChildren(idNode);
+        node.AdoptChildren(exprNode);
+
+        idNode.Type = String.class;
+        typeChecker.symbolTable.EnterSymbol( "idNode",idNode);
+
+        assertSame(String.class, typeChecker.Visit(node).Type);
+    }
+    @Test
+    void visitIntArrayExprWithDoubleIdentifier() {
+        Node node = new ArrayExprNode(0);
+        Node exprNode = new DecimalNode(0, 1.3);
+        Node idNode = new IDNode(0,"idNode");
+        node.AdoptChildren(idNode);
+        node.AdoptChildren(exprNode);
+
+        idNode.Type = int.class;
+        typeChecker.symbolTable.EnterSymbol( "idNode",idNode);
+
+        assertTrue(typeChecker.Visit(node).ErrorFlag);
+    }
+    @Test
+    void visitIntArrayExprWithBoolIdentifier() {
+        Node node = new ArrayExprNode(0);
+        Node exprNode = new BoolNode(0, true);
+        Node idNode = new IDNode(0,"idNode");
+        node.AdoptChildren(idNode);
+        node.AdoptChildren(exprNode);
+
+        idNode.Type = int.class;
+        typeChecker.symbolTable.EnterSymbol( "idNode",idNode);
+
+        assertTrue(typeChecker.Visit(node).ErrorFlag);
+    }
+    @Test
+    void visitIntArrayExprWithStringIdentifier() {
+        Node node = new ArrayExprNode(0);
+        Node exprNode = new StringNode(0, "testNode");
+        Node idNode = new IDNode(0,"idNode");
+        node.AdoptChildren(idNode);
+        node.AdoptChildren(exprNode);
+
+        idNode.Type = int.class;
+        typeChecker.symbolTable.EnterSymbol( "idNode",idNode);
+
+        assertTrue(typeChecker.Visit(node).ErrorFlag);
+    }
+    @Test
+    void visitIntArrayExprNotDeclared() {
+        Node node = new ArrayExprNode(0);
+        Node exprNode = new StringNode(0, "testNode");
+        Node idNode = new IDNode(0,"idNode");
+
+        node.AdoptChildren(idNode);
+        node.AdoptChildren(exprNode);
+
+
+        assertTrue(typeChecker.Visit(node).ErrorFlag);
+    }
+
 
     @Test
     void visitAssign() {
