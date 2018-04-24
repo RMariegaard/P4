@@ -212,7 +212,6 @@ class TypeCheckerVisitorTest {
 
     @Test
     void visitAssign() {
-        Node node = AssignNode(0,);
 
     }
 

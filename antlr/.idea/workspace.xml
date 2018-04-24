@@ -18,15 +18,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="TypeCheckerVisitor.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TypeCheckerVisitor.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/other/TypeCheckerVisitor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="276" column="8" lean-forward="false" selection-start-line="276" selection-start-column="8" selection-end-line="276" selection-end-column="8" />
+            <state relative-caret-position="198">
+              <caret line="637" column="85" lean-forward="false" selection-start-line="637" selection-start-column="85" selection-end-line="637" selection-end-column="85" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#19682#19683#0" expanded="true" />
-                <element signature="e#19728#19729#0" expanded="true" />
+                <element signature="e#19594#19595#0" expanded="true" />
+                <element signature="e#19640#19641#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -84,15 +84,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TypeCheckerVisitorTest.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TypeCheckerVisitorTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Tests/TypeCheckerVisitorTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="197">
-              <caret line="105" column="61" lean-forward="false" selection-start-line="105" selection-start-column="61" selection-end-line="105" selection-end-column="61" />
+            <state relative-caret-position="189">
+              <caret line="102" column="55" lean-forward="false" selection-start-line="102" selection-start-column="55" selection-end-line="102" selection-end-column="55" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#542#543#0" expanded="true" />
-                <element signature="e#597#598#0" expanded="true" />
+                <element signature="e#432#433#0" expanded="true" />
+                <element signature="e#487#488#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -205,7 +205,6 @@
         <option value="$PROJECT_DIR$/src/Nodes/ActionNode.java" />
         <option value="$PROJECT_DIR$/src/other/CodeGeneratorVisitor.java" />
         <option value="$PROJECT_DIR$/src/com/company/Main.java" />
-        <option value="$PROJECT_DIR$/src/Tests/TypeCheckerVisitorTest.java" />
         <option value="$PROJECT_DIR$/src/Nodes/Node.java" />
         <option value="$PROJECT_DIR$/src/Nodes/expr/AddExprNode.java" />
         <option value="$PROJECT_DIR$/src/Nodes/ArgumentNode.java" />
@@ -215,6 +214,7 @@
         <option value="$PROJECT_DIR$/codeExample.txt" />
         <option value="$PROJECT_DIR$/src/other/SymbolClass.java" />
         <option value="$PROJECT_DIR$/src/other/SymbolTable.java" />
+        <option value="$PROJECT_DIR$/src/Tests/TypeCheckerVisitorTest.java" />
         <option value="$PROJECT_DIR$/src/other/TypeCheckerVisitor.java" />
       </list>
     </option>
@@ -257,6 +257,12 @@
               <item name="antlr" type="b2602c69:ProjectViewProjectNode" />
               <item name="antlr" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="antlr" type="b2602c69:ProjectViewProjectNode" />
+              <item name="antlr" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Nodes" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="antlr" type="b2602c69:ProjectViewProjectNode" />
@@ -490,13 +496,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/other/TypeCheckerVisitor.java</url>
-          <line>577</line>
+          <line>578</line>
           <properties />
           <option name="timeStamp" value="15" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/other/TypeCheckerVisitor.java</url>
-          <line>267</line>
+          <line>266</line>
           <properties />
           <option name="timeStamp" value="39" />
         </line-breakpoint>
@@ -875,26 +881,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Tests/TypeCheckerVisitorTest.java">
+    <entry file="file://$PROJECT_DIR$/src/other/TypeCheckerVisitor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="105" column="61" lean-forward="false" selection-start-line="105" selection-start-column="61" selection-end-line="105" selection-end-column="61" />
+        <state relative-caret-position="198">
+          <caret line="637" column="85" lean-forward="false" selection-start-line="637" selection-start-column="85" selection-end-line="637" selection-end-column="85" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#542#543#0" expanded="true" />
-            <element signature="e#597#598#0" expanded="true" />
+            <element signature="e#19594#19595#0" expanded="true" />
+            <element signature="e#19640#19641#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/other/TypeCheckerVisitor.java">
+    <entry file="file://$PROJECT_DIR$/src/Tests/TypeCheckerVisitorTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="276" column="8" lean-forward="false" selection-start-line="276" selection-start-column="8" selection-end-line="276" selection-end-column="8" />
+        <state relative-caret-position="189">
+          <caret line="102" column="55" lean-forward="false" selection-start-line="102" selection-start-column="55" selection-end-line="102" selection-end-column="55" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#19682#19683#0" expanded="true" />
-            <element signature="e#19728#19729#0" expanded="true" />
+            <element signature="e#432#433#0" expanded="true" />
+            <element signature="e#487#488#0" expanded="true" />
           </folding>
         </state>
       </provider>

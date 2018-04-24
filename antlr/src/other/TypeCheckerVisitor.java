@@ -287,15 +287,17 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
         Node type = Visit(node.IDNode());
         SymbolClass sym = symbolTable.RetrieveSymbol(node.IDNode().idString);
         if(sym != null){
-            int numberOfparams = sym.Parameters != null ? sym.Parameters.length : 0;
+            MethodNode methodNode = (MethodNode) sym.Node;
+            int numberOfparams = methodNode.NumberOfParameters();
             int numberOfargs = node.NumberOfArguments();
             if(numberOfargs != numberOfparams){
                 ErrorList.add(String.format("Line %s: Number of arguments does not match the number of parameters for the method %s", node.FirstLinenumber, node.IDNode().toString()));
             }
             Node[] arguments = node.ArgumentNodes();
+            Node[] parameters = methodNode.Parameters();
             for(int i = 0; i<numberOfparams; i++) {
-                if (sym.Parameters[i].Type != Visit(arguments[i])) {
-                    ErrorList.add(String.format("Line %s, Argument number %s has to be of type %s", node.FirstLinenumber, i + 1, sym.Parameters[i].Type.toString()));
+                if (parameters[i].Type != Visit(arguments[i])) {
+                    ErrorList.add(String.format("Line %s, Argument number %s has to be of type %s", node.FirstLinenumber, i + 1, parameters[i].Type.toString()));
                 }
             }
         }
@@ -356,7 +358,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
             return node;
         }
         else{
-            node.Type = sym.type;
+            node.Type = sym.Node.Type;
             return node;
         }
     }
@@ -427,8 +429,8 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
             return node;
         }
         else {
-            symbolTable.EnterSymbol(node.IDNode().toString(), typeNode.toString(), node.Parameters());
             node.Type = typeNode.Type;
+            symbolTable.EnterSymbol(node.IDNode().toString(), node);
             return node;
         }
     }
@@ -624,7 +626,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
                     for(String id : ids){
                         SymbolClass sym = symbolTable.RetrieveSymbol(id);
                         if(sym  == null)
-                            symbolTable.EnterSymbol(id, type);
+                            symbolTable.EnterSymbol(id, new MethodNode(0)); //TODO SKAL LAVES!!!MANGLER TYPE BLA:
                         
                     }
                 }
@@ -633,7 +635,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
                     String[] ids = elements[1].split("\\.");
                     for(String id : ids)
                         if(symbolTable.RetrieveSymbol(id) == null)
-                            symbolTable.EnterSymbol(id, type, new ArgumentNode[]{node});
+                            symbolTable.EnterSymbol(id, node); //TODO ER IKKE RIGTIGT
                 }
             }
 
