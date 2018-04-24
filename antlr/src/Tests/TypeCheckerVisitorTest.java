@@ -1,19 +1,16 @@
 package Tests;
 
-import Nodes.AndNode;
-import Nodes.ArgumentNode;
-import Nodes.Node;
-import Nodes.RefNode;
+import Nodes.*;
 import Nodes.expr.AddExprNode;
+import Nodes.expr.ArrayExprNode;
 import Nodes.values.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import other.SymbolClass;
 import other.TypeCheckerVisitor;
 
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 class TypeCheckerVisitorTest {
@@ -30,6 +27,7 @@ class TypeCheckerVisitorTest {
 
     @Test
     void visitAction() {
+        //TODO: this one
     }
 
     @Test
@@ -37,8 +35,8 @@ class TypeCheckerVisitorTest {
         Node node = new AddExprNode(0);
         node.AdoptChildren(new IntNode(0,3));
         node.AdoptChildren(new DecimalNode(0,2.2));
-
-        assertNull(typeChecker.Visit(node));
+        typeChecker.Visit(node);
+        assertTrue(node.ErrorFlag);
     }
 
     @Test
@@ -46,8 +44,8 @@ class TypeCheckerVisitorTest {
         Node node = new AddExprNode(0);
         node.AdoptChildren(new IntNode(0,3));
         node.AdoptChildren(new IntNode(0,2));
-
-        assertSame(typeChecker.Visit(node), int.class);
+        typeChecker.Visit(node);
+        assertSame(int.class, node.Type);
     }
     @Test
     void visitAddExprDecimalAndDecimal() {
@@ -55,7 +53,7 @@ class TypeCheckerVisitorTest {
         node.AdoptChildren(new DecimalNode(0,2.5));
         node.AdoptChildren(new DecimalNode(0,11.2));
 
-        assertSame(typeChecker.Visit(node), double.class);
+        assertSame( double.class, typeChecker.Visit(node).Type);
     }
     @Test
     void visitAddExprStringAndString() {
@@ -66,7 +64,7 @@ class TypeCheckerVisitorTest {
         //Skal vi kunne gøre dette? så brug
         //assertSame(typeChecker.Visit(node), String.class);
 
-        assertNull(typeChecker.Visit(node));
+        assertTrue(typeChecker.Visit(node).ErrorFlag);
     }
     @Test
     void visitAddExprBoolAndBool() {
@@ -74,9 +72,8 @@ class TypeCheckerVisitorTest {
         node.AdoptChildren(new BoolNode(0,true));
         node.AdoptChildren(new BoolNode(0,true));
 
-        assertNull(typeChecker.Visit(node));
+        assertTrue(typeChecker.Visit(node).ErrorFlag);
     }
-
 
     @Test
     void visitAndWithBools() {
@@ -84,7 +81,7 @@ class TypeCheckerVisitorTest {
         node.AdoptChildren(new BoolNode(0,true));
         node.AdoptChildren(new BoolNode(0,true));
 
-        assertSame( boolean.class, typeChecker.Visit(node));
+        assertSame( boolean.class, typeChecker.Visit(node).Type);
     }
 
     @Test
@@ -93,7 +90,7 @@ class TypeCheckerVisitorTest {
         node.AdoptChildren(new IntNode(0,12));
         node.AdoptChildren(new BoolNode(0,true));
         typeChecker.Visit(node);
-        assertTrue(!typeChecker.ErrorList.isEmpty());
+        assertTrue(node.ErrorFlag);
     }
 
     @Test
@@ -104,35 +101,119 @@ class TypeCheckerVisitorTest {
         node.AdoptChildren(refNode);
 
         typeChecker.symbolTable.EnterSymbol("Lars", int.class);
-
-        assertNull(typeChecker.Visit(node));
+        typeChecker.Visit(node);
+        assertTrue(node.ErrorFlag);
     }
 
     @Test
-    void visitArgumentWithInt() {
+    void visitArgumentWithIntIsInSymbolTable() {
         Node node = new ArgumentNode(0, "int");
         Node refNode = new RefNode(0);
         refNode.AdoptChildren(new IDNode(0, "Lars"));
         node.AdoptChildren(refNode);
+        typeChecker.Visit(node);
 
-        assertSame(int.class, typeChecker.Visit(node));
+        SymbolClass symbolClass = typeChecker.symbolTable.RetrieveSymbol("Lars");
+        assertNotNull(symbolClass);
     }
     @Test
-    void visitArgumentWithDecimal() {
+    void visitArgumentWithIntIsTypeInt() {
+        Node node = new ArgumentNode(0, "int");
+        Node refNode = new RefNode(0);
+        refNode.AdoptChildren(new IDNode(0, "Lars"));
+        node.AdoptChildren(refNode);
+        typeChecker.Visit(node);
+
+        SymbolClass symbolClass = typeChecker.symbolTable.RetrieveSymbol("Lars");
+        assertSame(int.class,symbolClass.type);
+    }
+    @Test
+    void visitArgumentWithDecimalIsInSymbolTable() {
         Node node = new ArgumentNode(0, "decimal");
         Node refNode = new RefNode(0);
         refNode.AdoptChildren(new IDNode(0, "Lars"));
         node.AdoptChildren(refNode);
 
-        assertSame(int.class, typeChecker.Visit(node));
-    }
+        typeChecker.Visit(node);
 
+        SymbolClass symbolClass = typeChecker.symbolTable.RetrieveSymbol("Lars");
+        assertNotNull(symbolClass);
+    }
     @Test
-    void visitArrayExpr() {
+    void visitArgumentWithDecimalIsCorrectType() {
+        Node node = new ArgumentNode(0, "decimal");
+        Node refNode = new RefNode(0);
+        refNode.AdoptChildren(new IDNode(0, "Lars"));
+        node.AdoptChildren(refNode);
+
+        typeChecker.Visit(node);
+
+        SymbolClass symbolClass = typeChecker.symbolTable.RetrieveSymbol("Lars");
+        assertSame(double.class,symbolClass.type);
+    }
+    @Test
+    void visitArgumentWithBoolIsInSymbolTable() {
+        Node node = new ArgumentNode(0, "bool");
+        Node refNode = new RefNode(0);
+        refNode.AdoptChildren(new IDNode(0, "Lars"));
+        node.AdoptChildren(refNode);
+
+        typeChecker.Visit(node);
+
+        SymbolClass symbolClass = typeChecker.symbolTable.RetrieveSymbol("Lars");
+        assertNotNull(symbolClass);
+    }
+    @Test
+    void visitArgumentWithBoolIsCorrectType() {
+        Node node = new ArgumentNode(0, "bool");
+        Node refNode = new RefNode(0);
+        refNode.AdoptChildren(new IDNode(0, "Lars"));
+        node.AdoptChildren(refNode);
+
+        typeChecker.Visit(node);
+
+        SymbolClass symbolClass = typeChecker.symbolTable.RetrieveSymbol("Lars");
+        assertSame(boolean.class,symbolClass.type);
+    }
+    @Test
+    void visitArgumentWithTextIsInSymbolTable() {
+        Node node = new ArgumentNode(0, "text");
+        Node refNode = new RefNode(0);
+        refNode.AdoptChildren(new IDNode(0, "Lars"));
+        node.AdoptChildren(refNode);
+
+        typeChecker.Visit(node);
+
+        SymbolClass symbolClass = typeChecker.symbolTable.RetrieveSymbol("Lars");
+        assertNotNull(symbolClass);
+    }
+    @Test
+    void visitArgumentWithTextIsCorrectType() {
+        Node node = new ArgumentNode(0, "text");
+        Node refNode = new RefNode(0);
+        refNode.AdoptChildren(new IDNode(0, "Lars"));
+        node.AdoptChildren(refNode);
+
+        typeChecker.Visit(node);
+
+        SymbolClass symbolClass = typeChecker.symbolTable.RetrieveSymbol("Lars");
+        assertSame(String.class,symbolClass.type);
+    }
+    @Test
+    void visitIntArrayExprWithIntIdentifier() {
+        Node node = new ArrayExprNode(0);
+        Node idNode = new IDNode(0,"idNode");
+        idNode.Type = int.class;
+        //TODO: vent på Casper laver Symbol table
+
+        Node intNode = new IntNode(0, 1);
+
     }
 
     @Test
     void visitAssign() {
+        Node node = AssignNode(0,);
+
     }
 
 }

@@ -36,7 +36,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
         try{
             if(leftNode.Type.equals(rightNode.Type)){
                 if(leftNode.Type == int.class || leftNode.Type == double.class){
-                    node.Type = leftNode;
+                    node.Type = leftNode.Type;
                 }
                 else{
                     ErrorList.add(String.format("Line %s It is illegal to add two elements of type %s together", node.FirstLinenumber, leftNode.Type));
@@ -97,7 +97,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
                 return node;
             }
             else {
-                ErrorList.add(String.format("Line %s: Array can only be indexed with type Integer not with %s",node.FirstLinenumber, exprType.getClass()));
+                ErrorList.add(String.format("Line %s: Array can only be indexed with type Integer not with %s",node.FirstLinenumber, exprType.Type));
                 node.ErrorFlag = true;
                 return node;
             }
@@ -116,7 +116,6 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
             Node idType = Visit(node.RefNode());
             Node valueType = Visit(node.ValueNode());
             if(valueType.Type == null){
-                //TODO: if valuetype is zero then another error has happen and has been reported. however should type null be written to the user?
                 return node;
             }
             else if (idType.Type.equals(valueType.Type)) {
