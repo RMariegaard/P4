@@ -100,7 +100,9 @@ class TypeCheckerVisitorTest {
         refNode.AdoptChildren(new IDNode(0, "Lars"));
         node.AdoptChildren(refNode);
 
-        typeChecker.symbolTable.EnterSymbol("Lars", int.class);
+        Node intNode = new IntNode(3,0);
+        intNode.Type = int.class;
+        typeChecker.symbolTable.EnterSymbol("Lars", intNode);
         typeChecker.Visit(node);
         assertTrue(node.ErrorFlag);
     }
@@ -125,7 +127,7 @@ class TypeCheckerVisitorTest {
         typeChecker.Visit(node);
 
         SymbolClass symbolClass = typeChecker.symbolTable.RetrieveSymbol("Lars");
-        assertSame(int.class,symbolClass.type);
+        assertSame(int.class,symbolClass.Node.Type);
     }
     @Test
     void visitArgumentWithDecimalIsInSymbolTable() {
@@ -149,7 +151,7 @@ class TypeCheckerVisitorTest {
         typeChecker.Visit(node);
 
         SymbolClass symbolClass = typeChecker.symbolTable.RetrieveSymbol("Lars");
-        assertSame(double.class,symbolClass.type);
+        assertSame(double.class,symbolClass.Node.Type);
     }
     @Test
     void visitArgumentWithBoolIsInSymbolTable() {
@@ -173,7 +175,7 @@ class TypeCheckerVisitorTest {
         typeChecker.Visit(node);
 
         SymbolClass symbolClass = typeChecker.symbolTable.RetrieveSymbol("Lars");
-        assertSame(boolean.class,symbolClass.type);
+        assertSame(boolean.class,symbolClass.Node.Type);
     }
     @Test
     void visitArgumentWithTextIsInSymbolTable() {
@@ -197,7 +199,7 @@ class TypeCheckerVisitorTest {
         typeChecker.Visit(node);
 
         SymbolClass symbolClass = typeChecker.symbolTable.RetrieveSymbol("Lars");
-        assertSame(String.class,symbolClass.type);
+        assertSame(String.class,symbolClass.Node.Type);
     }
     @Test
     void visitIntArrayExprWithIntIdentifier() {

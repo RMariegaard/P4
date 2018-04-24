@@ -46,9 +46,7 @@ public class SymbolTable {
 
     public void EnterSymbol(String name, Node node){
         SymbolClass oldSym = hashtable.get(name);
-        if (oldSym != null && oldSym.Depth == depth){
-            //ERROR dublikering af navn
-        }
+
         SymbolClass sym = new SymbolClass();
 
         //Add to scope display
