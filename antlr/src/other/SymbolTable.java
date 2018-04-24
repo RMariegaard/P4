@@ -51,19 +51,20 @@ public class SymbolTable {
 
         //Add to scope display
         if(!scopeDisplay.isEmpty()){
-        sym.Level = scopeDisplay.get(depth);}
-        sym.Name = name;
-        sym.Depth = depth;
-        sym.Node = node;
-        scopeDisplay.add(depth, sym);
+            sym.Level = scopeDisplay.get(depth);}
+            sym.Name = name;
+            sym.Depth = depth;
+            sym.Node = node;
+            scopeDisplay.add(depth, sym);
 
-        //prints to console
-        System.out.println(node.Type.toString() + " " + name);
+            //prints to console
+
+            System.out.println(node.Type.toString() + " " + name);
 
 
-        //Add to hash
-        if (oldSym == null){
-            hashtable.put(sym.Name, sym);
+            //Add to hash
+            if (oldSym == null){
+                hashtable.put(sym.Name, sym);
         }
         else {
             hashtable.remove(oldSym.Name);

@@ -117,6 +117,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
             Node valueType = Visit(node.ValueNode());
             if(valueType.Type == null){
                 return node;
+                // this should only happen, if an error has occured further down the three
             }
             else if (idType.Type.equals(valueType.Type)) {
                 node.Type = idType.Type;
@@ -127,6 +128,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
                 node.ErrorFlag = true;
             }
         }catch (NullPointerException e){
+            //We no longer return null, so this should never happen, the error get catched in visit(IDNODE)
             ErrorList.add(String.format("Line %s: Variable %s does not exist, and cant be assigned to", node.FirstLinenumber, node.RefNode().LeftmostChild.toString()));
             node.ErrorFlag = true;
         }
@@ -158,10 +160,11 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
     @Override
     public Node Visit(DclNode node) {
         if(symbolTable.DeclaredLocally(node.getID())){
-            ErrorList.add(String.format("Line %s: ", node.FirstLinenumber) + node.toString() + ", It already exist");
+            ErrorList.add(String.format("Line %s: ", node.FirstLinenumber) + node.getID() + ", It already exist");
             node.ErrorFlag = true;
-            return null;
+            return node;
         }
+        //Why do we add the dcl node to the symbol table?
         symbolTable.EnterSymbol(node.getID(), node);
         Visit(node.ChildNode());
         //if(node.Type.equals(Visit(node.ChildNode())))
@@ -183,10 +186,12 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
         try{
             if(leftNodeType.Type.equals(rightNodeType.Type)){
                 if(leftNodeType.Type == int.class|| leftNodeType.Type == double.class){
-                    //Hvordan fuck checker man for divide med 0?? svar: det her er jo typechecking. Det skal gøre et andet sted
-                    if(rightNodeType instanceof IntNode)
-                        if (((IntNode) rightNodeType).value == 0)
-                            ErrorList.add(String.format("Line %s: cannot divide with zero", node.FirstLinenumber)); //idk om det virker
+                    if(rightNodeType instanceof IntNode) {
+                        if (((IntNode) rightNodeType).value == 0) { //This only works when the Right node is IntNode, anything else, function, variable etc, wont check for zero.
+                            ErrorList.add(String.format("Line %s: cannot divide with zero", node.FirstLinenumber));
+                            node.ErrorFlag = true;
+                        }
+                    }
                     node.Type = leftNodeType.Type;
                     return node;
                 }

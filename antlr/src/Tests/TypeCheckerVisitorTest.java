@@ -3,6 +3,7 @@ package Tests;
 import Nodes.*;
 import Nodes.expr.AddExprNode;
 import Nodes.expr.ArrayExprNode;
+import Nodes.expr.DivExprNode;
 import Nodes.values.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,8 +34,7 @@ class TypeCheckerVisitorTest {
     @Test
     void visitAddExprIntAndDecimal() {
         Node node = new AddExprNode(0);
-        node.AdoptChildren(new IntNode(0,3));
-        node.AdoptChildren(new DecimalNode(0,2.2));
+        node.AdoptChildren(new IntNode(0,3), new DecimalNode(0,2.2));
         typeChecker.Visit(node);
         assertTrue(node.ErrorFlag);
     }
@@ -42,16 +42,14 @@ class TypeCheckerVisitorTest {
     @Test
     void visitAddExprIntAndInt() {
         Node node = new AddExprNode(0);
-        node.AdoptChildren(new IntNode(0,3));
-        node.AdoptChildren(new IntNode(0,2));
+        node.AdoptChildren(new IntNode(0,3), new IntNode(0,2));
         typeChecker.Visit(node);
         assertSame(int.class, node.Type);
     }
     @Test
     void visitAddExprDecimalAndDecimal() {
         Node node = new AddExprNode(0);
-        node.AdoptChildren(new DecimalNode(0,2.5));
-        node.AdoptChildren(new DecimalNode(0,11.2));
+        node.AdoptChildren(new DecimalNode(0,2.5), new DecimalNode(0,11.2));
 
         assertSame( double.class, typeChecker.Visit(node).Type);
     }
@@ -304,11 +302,202 @@ class TypeCheckerVisitorTest {
 
         assertTrue(typeChecker.Visit(node).ErrorFlag);
     }
+        //TODO: Gider ikke teste arrays mere
+
+    @Test
+    void visitAssignIntToInt() {
+        Node node = new AssignNode(0);
+        Node idNode = new IDNode(0, "variable");
+        idNode.Type = int.class;
+        Node refNode = new RefNode(0);
+        Node value = new IntNode(0, 42);
+        node.AdoptChildren(refNode);
+        node.AdoptChildren(value);
+        refNode.AdoptChildren(idNode);
+
+        typeChecker.symbolTable.EnterSymbol("variable", idNode);
+
+        assertSame(int.class, typeChecker.Visit(node).Type);
+    }
+    @Test
+    void visitAssignDecimalToDecimal() {
+        Node node = new AssignNode(0);
+        Node idNode = new IDNode(0, "variable");
+        idNode.Type = double.class;
+        Node refNode = new RefNode(0);
+        Node value = new DecimalNode(0, 34.3);
+        node.AdoptChildren(refNode);
+        node.AdoptChildren(value);
+        refNode.AdoptChildren(idNode);
+
+        typeChecker.symbolTable.EnterSymbol("variable", idNode);
+
+        assertSame(double.class, typeChecker.Visit(node).Type);
+    }
+    @Test
+    void visitAssignBoolToBool() {
+        Node node = new AssignNode(0);
+        Node idNode = new IDNode(0, "variable");
+        idNode.Type = boolean.class;
+        Node refNode = new RefNode(0);
+        Node value = new BoolNode(0, true);
+        node.AdoptChildren(refNode);
+        node.AdoptChildren(value);
+        refNode.AdoptChildren(idNode);
+
+        typeChecker.symbolTable.EnterSymbol("variable", idNode);
+
+        assertSame(boolean.class, typeChecker.Visit(node).Type);
+    }
+    @Test
+    void visitAssignStringToString() {
+        Node node = new AssignNode(0);
+        Node idNode = new IDNode(0, "variable");
+        idNode.Type = String.class;
+        Node refNode = new RefNode(0);
+        Node value = new StringNode(9,"test");
+        node.AdoptChildren(refNode);
+        node.AdoptChildren(value);
+        refNode.AdoptChildren(idNode);
+
+        typeChecker.symbolTable.EnterSymbol("variable", idNode);
+
+        assertSame(String.class, typeChecker.Visit(node).Type);
+    }
+    @Test
+    void visitAssignIntToString() {
+        Node node = new AssignNode(0);
+        Node idNode = new IDNode(0, "variable");
+        idNode.Type = String.class;
+        Node refNode = new RefNode(0);
+        Node value = new IntNode(0, 2);
+        node.AdoptChildren(refNode, value);
+        refNode.AdoptChildren(idNode);
+
+        typeChecker.symbolTable.EnterSymbol("variable", idNode);
+
+        assertTrue(typeChecker.Visit(node).ErrorFlag);
+    }
+    @Test
+    void visitAssignToUndeclaredVariable() {
+        Node node = new AssignNode(0);
+        Node idNode = new IDNode(0, "variable");
+        idNode.Type = int.class;
+        Node refNode = new RefNode(0);
+        Node value = new IntNode(0, 2);
+        node.AdoptChildren(refNode, value);
+        refNode.AdoptChildren(idNode);
+        typeChecker.Visit(node);
+
+        //The error is found when visiting IDNode, therefore the errorFlag is set on that node, if it is not in the scope.
+        assertTrue(idNode.ErrorFlag);
+    }
+    @Test
+    void visitBehavior(){
+        //TODO: test for undeclared behaviour and declared
+    }
+    @Test
+    void visitDclNewIntVariable(){
+        Node node = new DclNode(0,"int");
+        Node idNode = new IDNode(0, "variableDCL");
+        node.AdoptChildren(idNode);
+
+        typeChecker.Visit(node);
+
+        assertTrue(typeChecker.symbolTable.DeclaredLocally("variableDCL"));
+
+    }
+    @Test
+    void visitDclNewTextVariable(){
+        Node node = new DclNode(0,"text");
+        Node idNode = new IDNode(0, "variableDCL");
+        node.AdoptChildren(idNode);
+
+        typeChecker.Visit(node);
+
+        assertTrue(typeChecker.symbolTable.DeclaredLocally("variableDCL"));
+    }
+    @Test
+    void visitDclNewBoolVariable(){
+        Node node = new DclNode(0,"bool");
+        Node idNode = new IDNode(0, "variableDCL");
+        node.AdoptChildren(idNode);
+
+        typeChecker.Visit(node);
+
+        assertTrue(typeChecker.symbolTable.DeclaredLocally("variableDCL"));
+    }
+
+    @Test
+    void visitDclNewDecimalVariable(){
+        Node node = new DclNode(0,"decimal");
+        Node idNode = new IDNode(0, "variableDCL");
+        node.AdoptChildren(idNode);
+
+        typeChecker.Visit(node);
+
+        assertTrue(typeChecker.symbolTable.DeclaredLocally("variableDCL"));
+    }
+    @Test
+    void visitDclDublicateNode(){
+        Node node = new DclNode(0,"decimal");
+        Node idNode = new IDNode(0, "variableDCL");
+        node.AdoptChildren(idNode);
+
+        Node someOtherNode = new IntNode(0,4);
+        someOtherNode.Type = int.class;
+        typeChecker.symbolTable.EnterSymbol("variableDCL", someOtherNode);
+
+        typeChecker.Visit(node);
+
+        assertTrue(node.ErrorFlag);
+    }
+    @Test
+    void visitDivExprIntAndDecimal() {
+        Node node = new DivExprNode(0);
+        node.AdoptChildren(new IntNode(0,3), new DecimalNode(0,2.2));
+        typeChecker.Visit(node);
+        assertTrue(node.ErrorFlag);
+    }
+
+    @Test
+    void visitDivExprIntAndInt() {
+        Node node = new DivExprNode(0);
+        node.AdoptChildren(new IntNode(0,3), new IntNode(0,2));
+        typeChecker.Visit(node);
+        assertSame(int.class, node.Type);
+    }
+    @Test
+    void visitDivExprIntAndIntWith0() {
+        Node node = new DivExprNode(0);
+        node.AdoptChildren(new IntNode(0,3), new IntNode(0,0));
+        typeChecker.Visit(node);
+        assertTrue(node.ErrorFlag);
+    }
 
 
     @Test
-    void visitAssign() {
+    void visitDivExprDecimalAndDecimal() {
+        Node node = new DivExprNode(0);
+        node.AdoptChildren(new DecimalNode(0,2.5), new DecimalNode(0,11.2));
 
+        assertSame( double.class, typeChecker.Visit(node).Type);
+    }
+    @Test
+    void visitDivExprStringAndString() {
+        Node node = new DivExprNode(0);
+        node.AdoptChildren(new StringNode(0,"One String"));
+        node.AdoptChildren(new StringNode(0,"Two String"));
+
+        assertTrue(typeChecker.Visit(node).ErrorFlag);
+    }
+    @Test
+    void visitDivExprBoolAndBool() {
+        Node node = new DivExprNode(0);
+        node.AdoptChildren(new BoolNode(0,true));
+        node.AdoptChildren(new BoolNode(0,true));
+
+        assertTrue(typeChecker.Visit(node).ErrorFlag);
     }
 
 }
