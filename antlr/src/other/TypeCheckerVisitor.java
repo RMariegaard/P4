@@ -293,11 +293,13 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
             if(numberOfargs != numberOfparams){
                 ErrorList.add(String.format("Line %s: Number of arguments does not match the number of parameters for the method %s", node.FirstLinenumber, node.IDNode().toString()));
             }
-            Node[] arguments = node.ArgumentNodes();
-            Node[] parameters = methodNode.Parameters();
-            for(int i = 0; i<numberOfparams; i++) {
-                if (parameters[i].Type != Visit(arguments[i])) {
-                    ErrorList.add(String.format("Line %s, Argument number %s has to be of type %s", node.FirstLinenumber, i + 1, parameters[i].Type.toString()));
+            else{
+                Node[] arguments = node.ArgumentNodes();
+                Node[] parameters = methodNode.Parameters();
+                for(int i = 0; i<numberOfparams; i++) {
+                    if (parameters[i].Type != Visit(arguments[i])) {
+                        ErrorList.add(String.format("Line %s, Argument number %s has to be of type %s", node.FirstLinenumber, i + 1, parameters[i].Type.toString()));
+                    }
                 }
             }
         }
@@ -625,17 +627,27 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
                     String[] ids = elements[1].split("\\.");
                     for(String id : ids){
                         SymbolClass sym = symbolTable.RetrieveSymbol(id);
-                        if(sym  == null)
-                            symbolTable.EnterSymbol(id, new MethodNode(0)); //TODO SKAL LAVES!!!MANGLER TYPE BLA:
-                        
+                        if(sym  == null) {
+                            MethodNode node = new MethodNode(0);
+                            node.Type = type;
+                            node.AdoptChildren(new IDNode(0, id), new RTypeNode(0, elements[2]));
+                            symbolTable.EnterSymbol(id, node);
+                        }
                     }
                 }
                 else{
-                    ArgumentNode node = new ArgumentNode(0, elements[3]); //Has no refNode, might be a problem
+                    ArgumentNode anode = new ArgumentNode(0, elements[3]); //Has no refNode, might be a problem
                     String[] ids = elements[1].split("\\.");
-                    for(String id : ids)
-                        if(symbolTable.RetrieveSymbol(id) == null)
-                            symbolTable.EnterSymbol(id, node); //TODO ER IKKE RIGTIGT
+                    for(int i= 0; i<ids.length; i++)
+                        if(symbolTable.RetrieveSymbol(ids[i]) == null){
+                            MethodNode mnode = new MethodNode(0);
+                            mnode.Type = elements[2];
+                            mnode.AdoptChildren(new IDNode(0, ids[i]), new RTypeNode(0, elements[2]));
+                            if(i == ids.length-1){
+                                mnode.AdoptChildren(anode);
+                            }
+                            symbolTable.EnterSymbol(ids[i], mnode);
+                        }
                 }
             }
 
