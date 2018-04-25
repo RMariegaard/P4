@@ -1,4 +1,4 @@
-//Code Translation from a robot sample: Cornors in Java to
+//Code Translation from a robot sample: "Cornors" in Java to
 domain specific language
 
 //Global variables
@@ -8,11 +8,11 @@ bool stopWhenSeeRobot = false // When robots is spotted, go to the corner
 
 setup
 
-    setBodyColor(Color.red)
-    setGunColor(Color.black)
-    setRadarColor(Color.yellow)
-    setBulletColor(color.green)
-    setScanColor(Color.green)
+    Tank.setBodyColor(Color.red)
+    Tank.Gun.setGunColor(Color.black)
+    Tank.Radar.setRadarColor(Color.yellow)
+    Tank.setBulletColor(color.green)
+    Tank.setScanColor(Color.green)
 
     others = Game.getOthers()
 

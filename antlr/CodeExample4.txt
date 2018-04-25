@@ -1,0 +1,56 @@
+//Code Translation from a robot sample: "Crazy" in Java to
+  domain specific language
+
+setup
+
+    Tank.setColor(Color.black)
+    Tank.Gun.setColor(Color.white)
+    Tank.Radar.setColor(Color.yellow)
+    Tank.BulletColor(Color.red)
+    Tank.ScanColor(Color.green)
+end
+
+game-loop
+
+    Tank.setAhead(40000)
+    movingForward = true
+    Tank.setTurnRight(90)
+    Tank.setTurnLeft(180)
+    Tank.setTurnRight(180)
+end
+
+function void reversedirection()
+
+    if (movingForward)
+
+        setBack(40000)
+        movingForward = false
+    end
+
+    else
+
+        setAhead(40000)
+        movingForward = true
+    end
+end
+
+strategy Default
+
+    behavior onHitWall(HitWallEvent enemy)
+
+        reverseDirection()
+    end
+
+    behavior onScannedRobot(ScannedRobotEvent enemy)
+
+        fire(1)
+    end
+
+    behavior onHitRobot(HitRobotEvent enemy)
+
+        if (enemy.isMyFault())
+
+            reverseDirection()
+        end
+    end
+end
