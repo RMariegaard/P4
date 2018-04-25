@@ -46,6 +46,7 @@ class TypeCheckerVisitorTest {
         typeChecker.Visit(node);
         assertSame(int.class, node.Type);
     }
+
     @Test
     void visitAddExprDecimalAndDecimal() {
         Node node = new AddExprNode(0);
@@ -53,6 +54,7 @@ class TypeCheckerVisitorTest {
 
         assertSame( double.class, typeChecker.Visit(node).Type);
     }
+
     @Test
     void visitAddExprStringAndString() {
         Node node = new AddExprNode(0);
@@ -499,5 +501,25 @@ class TypeCheckerVisitorTest {
 
         assertTrue(typeChecker.Visit(node).ErrorFlag);
     }
+    @Test
+    void visitDoStmt(){
+        Node node = new DoStmtNode(0);
+        Node argument = new ArgumentNode(0,"int");
+        Node ref = new RefNode(0);
+        Node idNode = new IDNode(0, "i");
+        idNode.Type = int.class;
 
+        ref.AdoptChildren(idNode);
+        argument.AdoptChildren(ref);
+
+        Node start = new IntNode(0, 0);
+        Node end = new IntNode(0, 5);
+        Node increment = new UAddNode(0);
+        Node block = new BlockNode(0);
+        node.AdoptChildren(argument, start, end, increment, block);
+
+        typeChecker.Visit(node);
+        assertFalse(node.ErrorFlag);
+
+    }
 }
