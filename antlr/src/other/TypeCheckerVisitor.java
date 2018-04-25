@@ -234,7 +234,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
         if(node.IncrementNode() instanceof UAddNode || node.IncrementNode() instanceof UsubNode)
             Visit(node.IncrementNode());
         else {
-            ErrorList.add(String.format("Line %s: Last term in do Loop has to be an ++ or --"));
+            ErrorList.add(String.format("Line %s: Last term in do Loop has to be an ++ or --", node.FirstLinenumber));
             node.ErrorFlag = true;
         }
         Visit(node.BlockNode());
@@ -664,18 +664,20 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
 
     private Object FindType(String type) {
 
-        if(type.equals("text"))
-             return String.class;
-        else if(type.equals("boolean"))
-            return boolean.class;
-        else if(type.equals("int"))
-            return int.class;
-        else if (type.equals("double"))
-            return double.class;
-        else if (type.equals("void"))
-            return void.class;
-        else
-            return null;
+        switch (type) {
+            case "text":
+                return String.class;
+            case "boolean":
+                return boolean.class;
+            case "int":
+                return int.class;
+            case "double":
+                return double.class;
+            case "void":
+                return void.class;
+            default:
+                return null;
+        }
 
     }
 }
