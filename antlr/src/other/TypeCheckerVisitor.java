@@ -18,12 +18,17 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
 
     @Override
     public Node Visit(ActionNode node) {
+        //This is done because we dont have time to implement id.id.id from RobocodeAPI
+        //The fcall id name is changed to id.id.id.Fcallname before visiting the fcall node
         Node[] array = node.IDNodes();
+        String fcallName = node.Fcall().IDNode().idString;
+        String newFcallName = "";
         for(int i = 0; i<array.length; i++) {
-            Visit(array[i]);
+            newFcallName = String.format(newFcallName + array[i] + ".");
         }
+        newFcallName = String.format(newFcallName + fcallName);
+        node.Fcall().IDNode().idString = newFcallName;
         node.Type = Visit(node.Fcall()).Type;
-        //TODO idk hvad denne skal have af extra information
 
         return node;
     }
@@ -628,12 +633,11 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
             List<String> content = Files.readAllLines(Paths.get(input));
             String[] elements;
             for(String line : content){
-                 elements = line.split("\\s+"); //RobocodeName - OurName - returnType - Parameter(max 1)/Can be none
+                elements = line.split("\\s+"); //RobocodeName - OurName - returnType - Parameter(max 1)/Can be none
+                String id = elements[1];
                 Object type = FindType(elements[2]);
+                SymbolClass sym = symbolTable.RetrieveSymbol(id);
                 if(elements[3].equals("none")) {
-                    String[] ids = elements[1].split("\\.");
-                    for(String id : ids){
-                        SymbolClass sym = symbolTable.RetrieveSymbol(id);
                         if(sym  == null) {
                             MethodNode node = new MethodNode(0);
                             node.Type = type;
@@ -641,19 +645,14 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
                             symbolTable.EnterSymbol(id, node);
                         }
                     }
-                }
                 else{
                     ArgumentNode anode = new ArgumentNode(0, elements[3]); //Has no refNode, might be a problem
-                    String[] ids = elements[1].split("\\.");
-                    for(int i= 0; i<ids.length; i++)
-                        if(symbolTable.RetrieveSymbol(ids[i]) == null){
+                        if(sym  == null){
                             MethodNode mnode = new MethodNode(0);
                             mnode.Type = elements[2];
-                            mnode.AdoptChildren(new IDNode(0, ids[i]), new RTypeNode(0, elements[2]));
-                            if(i == ids.length-1){
-                                mnode.AdoptChildren(anode);
-                            }
-                            symbolTable.EnterSymbol(ids[i], mnode);
+                            mnode.AdoptChildren(new IDNode(0, id), new RTypeNode(0, elements[2]));
+                            mnode.AdoptChildren(anode);
+                            symbolTable.EnterSymbol(id, mnode);
                         }
                 }
             }
