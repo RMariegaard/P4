@@ -226,9 +226,17 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
         Node eType = Visit(node.EndValueNode());
         if(eType.Type != int.class){
             ErrorList.add(String.format("Line %s: the endvalue for the do loop has to be of type int and cant be %s", node.FirstLinenumber, eType.Type));
+            node.ErrorFlag = true;
         }
         //Jaaaaaaaaaaa- hvordan var det lige vores do loop var ??
-        Visit(node.IncrementNode());
+
+        //Last term in do stmt has to be an increment or decrement, so we cant 
+        if(node.IncrementNode() instanceof UAddNode || node.IncrementNode() instanceof UsubNode)
+            Visit(node.IncrementNode());
+        else {
+            ErrorList.add(String.format("Line %s: Last term in do Loop has to be an ++ or --"));
+            node.ErrorFlag = true;
+        }
         Visit(node.BlockNode());
         symbolTable.CloseScope();
         return node;
