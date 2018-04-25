@@ -386,12 +386,6 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
     }
 
     @Override
-    public Node Visit(InfixExprNode node) {
-        return null;
-        //TODO: LAV DEN HER CASPER
-    }
-
-    @Override
     public Node Visit(IntNode node) {
         node.Type = int.class;
         return node;
