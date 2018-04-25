@@ -149,10 +149,6 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
         return result;
     }
 
-    @Override
-    public String Visit(InfixExprNode node) {
-        return null;
-    }
 
     @Override
     public String Visit(IntNode node) {
@@ -229,6 +225,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
         String string = "";
         string += ImportLibaries(strategies);
         return null;
+        //TODO: det giver ingen mening det her. Return null???
     }
 
     private String ImportLibaries(String strategies) {

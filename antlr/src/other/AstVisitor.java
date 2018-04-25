@@ -28,7 +28,6 @@ public abstract class AstVisitor<T> {
     public abstract T Visit(GreaterEqualNode node);
     public abstract T Visit(IDNode node);
     public abstract T Visit(IfStmtNode node);
-    public abstract T Visit(InfixExprNode node);
     public abstract T Visit(IntNode node);
     public abstract T Visit(LessEqualNode node);
     public abstract T Visit(LessNode node);
@@ -118,8 +117,6 @@ public abstract class AstVisitor<T> {
             return Visit((NotExprNode) node);
         } else if(node instanceof MulExprNode){
             return Visit((MulExprNode) node);
-        } else if(node instanceof InfixExprNode){
-            return Visit((InfixExprNode) node);
         } else if(node instanceof DivExprNode){
             return Visit((DivExprNode) node);
         } else if(node instanceof ArrayExprNode){
