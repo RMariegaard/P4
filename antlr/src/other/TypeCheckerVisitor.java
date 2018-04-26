@@ -142,7 +142,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
 
     @Override
     public Node Visit(BehaviorNode node) {
-        Visit(node.IDNode()); //Vi skal have tilføjet alle behaviors til symboltable
+        Visit(node.IDNode());
         Visit(node.BlockNode());
         return node;
     }
@@ -636,7 +636,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
             List<String> content = Files.readAllLines(Paths.get(input));
             String[] elements;
             for(String line : content){
-                elements = line.split("\\s"); //RobocodeName - returnType (most likely void) - OurName
+                elements = line.split("\\s+"); //RobocodeName - returnType (most likely void) - OurName
                 String id = elements[2];
                 SymbolClass sym = symbolTable.RetrieveSymbol(id);
                 if(sym == null){
