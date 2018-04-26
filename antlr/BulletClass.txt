@@ -1,4 +1,3 @@
-getDistanceRemaining		Tank.getDistanceRemaining		double		none
 getBullet.getHeading           Bullet.getHeading               double      none
 getBullet.getName              Bullet.getName                  String      none
 getBullet.getPower             Bullet.getPower                 double      none

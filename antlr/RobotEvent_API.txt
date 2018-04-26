@@ -1,4 +1,4 @@
-onBulletHit			void		BulletHitEvent
+onBulletHit			void		BulletHit
 onBulletHitBullet		void		BulletHitBulletEvent
 onBulletMissed			void		BulletMissedEvent
 onDeath				void		DeathEvent

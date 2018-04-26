@@ -142,8 +142,18 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
 
     @Override
     public Node Visit(BehaviorNode node) {
+        symbolTable.OpenScope();
         Visit(node.IDNode());
+        if(node.IDNode().idString == "BulletHit"){
+            try{
+                AddLibraryFunctionsToSymbolTable("BulletClass.txt");
+            }
+            catch (Exception e){
+                ErrorList.add(String.format("You are missing files. Please reinstall the language agian"));
+            }
+        }
         Visit(node.BlockNode());
+        symbolTable.CloseScope();
         return node;
     }
 
