@@ -273,7 +273,8 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
         List<antlrParser.ExprContext> exprs = ctx.expr();
         if (!exprs.isEmpty()){
             for (antlrParser.ExprContext expr : exprs){
-                fnode.AdoptChildren(visit(expr));
+                Node exprNode = visit(expr);
+                fnode.AdoptChildren(exprNode);
             }
         }
 
