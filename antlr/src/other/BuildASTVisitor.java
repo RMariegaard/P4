@@ -99,8 +99,8 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
     public Node visitEventDcl(antlrParser.EventDclContext ctx) {
         int linenumber = ctx.start.getLine();
         Node eventNode = new EventNode(linenumber);
-        eventNode.AdoptChildren(visit(ctx.aoexpr()));
         eventNode.AdoptChildren(new IDNode(linenumber, ctx.ID().getText()));
+        eventNode.AdoptChildren(visit(ctx.aoexpr()));
         return eventNode;
     }
 

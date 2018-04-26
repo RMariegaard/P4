@@ -9,10 +9,10 @@ public class EventNode extends Node {
     }
 
     public Node ExprNode(){
-        return this.LeftmostChild;
+        return this.ID().RightSibling;
     }
     public IDNode ID(){
-        return (IDNode) this.ExprNode().RightSibling;
+        return (IDNode) this.LeftmostChild;
     }
 
     @Override

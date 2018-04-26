@@ -26,7 +26,8 @@ public class Main {
             //table.hashCode();
 
             TypeCheckerVisitor typeChecker = new TypeCheckerVisitor();
-            typeChecker.AddLibarytoSymbolTable("Robot_API.txt", "AdvancedRobot_API.txt");
+            typeChecker.AddLibraryFunctionsToSymbolTable("Robot_API.txt", "AdvancedRobot_API.txt");
+            typeChecker.AddLibraryEventsToSymbolTable("RobotEvent_API.txt", "AdvancedRobotEvent_API.txt");
             Object errorFree = typeChecker.Visit(ast);
             //ASTPrinter.PrintTree((Node)errorFree);
             if (!typeChecker.ErrorList.isEmpty()) {
