@@ -218,6 +218,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
 
     @Override
     public Node Visit(DoStmtNode node) {
+        //TODO: vi skal vel tjekke at første variable også er den er bliver talt op til sidst.
         symbolTable.OpenScope();
         if (Visit(node.VariableNode()).Type != int.class) {
             ErrorList.add(String.format("Line %s: the variable %s in Do construct has to be of type int", node.FirstLinenumber, node.VariableNode().RefNode().IDNode().toString()));
@@ -225,6 +226,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
         }
         Node sType = Visit(node.StartValueNode());
         if(sType.Type != int.class){
+
             ErrorList.add(String.format("Line %s: the startvalue for the do loop has to be of type int and cant be %s", node.FirstLinenumber, sType.Type));
             node.ErrorFlag = true;
         }

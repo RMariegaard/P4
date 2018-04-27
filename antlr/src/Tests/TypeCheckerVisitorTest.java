@@ -502,24 +502,132 @@ class TypeCheckerVisitorTest {
         assertTrue(typeChecker.Visit(node).ErrorFlag);
     }
     @Test
-    void visitDoStmt(){
+    void visitDoStmtNoErrors(){
         Node node = new DoStmtNode(0);
         Node argument = new ArgumentNode(0,"int");
         Node ref = new RefNode(0);
         Node idNode = new IDNode(0, "i");
-        idNode.Type = int.class;
 
         ref.AdoptChildren(idNode);
         argument.AdoptChildren(ref);
 
         Node start = new IntNode(0, 0);
         Node end = new IntNode(0, 5);
+
         Node increment = new UAddNode(0);
+        Node refInc = new RefNode(0);
+        Node idInc = new IDNode(0, "i");
+        increment.AdoptChildren(refInc.AdoptChildren(idInc));
+
         Node block = new BlockNode(0);
         node.AdoptChildren(argument, start, end, increment, block);
 
         typeChecker.Visit(node);
         assertFalse(node.ErrorFlag);
-
     }
+    @Test
+    void visitDoStmtVariableError(){
+        Node node = new DoStmtNode(0);
+        //variable node
+        Node argument = new ArgumentNode(0,"decimal");
+        Node ref = new RefNode(0);
+        Node idNode = new IDNode(0, "i");
+        ref.AdoptChildren(idNode);
+        argument.AdoptChildren(ref);
+        //Startvalue and endvalue
+        Node start = new IntNode(0, 0);
+        Node end = new IntNode(0, 5);
+        //Increment node
+        Node increment = new UAddNode(0);
+        Node refInc = new RefNode(0);
+        Node idInc = new IDNode(0, "i");
+        increment.AdoptChildren(refInc.AdoptChildren(idInc));
+
+        //Block
+        Node block = new BlockNode(0);
+        node.AdoptChildren(argument, start, end, increment, block);
+
+        typeChecker.Visit(node);
+        assertTrue(node.ErrorFlag);
+    }
+
+    @Test
+    void visitDoStmtStartError(){
+        Node node = new DoStmtNode(0);
+        Node argument = new ArgumentNode(0,"int");
+        Node ref = new RefNode(0);
+        Node idNode = new IDNode(0, "i");
+
+        ref.AdoptChildren(idNode);
+        argument.AdoptChildren(ref);
+
+        Node start = new DecimalNode(0, 0.444);
+        Node end = new IntNode(0, 5);
+
+        Node increment = new UAddNode(0);
+        Node refInc = new RefNode(0);
+        Node idInc = new IDNode(0, "i");
+        increment.AdoptChildren(refInc.AdoptChildren(idInc));
+
+
+        Node block = new BlockNode(0);
+        node.AdoptChildren(argument, start, end, increment, block);
+
+        typeChecker.Visit(node);
+        assertTrue(node.ErrorFlag);
+    }
+    @Test
+    void visitDoStmtEndError(){
+        Node node = new DoStmtNode(0);
+        //variable node
+        Node argument = new ArgumentNode(0,"int");
+        Node ref = new RefNode(0);
+        Node idNode = new IDNode(0, "i");
+        ref.AdoptChildren(idNode);
+        argument.AdoptChildren(ref);
+        //Startvalue and endvalue
+        Node start = new IntNode(0, 0);
+        Node end = new DecimalNode(0, 5.09);
+        //Increment node
+        Node increment = new UAddNode(0);
+        Node refInc = new RefNode(0);
+        Node idInc = new IDNode(0, "i");
+        increment.AdoptChildren(refInc.AdoptChildren(idInc));
+
+        //Block
+        Node block = new BlockNode(0);
+        node.AdoptChildren(argument, start, end, increment, block);
+
+        typeChecker.Visit(node);
+        assertTrue(node.ErrorFlag);
+    }
+    @Test
+    void visitDoStmtIncrementError(){
+        //TODO: har ik lavet denne endnu
+        Node node = new DoStmtNode(0);
+        //variable node
+        Node argument = new ArgumentNode(0,"int");
+        Node ref = new RefNode(0);
+        Node idNode = new IDNode(0, "i");
+        ref.AdoptChildren(idNode);
+        argument.AdoptChildren(ref);
+        //Startvalue and endvalue
+        Node start = new IntNode(0, 0);
+        Node end = new DecimalNode(0, 5.09);
+        //Increment node
+        Node increment = new UAddNode(0);
+        Node refInc = new RefNode(0);
+        Node idInc = new IDNode(0, "i");
+        increment.AdoptChildren(refInc.AdoptChildren(idInc));
+
+        //Block
+        Node block = new BlockNode(0);
+        node.AdoptChildren(argument, start, end, increment, block);
+
+        typeChecker.Visit(node);
+        assertTrue(node.ErrorFlag);
+    }
+    //TODO: test do noget mere
+
+
 }
