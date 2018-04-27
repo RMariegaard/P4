@@ -129,7 +129,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
                 return node;
             }
             else{
-                ErrorList.add(String.format("Line %s: assigning %s to type %s not possible", node.FirstLinenumber, node.FirstLinenumber, valueType.Type.toString(), idType.Type.toString()));
+                ErrorList.add(String.format("Line %s: assigning %s to type %s not possible", node.FirstLinenumber, valueType.Type.toString(), idType.Type.toString()));
                 node.ErrorFlag = true;
             }
         }catch (NullPointerException e){
@@ -144,7 +144,8 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
     public Node Visit(BehaviorNode node) {
         symbolTable.OpenScope();
         Visit(node.IDNode());
-        if(node.IDNode().idString == "BulletHit"){
+        //TODO:Casper hvad fuck er det her?
+        if(node.IDNode().idString.equals("BulletHit")){
             try{
                 AddLibraryFunctionsToSymbolTable("BulletClass.txt");
             }
@@ -330,7 +331,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
                 Node[] arguments = node.ArgumentNodes();
                 Node[] parameters = methodNode.Parameters();
                 for(int i = 0; i<numberOfparams; i++) {
-                    if (parameters[i].Type != Visit(arguments[i])) {
+                    if (parameters[i].Type != Visit(arguments[i]).Type) {
                         ErrorList.add(String.format("Line %s, Argument number %s has to be of type %s", node.FirstLinenumber, i + 1, parameters[i].Type.toString()));
                     }
                 }
@@ -531,8 +532,6 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
 
     @Override
     public Node Visit(ProgNode node) {
-        //Skal man starte med at åbne et scope??
-        //ellers besøger jeg vel bare alle børnene
         symbolTable.OpenScope();
         Node child = node.LeftmostChild;
         while (child != null){
@@ -546,7 +545,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
 
     @Override
     public Node Visit(RTypeNode node) {
-
+        //TODO: er denne her lavet?
         return node;
     }
 
@@ -695,14 +694,16 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
     }
 
     private Object FindType(String type) {
-
         switch (type) {
             case "text":
+            case "string":
                 return String.class;
+            case "bool":
             case "boolean":
                 return boolean.class;
             case "int":
                 return int.class;
+            case "decimal":
             case "double":
                 return double.class;
             case "void":

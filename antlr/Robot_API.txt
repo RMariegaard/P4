@@ -23,5 +23,6 @@ turnGunRight                    Tank.Gun.turnRight                  void        
 turnRadarLeft                   Tank.Radar.turnLeft                 void        double
 turnRadarRight                  Tank.Radar.turnRight                void        double
 getEnergy                       Tank.getEnergy                      double      none
-turnLeft                        Tank.turnLeft                       double      degrees
-turnRight                       Tank.turnRight                      double      degrees
+turnLeft                        Tank.turnLeft                       double      double
+turnRight                       Tank.turnRight                      double      double
+fire                            Tank.fire                           void        double

@@ -58,8 +58,7 @@ public class SymbolTable {
             scopeDisplay.add(depth, sym);
 
             //prints to console
-
-            System.out.println(node.Type.toString() + " " + name);
+            //System.out.println(node.Type.toString() + " " + name);
 
 
             //Add to hash

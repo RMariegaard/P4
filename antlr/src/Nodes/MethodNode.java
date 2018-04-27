@@ -17,10 +17,10 @@ public class MethodNode extends Node {
         int number = 0;
         Node node = RTypeNode();
         while(!(node.RightSibling instanceof BlockNode)){
-            number++;
             node = node.RightSibling;
             if(node == null) //Methods imported from RoboCodeAPI doesn't have a blockNode
                 break;
+            number++; //Has to count last, or else the API with no parameters will be set to 1
         }
         return number;
     }

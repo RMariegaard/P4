@@ -1,5 +1,5 @@
 getBullet.getHeading           Bullet.getHeading               double      none
-getBullet.getName              Bullet.getName                  String      none
+getBullet.getName              Bullet.getName                  string      none
 getBullet.getPower             Bullet.getPower                 double      none
 getBullet.getVelocity          Bullet.getVelocity              double      none
 getBullet.getX                 Bullet.getX                     double      none

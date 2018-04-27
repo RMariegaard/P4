@@ -1,7 +1,4 @@
 int target = 40
-int cool
-bool fun = 34 == true
-int test = true
 event(Tank.getEnergy() == 40.0) -> WhenEnergyIs40
 setup
 	Tank.setBodyColor(white)
@@ -10,20 +7,20 @@ setup
 end
 
 game-loop
-    Tank.ahead(123)
-    Gun.turnLeft(123)
+    Tank.ahead(123.0)
+    Tank.Gun.turnLeft(123.0)
     if( Game.getRoundNum() > 10)
-        Tank.fire(2)
-        Radar.turnRight(200)
+        Tank.fire(2.0)
+        Tank.Radar.turnRight(200.0)
     end
      
     else if (Game.getRoundNum() > 5)
-		Tank.fire(1)
-	    Radar.turnRight(100)
+		Tank.fire(1.0)
+	    Tank.Radar.turnRight(100.0)
 	end
 	else
-        Tank.fire(3)
-	    Radar.turnRight(50)
+        Tank.fire(3.0)
+	    Tank.Radar.turnRight(50.0)
 	end
 end
 
@@ -35,17 +32,17 @@ end
 
 strategy Default
     behavior OnScannedRobot
-	    Tank.turnRight(Enemy.GetBearing())
+	    Tank.turnRight(Enemy.getBearing())
     end
 
 
     behavior WhenEnergyIs40
 	    do(int i, 0, 5, i++)
-	    	fire(i)
+	    	Tank.fire(i)  //FAAAACK fire tager kun en double...
 	    end
     end
 
     behavior BulletHit
-        Tank.turnRight(Bullet.getY)
+        Tank.turnRight(Bullet.getY())
      end
 end

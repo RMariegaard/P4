@@ -602,7 +602,7 @@ class TypeCheckerVisitorTest {
         assertTrue(node.ErrorFlag);
     }
     @Test
-    void visitDoStmtIncrementError(){
+    void visitDoStmtIncrementErrorWrongName(){
         //TODO: har ik lavet denne endnu
         Node node = new DoStmtNode(0);
         //variable node
@@ -617,7 +617,7 @@ class TypeCheckerVisitorTest {
         //Increment node
         Node increment = new UAddNode(0);
         Node refInc = new RefNode(0);
-        Node idInc = new IDNode(0, "i");
+        Node idInc = new IDNode(0, "p");
         increment.AdoptChildren(refInc.AdoptChildren(idInc));
 
         //Block

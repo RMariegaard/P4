@@ -4,16 +4,26 @@ public class RTypeNode extends Node {
 
     public RTypeNode(int firstLinenumber, String type) {
         super(firstLinenumber);
-        if(type.equals("text"))
-            Type = String.class;
-        else if(type.equals("bool") || type.equals("boolean"))
-            Type = boolean.class;
-        else if(type.equals("int"))
-            Type = int.class;
-        else if (type.equals("decimal") || type.equals("double"))
-            Type = double.class;
-        else if (type.equals("void"))
-            Type = void.class;
+        switch (type) {
+            case "text":
+            case "string":
+                Type = String.class;
+                break;
+            case "bool":
+            case "boolean":
+                Type = boolean.class;
+                break;
+            case "int":
+                Type = int.class;
+                break;
+            case "decimal":
+            case "double":
+                Type = double.class;
+                break;
+            case "void":
+                Type = void.class;
+                break;
+        }
     }
 
     @Override
