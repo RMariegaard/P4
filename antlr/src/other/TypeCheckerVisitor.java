@@ -142,8 +142,18 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
 
     @Override
     public Node Visit(BehaviorNode node) {
-        Visit(node.IDNode()); //Vi skal have tilføjet alle behaviors til symboltable
+        symbolTable.OpenScope();
+        Visit(node.IDNode());
+        if(node.IDNode().idString == "BulletHit"){
+            try{
+                AddLibraryFunctionsToSymbolTable("BulletClass.txt");
+            }
+            catch (Exception e){
+                ErrorList.add(String.format("You are missing files. Please reinstall the language agian"));
+            }
+        }
         Visit(node.BlockNode());
+        symbolTable.CloseScope();
         return node;
     }
 
@@ -290,7 +300,10 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
             return node;
         }
         Node condition = Visit(node.ExprNode());
-        if(condition.Type == boolean.class){
+        if(node.FirstLinenumber == 0){
+            //The event is imported from Robocode
+        }
+        else if(condition.Type == boolean.class){
             node.Type = EventType.class;
             symbolTable.EnterSymbol(node.ID().toString(), node);
         }
@@ -630,7 +643,25 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
         return node;
     }
 
-    public void AddLibarytoSymbolTable(String... files) throws IOException {
+    public void AddLibraryEventsToSymbolTable(String... files) throws IOException{
+        for(String input : files){
+            List<String> content = Files.readAllLines(Paths.get(input));
+            String[] elements;
+            for(String line : content){
+                elements = line.split("\\s+"); //RobocodeName - returnType (most likely void) - OurName
+                String id = elements[2];
+                SymbolClass sym = symbolTable.RetrieveSymbol(id);
+                if(sym == null){
+                    EventNode node = new EventNode(0);
+                    node.AdoptChildren(new IDNode(0, id));
+                    node.Type = EventType.class;
+                    symbolTable.EnterSymbol(id, node);
+                }
+            }
+        }
+    }
+
+    public void AddLibraryFunctionsToSymbolTable(String... files) throws IOException {
         for(String input : files){
             List<String> content = Files.readAllLines(Paths.get(input));
             String[] elements;
