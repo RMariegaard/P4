@@ -268,7 +268,11 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
 
     @Override
     public Node Visit(ElseIfNode node) {
-        Visit(node.Condition());
+        Node condition = Visit(node.Condition());
+        if (!(condition.Type == boolean.class)) {
+            ErrorList.add(String.format("Line %s: Condition in else if statement has to be type bool, not %s", node.FirstLinenumber, condition.Type));
+            node.ErrorFlag = true;
+        }
         Visit(node.Block());
         return node;
     }
@@ -318,7 +322,8 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
 
     @Override
     public Node Visit(FcallNode node) {
-        Node type = Visit(node.IDNode());
+        Node type = Visit(node.IDNode()); //this checks if the function exist
+
         SymbolClass sym = symbolTable.RetrieveSymbol(node.IDNode().idString);
         if(sym != null){
             MethodNode methodNode = (MethodNode) sym.Node;
@@ -326,6 +331,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
             int numberOfargs = node.NumberOfArguments();
             if(numberOfargs != numberOfparams){
                 ErrorList.add(String.format("Line %s: Number of arguments does not match the number of parameters for the method %s", node.FirstLinenumber, node.IDNode().toString()));
+                node.ErrorFlag = true;
             }
             else{
                 Node[] arguments = node.ArgumentNodes();
@@ -333,6 +339,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
                 for(int i = 0; i<numberOfparams; i++) {
                     if (parameters[i].Type != Visit(arguments[i]).Type) {
                         ErrorList.add(String.format("Line %s, Argument number %s has to be of type %s", node.FirstLinenumber, i + 1, parameters[i].Type.toString()));
+                        node.ErrorFlag = true;
                     }
                 }
             }
@@ -353,6 +360,10 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
         Node rightNodeType = Visit(node.RightNode());
         try {
             if (leftNodeType.Type.equals(rightNodeType.Type)) {
+                if(leftNodeType.Type == String.class || leftNodeType.Type == String.class){
+                    ErrorList.add(String.format("Line %s: cannot compare two strings with >", node.FirstLinenumber));
+                    node.ErrorFlag = true;
+                }
                 node.Type = boolean.class;
                 return node;
             }
@@ -372,6 +383,10 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
         Node rightNodeType = Visit(node.RightNode());
         try {
             if (leftNodeType.Type.equals(rightNodeType.Type)) {
+                if(leftNodeType.Type == String.class || leftNodeType.Type == String.class){
+                    ErrorList.add(String.format("Line %s: cannot compare two strings with >=", node.FirstLinenumber));
+                    node.ErrorFlag = true;
+                }
                 node.Type = boolean.class;
                 return node;
             }
@@ -389,7 +404,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
     public Node Visit(IDNode node) {
         SymbolClass sym = symbolTable.RetrieveSymbol(node.idString);
         if(sym == null){
-            ErrorList.add(String.format("Line %s: ", node.FirstLinenumber) + node.idString + " was not declared in this scope.");
+            ErrorList.add(String.format("Line %s: ", node.FirstLinenumber) + node.idString + " was not declared");
             node.ErrorFlag = true;
             return node;
         }
@@ -401,7 +416,11 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
 
     @Override
     public Node Visit(IfStmtNode node) {
-        Visit(node.Condition());
+        Node condition = Visit(node.Condition());
+        if (!(condition.Type == boolean.class)) {
+            ErrorList.add(String.format("Line %s: Condition in if statement has to be type bool, not %s", node.FirstLinenumber, condition.Type));
+            node.ErrorFlag = true;
+        }
         Visit(node.Block());
         return node;
     }
@@ -418,6 +437,10 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
         Node rightNodeType = Visit(node.RightNode());
         try {
             if (leftNodeType.Type.equals(rightNodeType.Type)) {
+                if(leftNodeType.Type == String.class || leftNodeType.Type == String.class){
+                    ErrorList.add(String.format("Line %s: cannot compare two strings with >=", node.FirstLinenumber));
+                    node.ErrorFlag = true;
+                }
                 node.Type = boolean.class;
                 return node;
             }
@@ -437,6 +460,10 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
         Node rightNodeType = Visit(node.RightNode());
         try {
             if (leftNodeType.Type.equals(rightNodeType.Type)) {
+                if(leftNodeType.Type == String.class || leftNodeType.Type == String.class){
+                    ErrorList.add(String.format("Line %s: cannot compare two strings with >=", node.FirstLinenumber));
+                    node.ErrorFlag = true;
+                }
                 node.Type = boolean.class;
                 return node;
             }
@@ -523,8 +550,11 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
             }
             else{
                 ErrorList.add(String.format("Line %s: the two arguments before and after '||' has to be of type bool", node.FirstLinenumber ));
+                node.ErrorFlag = true;
             }
         }catch (NullPointerException e){
+            node.ErrorFlag = true;
+            //can this happen?
             return node;
         }
         return node;

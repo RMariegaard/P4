@@ -107,6 +107,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     @Override
     public String Visit(EqualNode node) {
+        //TODO: java kan man ikke skrive string == string, det kan vi i vores sprog, så det skal ændres til string.equals(string) i java.
         return String.format("%s == %s", Visit(node.LeftNode()), Visit(node.RightNode()));
     }
 

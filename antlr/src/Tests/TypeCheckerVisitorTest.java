@@ -1,10 +1,9 @@
 package Tests;
 
 import Nodes.*;
-import Nodes.expr.AddExprNode;
-import Nodes.expr.ArrayExprNode;
-import Nodes.expr.DivExprNode;
+import Nodes.expr.*;
 import Nodes.values.*;
+import Types.EventType;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -603,7 +602,6 @@ class TypeCheckerVisitorTest {
     }
     @Test
     void visitDoStmtIncrementErrorWrongName(){
-        //TODO: har ik lavet denne endnu
         Node node = new DoStmtNode(0);
         //variable node
         Node argument = new ArgumentNode(0,"int");
@@ -629,5 +627,681 @@ class TypeCheckerVisitorTest {
     }
     //TODO: test do noget mere
 
+    @Test
+    void visitElseIfWithBoolCondition(){
+        Node node = new ElseIfNode(0);
+        Node boolNode = new BoolNode(0, true);
+        Node block = new BlockNode(0);
 
+        node.AdoptChildren(boolNode,block);
+
+        assertFalse(typeChecker.Visit(node).ErrorFlag);
+    }
+    @Test
+    void visitElseIfWithNotBoolCondition(){
+        Node node = new ElseIfNode(0);
+        Node boolNode = new IntNode(0, 4);
+        Node block = new BlockNode(0);
+
+        node.AdoptChildren(boolNode,block);
+
+        assertTrue(typeChecker.Visit(node).ErrorFlag);
+    }
+
+    @Test
+    void visitEqualNodeTypeIntAndInt(){
+        Node node = new EqualNode(0);
+        Node intNode = new IntNode(0, 2);
+        Node intNode2 = new IntNode(0, 2);
+
+        node.AdoptChildren(intNode, intNode2);
+
+        assertSame(boolean.class, typeChecker.Visit(node).Type);
+    }
+    @Test
+    void visitEqualNodeTypeDecimalAndDecimal(){
+        Node node = new EqualNode(0);
+        Node decimalNode = new DecimalNode(0, 2.2);
+        Node decimalNode2 = new DecimalNode(0, 2.2);
+
+        node.AdoptChildren(decimalNode, decimalNode2);
+
+        assertSame(boolean.class, typeChecker.Visit(node).Type);
+    }
+    @Test
+    void visitEqualNodeTypeBoolAndBool(){
+        Node node = new EqualNode(0);
+        Node boolNode = new BoolNode(0, true);
+        Node boolNode2 = new BoolNode(0, true);
+
+        node.AdoptChildren(boolNode, boolNode2);
+
+        assertSame(boolean.class, typeChecker.Visit(node).Type);
+    }
+    @Test
+    void visitEqualNodeTypeTextAndText(){
+
+        Node node = new EqualNode(0);
+        Node StringNode = new StringNode(0, "string");
+        Node StringNode2 = new StringNode(0, "string");
+
+        node.AdoptChildren(StringNode, StringNode2);
+
+        assertSame(boolean.class, typeChecker.Visit(node).Type);
+    }
+    @Test
+    void visitEqualNodeTypeBoolAndInt(){
+        Node node = new EqualNode(0);
+        Node boolNode = new BoolNode(0, true);
+        Node intNode = new IntNode(0, 3);
+
+        node.AdoptChildren(boolNode, intNode);
+
+        assertTrue( typeChecker.Visit(node).ErrorFlag);
+    }
+    @Test
+    void visitEventNodeNameAlreadyExist(){
+        Node randomNode = new IDNode(1,"eventDcl");
+        randomNode.Type = int.class;
+        typeChecker.symbolTable.EnterSymbol("eventDcl", randomNode);
+
+        Node node = new EventNode(1);
+        Node idNode = new IDNode(1,"eventDcl");
+        Node condition = new BoolNode(1, true);
+
+        node.AdoptChildren(idNode,condition);
+
+        assertTrue(typeChecker.Visit(node).ErrorFlag);
+    }
+    @Test
+    void visitEventNodeConditionNotBool(){
+        Node node = new EventNode(1);
+        Node idNode = new IDNode(1,"eventDcl");
+        Node condition = new IntNode(1, 3);
+
+        node.AdoptChildren(idNode,condition);
+
+        assertTrue(typeChecker.Visit(node).ErrorFlag);
+    }
+
+    @Test
+    void visitEventNodeCorrect(){
+        Node node = new EventNode(1);
+        Node idNode = new IDNode(1,"eventDcl");
+        Node condition = new BoolNode(1, true);
+
+        node.AdoptChildren(idNode,condition);
+
+        assertSame(EventType.class, typeChecker.Visit(node).Type);
+    }
+    @Test
+    void visitFcallNodeNoParamsNoError(){
+        //Setup, creating a method and adds it to symbol table
+        Node methodNode = new MethodNode(1);
+        Node nameNode = new IDNode(1, "functionTest");
+        nameNode.Type = int.class;
+        Node type = new RTypeNode(0, "int");
+        methodNode.Type = int.class;
+        methodNode.AdoptChildren(nameNode, type);
+        typeChecker.symbolTable.EnterSymbol("functionTest", methodNode);
+
+        //Test
+        Node node = new FcallNode(1);
+        Node idNode = new IDNode(1, "functionTest");
+        node.AdoptChildren(idNode);
+
+        typeChecker.Visit(node);
+        assertFalse(node.ErrorFlag);
+    }
+    @Test
+    void visitFcallNodeOneParamsNoError(){
+        //Setup, creating a method and adds it to symbol table
+        Node methodNode = new MethodNode(1);
+        Node nameNode = new IDNode(1, "functionTest");
+        nameNode.Type = int.class;
+        Node type = new RTypeNode(0, "int");
+        methodNode.Type = int.class;
+        Node argument = new ArgumentNode(1, "int");
+        methodNode.AdoptChildren(nameNode, type, argument);
+        typeChecker.symbolTable.EnterSymbol("functionTest", methodNode);
+
+        //Test
+        Node node = new FcallNode(1);
+        Node idNode = new IDNode(1, "functionTest");
+        Node intNode2 = new IntNode(1, 2);
+        node.AdoptChildren(idNode, intNode2);
+
+        typeChecker.Visit(node);
+        assertFalse(node.ErrorFlag);
+    }
+
+    @Test
+    void visitFcallNodeToManyArguments(){
+        //Setup, creating a method and adds it to symbol table
+        Node methodNode = new MethodNode(1);
+        Node nameNode = new IDNode(1, "functionTest");
+        nameNode.Type = int.class;
+        Node type = new RTypeNode(0, "int");
+        methodNode.Type = int.class;
+        methodNode.AdoptChildren(nameNode, type);
+        typeChecker.symbolTable.EnterSymbol("functionTest", methodNode);
+
+        //Test
+        Node node = new FcallNode(1);
+        Node idNode = new IDNode(1, "functionTest");
+        Node intNode = new IntNode(1, 2);
+        node.AdoptChildren(idNode, intNode);
+
+        typeChecker.Visit(node);
+        assertTrue(node.ErrorFlag);
+    }
+    @Test
+    void visitFcallNodeToManyParameters(){
+        //Setup, creating a method and adds it to symbol table
+        Node methodNode = new MethodNode(1);
+        Node nameNode = new IDNode(1, "functionTest");
+        nameNode.Type = int.class;
+        Node type = new RTypeNode(0, "int");
+        methodNode.Type = int.class;
+        Node argument = new ArgumentNode(1, "int");
+        methodNode.AdoptChildren(nameNode, type, argument);
+        typeChecker.symbolTable.EnterSymbol("functionTest", methodNode);
+
+        //Test
+        Node node = new FcallNode(1);
+        Node idNode = new IDNode(1, "functionTest");
+        node.AdoptChildren(idNode);
+
+        typeChecker.Visit(node);
+        assertTrue(node.ErrorFlag);
+    }
+    @Test
+    void visitFcallNodeArgumentWrongType(){
+        //Setup, creating a method and adds it to symbol table
+        Node methodNode = new MethodNode(1);
+        Node nameNode = new IDNode(1, "functionTest");
+        nameNode.Type = int.class;
+        Node type = new RTypeNode(0, "int");
+        methodNode.Type = int.class;
+        Node argument = new ArgumentNode(1, "int");
+        methodNode.AdoptChildren(nameNode, type, argument);
+        typeChecker.symbolTable.EnterSymbol("functionTest", methodNode);
+
+        //Test
+        Node node = new FcallNode(1);
+        Node idNode = new IDNode(1, "functionTest");
+        Node intNode2 = new DecimalNode(1, 2.2);
+        node.AdoptChildren(idNode, intNode2);
+
+        typeChecker.Visit(node);
+        assertTrue(node.ErrorFlag);
+    }
+
+    @Test
+    void visitGreaterNodeTypeIntAndInt(){
+        Node node = new GreaterNode(0);
+        Node intNode = new IntNode(0, 2);
+        Node intNode2 = new IntNode(0, 2);
+
+        node.AdoptChildren(intNode, intNode2);
+
+        assertSame(boolean.class, typeChecker.Visit(node).Type);
+    }
+    @Test
+    void visitGreaterNodeTypeDecimalAndDecimal(){
+        Node node = new GreaterNode(0);
+        Node decimalNode = new DecimalNode(0, 2.2);
+        Node decimalNode2 = new DecimalNode(0, 2.2);
+
+        node.AdoptChildren(decimalNode, decimalNode2);
+
+        assertSame(boolean.class, typeChecker.Visit(node).Type);
+    }
+    @Test
+    void visitGreaterNodeTypeBoolAndBool(){
+        Node node = new GreaterNode(0);
+        Node boolNode = new BoolNode(0, true);
+        Node boolNode2 = new BoolNode(0, true);
+
+        node.AdoptChildren(boolNode, boolNode2);
+
+        assertSame(boolean.class, typeChecker.Visit(node).Type);
+    }
+    @Test
+    void visitGreaterNodeTypeTextAndText(){
+
+        Node node = new GreaterNode(0);
+        Node StringNode = new StringNode(0, "string");
+        Node StringNode2 = new StringNode(0, "string");
+
+        node.AdoptChildren(StringNode, StringNode2);
+
+        assertTrue(typeChecker.Visit(node).ErrorFlag);
+    }
+    @Test
+    void visitGreaterNodeTypeBoolAndInt(){
+        Node node = new GreaterNode(0);
+        Node boolNode = new BoolNode(0, true);
+        Node intNode = new IntNode(0, 3);
+
+        node.AdoptChildren(boolNode, intNode);
+
+        assertTrue( typeChecker.Visit(node).ErrorFlag);
+    }
+
+    @Test
+    void visitGreaterEqualNodeTypeIntAndInt(){
+        Node node = new GreaterEqualNode(0);
+        Node intNode = new IntNode(0, 2);
+        Node intNode2 = new IntNode(0, 2);
+
+        node.AdoptChildren(intNode, intNode2);
+
+        assertSame(boolean.class, typeChecker.Visit(node).Type);
+    }
+    @Test
+    void visitGreaterEqualNodeTypeDecimalAndDecimal(){
+        Node node = new GreaterEqualNode(0);
+        Node decimalNode = new DecimalNode(0, 2.2);
+        Node decimalNode2 = new DecimalNode(0, 2.2);
+
+        node.AdoptChildren(decimalNode, decimalNode2);
+
+        assertSame(boolean.class, typeChecker.Visit(node).Type);
+    }
+    @Test
+    void visitGreaterEqualNodeTypeBoolAndBool(){
+        Node node = new GreaterEqualNode(0);
+        Node boolNode = new BoolNode(0, true);
+        Node boolNode2 = new BoolNode(0, true);
+
+        node.AdoptChildren(boolNode, boolNode2);
+
+        assertSame(boolean.class, typeChecker.Visit(node).Type);
+    }
+    @Test
+    void visitGreaterEqualNodeTypeTextAndText(){
+
+        Node node = new GreaterEqualNode(0);
+        Node StringNode = new StringNode(0, "string");
+        Node StringNode2 = new StringNode(0, "string");
+
+        node.AdoptChildren(StringNode, StringNode2);
+
+        assertTrue(typeChecker.Visit(node).ErrorFlag);
+    }
+    @Test
+    void visitGreaterEqualNodeTypeBoolAndInt(){
+        Node node = new GreaterEqualNode(0);
+        Node boolNode = new BoolNode(0, true);
+        Node intNode = new IntNode(0, 3);
+
+        node.AdoptChildren(boolNode, intNode);
+
+        assertTrue( typeChecker.Visit(node).ErrorFlag);
+    }
+    @Test
+    void visitIDNode(){
+        Node node = new IDNode(0, "IDTest");
+        node.Type = int.class;
+        typeChecker.symbolTable.EnterSymbol("IDTest", node);
+
+        Node newNode = new IDNode(0, "IDTest");
+        typeChecker.Visit(newNode);
+        assertSame(node.Type, newNode.Type);
+
+    }
+    @Test
+    void visitIDNodeNotDcl(){
+        Node newNode = new IDNode(0, "IDTest");
+        typeChecker.Visit(newNode);
+        assertTrue( newNode.ErrorFlag);
+    }
+    @Test
+    void visitIfWithBoolCondition(){
+        Node node = new IfStmtNode(0);
+        Node boolNode = new BoolNode(0, true);
+        Node block = new BlockNode(0);
+
+        node.AdoptChildren(boolNode,block);
+
+        assertFalse(typeChecker.Visit(node).ErrorFlag);
+    }
+    @Test
+    void visitIfWithNotBoolCondition(){
+        Node node = new IfStmtNode(0);
+        Node boolNode = new IntNode(0, 4);
+        Node block = new BlockNode(0);
+
+        node.AdoptChildren(boolNode,block);
+
+        assertTrue(typeChecker.Visit(node).ErrorFlag);
+    }
+
+    @Test
+    void visitLessEqualNodeTypeIntAndInt(){
+        Node node = new LessEqualNode(0);
+        Node intNode = new IntNode(0, 2);
+        Node intNode2 = new IntNode(0, 2);
+
+        node.AdoptChildren(intNode, intNode2);
+
+        assertSame(boolean.class, typeChecker.Visit(node).Type);
+    }
+    @Test
+    void visitLessEqualNodeTypeDecimalAndDecimal(){
+        Node node = new LessEqualNode(0);
+        Node decimalNode = new DecimalNode(0, 2.2);
+        Node decimalNode2 = new DecimalNode(0, 2.2);
+
+        node.AdoptChildren(decimalNode, decimalNode2);
+
+        assertSame(boolean.class, typeChecker.Visit(node).Type);
+    }
+    @Test
+    void visitLessEqualNodeTypeBoolAndBool(){
+        Node node = new LessEqualNode(0);
+        Node boolNode = new BoolNode(0, true);
+        Node boolNode2 = new BoolNode(0, true);
+
+        node.AdoptChildren(boolNode, boolNode2);
+
+        assertSame(boolean.class, typeChecker.Visit(node).Type);
+    }
+    @Test
+    void visitLessEqualNodeTypeTextAndText(){
+
+        Node node = new LessEqualNode(0);
+        Node StringNode = new StringNode(0, "string");
+        Node StringNode2 = new StringNode(0, "string");
+
+        node.AdoptChildren(StringNode, StringNode2);
+
+        assertTrue(typeChecker.Visit(node).ErrorFlag);
+    }
+    @Test
+    void visitLessEqualNodeTypeBoolAndInt(){
+        Node node = new LessEqualNode(0);
+        Node boolNode = new BoolNode(0, true);
+        Node intNode = new IntNode(0, 3);
+
+        node.AdoptChildren(boolNode, intNode);
+
+        assertTrue( typeChecker.Visit(node).ErrorFlag);
+    }
+
+
+    @Test
+    void visitLessNodeTypeIntAndInt(){
+        Node node = new LessNode(0);
+        Node intNode = new IntNode(0, 2);
+        Node intNode2 = new IntNode(0, 2);
+
+        node.AdoptChildren(intNode, intNode2);
+
+        assertSame(boolean.class, typeChecker.Visit(node).Type);
+    }
+    @Test
+    void visitLessNodeTypeDecimalAndDecimal(){
+        Node node = new LessNode(0);
+        Node decimalNode = new DecimalNode(0, 2.2);
+        Node decimalNode2 = new DecimalNode(0, 2.2);
+
+        node.AdoptChildren(decimalNode, decimalNode2);
+
+        assertSame(boolean.class, typeChecker.Visit(node).Type);
+    }
+    @Test
+    void visitLessNodeTypeBoolAndBool(){
+        Node node = new LessNode(0);
+        Node boolNode = new BoolNode(0, true);
+        Node boolNode2 = new BoolNode(0, true);
+
+        node.AdoptChildren(boolNode, boolNode2);
+
+        assertSame(boolean.class, typeChecker.Visit(node).Type);
+    }
+    @Test
+    void visitLessNodeTypeTextAndText(){
+
+        Node node = new LessNode(0);
+        Node StringNode = new StringNode(0, "string");
+        Node StringNode2 = new StringNode(0, "string");
+
+        node.AdoptChildren(StringNode, StringNode2);
+
+        assertTrue(typeChecker.Visit(node).ErrorFlag);
+    }
+    @Test
+    void visitLessNodeTypeBoolAndInt(){
+        Node node = new LessNode(0);
+        Node boolNode = new BoolNode(0, true);
+        Node intNode = new IntNode(0, 3);
+
+        node.AdoptChildren(boolNode, intNode);
+
+        assertTrue( typeChecker.Visit(node).ErrorFlag);
+    }
+
+    @Test
+    void visitMethodNode(){
+        Node methodNode = new MethodNode(1);
+        Node nameNode = new IDNode(1, "MethodTest");
+        nameNode.Type = int.class;
+        Node type = new RTypeNode(0, "int");
+        methodNode.Type = int.class;
+        Node argument = new ArgumentNode(1, "int");
+        methodNode.AdoptChildren(nameNode, type, argument);
+        typeChecker.Visit(methodNode);
+        assertTrue(typeChecker.symbolTable.DeclaredLocally("MethodTest"));
+
+    }
+    @Test
+    void visitMethodNodeAlreadyDeclared(){
+        Node idNode = new IDNode(3, "MethodTest");
+        typeChecker.symbolTable.EnterSymbol("MethodTest", idNode);
+
+        Node methodNode = new MethodNode(1);
+        Node nameNode = new IDNode(1, "MethodTest");
+        nameNode.Type = int.class;
+        Node type = new RTypeNode(0, "int");
+        methodNode.Type = int.class;
+        Node argument = new ArgumentNode(1, "int");
+        methodNode.AdoptChildren(nameNode, type, argument);
+        typeChecker.Visit(methodNode);
+        assertTrue(methodNode.ErrorFlag);
+
+    }
+
+
+    @Test
+    void visitMulExprIntAndDecimal() {
+        Node node = new MulExprNode(0);
+        node.AdoptChildren(new IntNode(0,3), new DecimalNode(0,2.2));
+        typeChecker.Visit(node);
+        assertTrue(node.ErrorFlag);
+    }
+
+    @Test
+    void visitMulExprIntAndInt() {
+        Node node = new MulExprNode(0);
+        node.AdoptChildren(new IntNode(0,3), new IntNode(0,2));
+        typeChecker.Visit(node);
+        assertSame(int.class, node.Type);
+    }
+
+    @Test
+    void visitMulExprDecimalAndDecimal() {
+        Node node = new MulExprNode(0);
+        node.AdoptChildren(new DecimalNode(0,2.5), new DecimalNode(0,11.2));
+
+        assertSame( double.class, typeChecker.Visit(node).Type);
+    }
+
+    @Test
+    void visitMulExprStringAndString() {
+        Node node = new MulExprNode(0);
+        node.AdoptChildren(new StringNode(0,"One String"));
+        node.AdoptChildren(new StringNode(0,"Two String"));
+
+        //Skal vi kunne gøre dette? så brug
+        //assertSame(typeChecker.Visit(node), String.class);
+
+        assertTrue(typeChecker.Visit(node).ErrorFlag);
+    }
+    @Test
+    void visitMulExprBoolAndBool() {
+        Node node = new MulExprNode(0);
+        node.AdoptChildren(new BoolNode(0,true));
+        node.AdoptChildren(new BoolNode(0,true));
+
+        assertTrue(typeChecker.Visit(node).ErrorFlag);
+    }
+    @Test
+    void visitNotExprBool(){
+        Node node = new NotExprNode(0);
+        Node boolNode = new BoolNode(0, true);
+        node.AdoptChildren(boolNode);
+
+        assertSame(boolean.class, typeChecker.Visit(node).Type);
+    }
+    @Test
+    void visitNotExprInt(){
+        Node node = new NotExprNode(0);
+        Node boolNode = new IntNode(0, 12);
+        node.AdoptChildren(boolNode);
+
+        assertTrue(typeChecker.Visit(node).ErrorFlag);
+    }
+    @Test
+    void visitOrWithBools() {
+        Node node = new OrNode(0);
+        node.AdoptChildren(new BoolNode(0,true));
+        node.AdoptChildren(new BoolNode(0,true));
+
+        assertSame( boolean.class, typeChecker.Visit(node).Type);
+    }
+
+    @Test
+    void visitOrWithError() {
+        Node node = new OrNode(0);
+        node.AdoptChildren(new IntNode(0,12));
+        node.AdoptChildren(new BoolNode(0,true));
+        typeChecker.Visit(node);
+        assertTrue(node.ErrorFlag);
+    }
+    @Test
+    void visitSubExprIntAndDecimal() {
+        Node node = new SubExprNode(0);
+        node.AdoptChildren(new IntNode(0,3), new DecimalNode(0,2.2));
+        typeChecker.Visit(node);
+        assertTrue(node.ErrorFlag);
+    }
+
+    @Test
+    void visitSubExprIntAndInt() {
+        Node node = new SubExprNode(0);
+        node.AdoptChildren(new IntNode(0,3), new IntNode(0,2));
+        typeChecker.Visit(node);
+        assertSame(int.class, node.Type);
+    }
+
+    @Test
+    void visitSubExprDecimalAndDecimal() {
+        Node node = new SubExprNode(0);
+        node.AdoptChildren(new DecimalNode(0,2.5), new DecimalNode(0,11.2));
+
+        assertSame( double.class, typeChecker.Visit(node).Type);
+    }
+
+    @Test
+    void visitSubExprStringAndString() {
+        Node node = new SubExprNode(0);
+        node.AdoptChildren(new StringNode(0,"One String"));
+        node.AdoptChildren(new StringNode(0,"Two String"));
+
+        //Skal vi kunne gøre dette? så brug
+        //assertSame(typeChecker.Visit(node), String.class);
+
+        assertTrue(typeChecker.Visit(node).ErrorFlag);
+    }
+    @Test
+    void visitSubExprBoolAndBool() {
+        Node node = new SubExprNode(0);
+        node.AdoptChildren(new BoolNode(0,true));
+        node.AdoptChildren(new BoolNode(0,true));
+
+        assertTrue(typeChecker.Visit(node).ErrorFlag);
+    }
+    @Test
+    void visitUSubNode(){
+        Node node = new UsubNode(0);
+        Node refNode = new RefNode(0);
+        Node idNode = new IDNode(0, "variable");
+        idNode.Type = int.class;
+        refNode.AdoptChildren(idNode);
+        node.AdoptChildren(refNode);
+
+        typeChecker.Visit(node);
+        assertFalse(node.ErrorFlag);
+    }
+    @Test
+    void visitUSubNodeNotInt(){
+        Node node = new UsubNode(0);
+        Node refNode = new RefNode(0);
+        Node idNode = new IDNode(0, "variable");
+        idNode.Type = double.class;
+        refNode.AdoptChildren(idNode);
+        node.AdoptChildren(refNode);
+
+        typeChecker.Visit(node);
+        assertTrue(node.ErrorFlag);
+    }
+    @Test
+    void visitUAddNode(){
+        Node node = new UAddNode(0);
+        Node refNode = new RefNode(0);
+        Node idNode = new IDNode(0, "variable");
+        idNode.Type = int.class;
+        refNode.AdoptChildren(idNode);
+        node.AdoptChildren(refNode);
+
+        typeChecker.Visit(node);
+        assertFalse(node.ErrorFlag);
+    }
+    @Test
+    void visitUAddNodeNotInt(){
+        Node node = new UAddNode(0);
+        Node refNode = new RefNode(0);
+        Node idNode = new IDNode(0, "variable");
+        idNode.Type = double.class;
+        refNode.AdoptChildren(idNode);
+        node.AdoptChildren(refNode);
+
+        typeChecker.Visit(node);
+        assertTrue(node.ErrorFlag);
+    }
+
+    @Test
+    void visitWhileStmt(){
+        Node node = new WhileStmtNode(0);
+        Node condition = new BoolNode(0, true);
+        Node block = new BlockNode(0);
+        node.AdoptChildren(condition, block);
+
+        typeChecker.Visit(node);
+        assertFalse(node.ErrorFlag);
+
+    }
+    @Test
+    void visitWhileStmtConditionNotBool(){
+        Node node = new WhileStmtNode(0);
+        Node condition = new IntNode(0, 22);
+        Node block = new BlockNode(0);
+        node.AdoptChildren(condition, block);
+
+        typeChecker.Visit(node);
+        assertTrue(node.ErrorFlag);
+
+    }
 }
