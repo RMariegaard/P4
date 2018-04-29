@@ -4,10 +4,12 @@ import Nodes.*;
 import Nodes.expr.*;
 import Nodes.values.*;
 
+import java.util.ArrayList;
+
 public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     public String Code;
-
+    private ArrayList<String> listOfCustomEvent = new ArrayList<>();
     @Override
     public String Visit(ActionNode node) {
         String string = "";
@@ -28,12 +30,12 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     @Override
     public String Visit(ArgumentNode node) {
-        return String.format("%s %s", node.Type.toString(), Visit(node.RefNode()));
+        return String.format("%s %s", getType(node.Type), Visit(node.RefNode()));
     }
 
     @Override
     public String Visit(ArrayExprNode node) {
-        return String.format("%s[%s]", Visit(node.ExprNode()), Visit(node.IDNode()));
+        return String.format("%s[%s]", Visit(node.IDNode()), Visit(node.ExprNode()));
     }
 
     @Override
@@ -43,16 +45,18 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     @Override
     public String Visit(BehaviorNode node) {
-        return null;
+        String behavior;
+        //TODO: hvordan finder vi lige det event argument den skal have??. 2. argument mangler \/\/
+        behavior = String.format("public void %s(%s)\n{\n%s\n}\n", node.IDNode(), node.BlockNode());
+        return behavior;
     }
-
     @Override
     public String Visit(BlockNode node)
     {
         String result = "";
         for (int i = 0; i < node.NumberOfStatements(); i++)
         {
-            result = String.format(result + Visit(node.StmtNodes()[i]) + "\n");
+            result = String.format(result + Visit(node.StmtNodes()[i]) + ";\n");
         }
         return result;
     }
@@ -89,7 +93,8 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
     @Override
     public String Visit(DoStmtNode node)
     {
-        return String.format("for(%s = %s; %s < %s; %s = %s + %s){%s}"
+        //TODO: yea, vi skal snart tage en beslutning her
+        return String.format("for(%s = %s; %s < %s; %s = %s + %s)\n{\n%s\n}\n"
                 , Visit(node.VariableNode()), Visit(node.StartValueNode()), Visit(node.VariableNode()), Visit(node.EndValueNode())
                 , Visit(node.VariableNode()), Visit(node.VariableNode()), Visit(node.IncrementNode()), Visit(node.BlockNode()));
     }
@@ -97,27 +102,52 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
     @Override
     public String Visit(ElseNode node)
     {
-        return String.format("else { %s }", Visit(node.Block()));
+        return String.format("else \n{\n %s \n}\n", Visit(node.Block()));
     }
 
     @Override
     public String Visit(ElseIfNode node) {
-        return String.format("else if(%s){ %s }", Visit(node.Condition()), Visit(node.Block()));
+        return String.format("else if(%s)\n{\n %s \n}\n", Visit(node.Condition()), Visit(node.Block()));
     }
 
     @Override
     public String Visit(EqualNode node) {
-        //TODO: java kan man ikke skrive string == string, det kan vi i vores sprog, så det skal ændres til string.equals(string) i java.
+        if(node.Type == String.class){
+            return String.format("%s.equals(%s)", Visit(node.LeftNode()), Visit(node.RightNode()) );
+        }
         return String.format("%s == %s", Visit(node.LeftNode()), Visit(node.RightNode()));
     }
 
     @Override
     public String Visit(EventNode node) {
-        return null;
+        String eventDcl;
+        String name = Visit(node.ID());
+        eventDcl = String.format("Condition %s = new Condition(\"%s\")", name, Visit(node.ExprNode()));
+        eventDcl = String.format(eventDcl + "\n{\n public boolean test() \n{\n return (%s);\n};\n};");
+        //TODO: Det her bliver fucking mærkeligt, først skal man declare event^^, derefter skal der i én
+        //Function OnCustomEvent, laves en if for alle vores custom events, hvilket bliver fuuucking trælss...
+        listOfCustomEvent.add(String.format("%s",node.ID()))
+        return eventDcl;
     }
 
     @Override
-    public String Visit(FcallNode node) { return null;}
+    public String Visit(FcallNode node) {
+        if(node.NumberOfArguments() == 0)
+            return String.format("%s()", Visit(node.IDNode()));
+        else if (node.NumberOfArguments() == 1)
+            return String.format("%s(%s)", Visit(node.IDNode()), Visit(node.ArgumentNodes()[0]));
+        else{
+            //TODO: ja det et godt sprøgsmål, lets try something HAHAHHAHAHHA det til grin det her..
+            //Hvad gør man hvis Fcall bliver brugt i en stmt i stedet, foregår det i block node???
+            String Fcall = String.format("%s(", Visit(node.IDNode()));
+            Node[] array = node.ArgumentNodes();
+            for(int i = 0; i < node.NumberOfArguments() - 1; i++){
+                Fcall = String.format(Fcall + "%s,",Visit(array[i]));
+            }
+            Fcall = String.format(Fcall + "%s)", Visit(array[array.length]));
+            return Fcall;
+        }
+    }
 
     @Override
     public String Visit(GameLoopNode node) {
@@ -284,5 +314,12 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
     public String Visit(WhileStmtNode node)
     {
         return String.format("while(%s){ %s }", Visit(node.ConditionNode()), Visit(node.BlockNode()));
+    }
+
+    private String getType(Object type){
+        if(type == String.class)
+            return "string";
+        else
+            return type.toString();
     }
 }
