@@ -1,0 +1,48 @@
+int target = 40
+event(Tank.getEnergy() == 40.0) -> WhenEnergyIs40
+setup
+	Tank.setBodyColor(white)
+	Tank.setGunColor(white)
+	Tank.setRadarColor(white)
+end
+
+game-loop
+    Tank.ahead(123.0)
+    Tank.Gun.turnLeft(123.0)
+    if( Game.getRoundNum() > 10)
+        Tank.fire(2.0)
+        Tank.Radar.turnRight(200.0)
+    end
+
+    else if (Game.getRoundNum() > 5)
+		Tank.fire(1.0)
+	    Tank.Radar.turnRight(100.0)
+	end
+	else
+        Tank.fire(3.0)
+	    Tank.Radar.turnRight(50.0)
+	end
+end
+
+function int myAddFunction (int a, int b)
+	int res = a + b
+	res++
+	return res
+end
+
+strategy Default
+    behavior OnScannedRobot
+	    Tank.turnRight(Enemy.getBearing())
+    end
+
+
+    behavior WhenEnergyIs40
+	    do(int i, 0, 5, i++)
+	    	Tank.fire(i)  //FAAAACK fire tager kun en double...
+	    end
+    end
+
+    behavior BulletHit
+        Tank.turnRight(Bullet.getY())
+     end
+end

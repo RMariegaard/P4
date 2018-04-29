@@ -30,7 +30,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     @Override
     public String Visit(ArgumentNode node) {
-        return String.format("%s %s", getType(node.Type), Visit(node.RefNode()));
+        return String.format("%s %s;", getType(node.Type), Visit(node.RefNode()));
     }
 
     @Override
@@ -126,7 +126,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
         eventDcl = String.format(eventDcl + "\n{\n public boolean test() \n{\n return (%s);\n};\n};");
         //TODO: Det her bliver fucking mærkeligt, først skal man declare event^^, derefter skal der i én
         //Function OnCustomEvent, laves en if for alle vores custom events, hvilket bliver fuuucking trælss...
-        listOfCustomEvent.add(String.format("%s",node.ID()))
+        listOfCustomEvent.add(String.format("%s",node.ID()));
         return eventDcl;
     }
 
@@ -151,7 +151,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     @Override
     public String Visit(GameLoopNode node) {
-        return null;
+        return String.format("%s",node.Block());
     }
 
     @Override
@@ -168,7 +168,8 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     @Override
     public String Visit(IDNode node) {
-        return null;
+        // ved ikke om det er rigitgt kan ikke finde IDNode måsker det bare mig der er retarderet.
+        return String.format("%s", node.idString);
     }
 
     @Override
@@ -200,12 +201,27 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     @Override
     public String Visit(MethodNode node) {
-        return null;
+        String string = "";
+        int parametersdone = 0;
+        string += String.format("public %s %s(", node.RTypeNode(), node.IDNode());
+
+        for( ArgumentNode parameter : node.Parameters() ){
+            if(parametersdone + 1 == node.NumberOfParameters()){
+                string = String.format(string + "%s)", Visit(parameter));
+            }
+            else {
+                string = String.format(string + "%s, ", Visit(parameter));
+            }
+            parametersdone++;
+        }
+
+
+        return String.format(string + "{\n %s }", Visit(node.BlockNode()));
     }
 
     @Override
     public String Visit(MulExprNode node) {
-        return null;
+        return String.format("%s * %s", Visit(node.LeftNode()), Visit(node.RightNode()));
     }
 
     @Override
@@ -265,7 +281,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     @Override
     public String Visit(RTypeNode node) {
-        return null;
+        return node.toString();
     }
 
     @Override
@@ -276,12 +292,18 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     @Override
     public String Visit(RefNode node) {
-        return null;
+        if(node.IsArrayRef()){
+            //forstår ikke helt det med isarrayref siger den aldrig bliver brugt ?
+            return String.format("%s",Visit(node.IDNode()));
+        }
+        else {
+           return String.format("%s", Visit(node.IDNode()));
+        }
     }
 
     @Override
     public String Visit(SetupNode node) {
-        return null;
+        return String.format("%s", Visit(node.BlockNode()));
     }
 
     @Override
@@ -297,17 +319,17 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     @Override
     public String Visit(SubExprNode node) {
-        return null;
+        return String.format("%s - %s", Visit(node.LeftNode()), Visit(node.RightNode()));
     }
 
     @Override
     public String Visit(UsubNode node) {
-        return null;
+        return String.format("%s--",Visit(node.RefNode()));
     }
 
     @Override
     public String Visit(UAddNode node) {
-        return null;
+        return String.format("%s++",Visit(node.RefNode()));
     }
 
     @Override
