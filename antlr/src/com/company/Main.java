@@ -6,7 +6,8 @@ import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import other.BuildASTVisitor;
-import other.*;
+import other.ErrorListner;
+import other.TypeCheckerVisitor;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -16,7 +17,8 @@ public class Main {
     public static void main(String[] args) {
 	// write your code here
         try {
-            antlrParser.ProgContext cst = getCST("codeExample.txt");
+            antlrParser.ProgContext cst = getCST("CodeTemplet");
+            if(cst != null  ){
             Node ast = new BuildASTVisitor().visitProg(cst);
             ast.makeNode();
             //ASTPrinter.PrintTree((ast));
@@ -35,7 +37,11 @@ public class Main {
                 for (String error : typeChecker.ErrorList) {
                     System.out.println(error);
                 }
+            }
         }
+            else{
+                System.out.println("Something happend");
+            }
 
         }catch (IOException e){
             System.out.println(e.getMessage() + " ERROR" );
@@ -50,8 +56,13 @@ public class Main {
         CommonTokenStream tokenStream = new CommonTokenStream(lexer);
         antlrParser parser = new antlrParser(tokenStream);
 
+        parser.addErrorListener(new ErrorListner());
         antlrParser.ProgContext cst = parser.prog();
-
-        return cst;
+        if(parser.getNumberOfSyntaxErrors() ==0){
+            return cst;
+        }
+        else {;
+            return null;
+        }
     }
 }
