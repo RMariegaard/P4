@@ -56,7 +56,7 @@ public class Main {
         CommonTokenStream tokenStream = new CommonTokenStream(lexer);
         antlrParser parser = new antlrParser(tokenStream);
 
-        parser.addErrorListener(new ErrorListner());
+        parser.addErrorListener(new ErrorListner()); //TODO Use this for something. Should print out to the user
         antlrParser.ProgContext cst = parser.prog();
         if(parser.getNumberOfSyntaxErrors() ==0){
             return cst;
