@@ -625,10 +625,13 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
 
     @Override
     public Node Visit(StrategyNode node) {
+        symbolTable.EnterSymbol(node.IDNode().toString(), node);
         Visit(node.IDNode());
+        symbolTable.OpenScope();
         for(Node bnode : node.BehaviourNodes()){
            Visit(bnode);
         }
+        symbolTable.CloseScope();
         return node;
     }
 

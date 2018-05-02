@@ -10,7 +10,13 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     public String Code;
     private ArrayList<String> listOfCustomEvent = new ArrayList<>();
+    private ArrayList<APIevents> listOfAPIEvents = new ArrayList<>();
     private String currentEvent;
+
+    public CodeGeneratorVisitor(ArrayList<APIevents> list){
+        listOfAPIEvents = list;
+    }
+
     @Override
     public String Visit(ActionNode node) {
         String string = "";
@@ -272,7 +278,13 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
         }
         string += "};\n";
         //Going through the rest of the events from robocodeAPI:
-
+        for(APIevents event: listOfAPIEvents){
+            string += String.format("public void %s(%s e){\n", event.name, event.EventArg);
+            currentEvent = event.name;
+            for(Node strat: node.StrategyNodes()){ //Visiting each strategy, to check if they have some behavior at this event.
+                string += Visit(strat);
+            }
+        }
 
         //Prøver lige noget andet.
         //String strategies = "";

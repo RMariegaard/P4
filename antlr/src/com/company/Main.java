@@ -42,11 +42,14 @@ public class Main {
                     for (String error : typeChecker.ErrorList) {
                         System.out.println(error);
                     }
+                }
             }
-        }
             else{
                 System.out.println("Something happend");
             }
+
+            //TODO: create a new file.
+
 
         }catch (IOException e){
             System.out.println(e.getMessage() + " ERROR" );
