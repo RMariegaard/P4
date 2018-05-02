@@ -252,6 +252,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
         string += "import robocode.*\n";
 
+
         for(Node pnode : node.PreDclNodes())
             string += Visit(pnode) + ";\n";
 

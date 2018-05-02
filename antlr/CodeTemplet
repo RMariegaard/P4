@@ -38,7 +38,7 @@ strategy Default
 
     behavior WhenEnergyIs40
 	    do(int i, 0, 5, i++)
-	    	Tank.fire(i)  //FAAAACK fire tager kun en double...
+	    	Tank.fire(2.0)  //FAAAACK fire tager kun en double...
 	    end
     end
 

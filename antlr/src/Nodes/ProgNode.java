@@ -1,10 +1,15 @@
 package Nodes;
 
+import java.util.ArrayList;
+
 public class ProgNode extends Node {
 
     public ProgNode(int firstLinenumber) {
         super(firstLinenumber);
     }
+
+    private ArrayList<MethodNode> listOfMethods = new ArrayList<>();
+    private ArrayList<StrategyNode> listOfStrategies = new ArrayList<>();
 
     public int NumberOfPreDcls(){
         int result = 0;
@@ -36,44 +41,32 @@ public class ProgNode extends Node {
     }
 
     public int NumberOfStrategies(){
-        int result = 0;
+        return listOfStrategies.size();
+    }
+    public void FindAllStrats(){
         Node node = this.GameLoopNode().RightSibling;
-        while(node instanceof StrategyNode) {
-            result++;
+        while ((node instanceof StrategyNode)){
+            listOfStrategies.add((StrategyNode) node);
             node = node.RightSibling;
         }
-        return result;
     }
-
-    public StrategyNode[] StrategyNodes(){
-        StrategyNode[] array = new StrategyNode[NumberOfStrategies()];
-        StrategyNode node = (StrategyNode) this.GameLoopNode().RightSibling;
-        for(int i=0; i<array.length; i++){
-            array[i] = node;
-            node = (StrategyNode) node.RightSibling;
+    public ArrayList<StrategyNode> StrategyNodes(){
+        return listOfStrategies;
+    }
+    public void FindAllMethods(){
+        Node node = listOfStrategies.get(listOfStrategies.size()-1).RightSibling;
+        while (node instanceof MethodNode){
+            listOfMethods.add((MethodNode) node);
+            node = node.RightSibling;
         }
-        return array;
     }
-
     public int NumberOfMethods(){
-        int result = 0;
-        Node[] array = PreDclNodes();
-        Node node = array[array.length-1].RightSibling;
-        while(node instanceof MethodNode){
-            result++;
-            node = node.RightSibling;
-        }
-        return result;
+        return listOfMethods.size() -1;
     }
 
-    public MethodNode[] MethodNodes(){
-        MethodNode[] array = new MethodNode[NumberOfMethods()];
-        MethodNode node = (MethodNode) StrategyNodes()[NumberOfStrategies()-1].RightSibling;
-        for(int i=0; i<array.length; i++){
-            array[i] = node;
-            node = (MethodNode) node.RightSibling;
-        }
-        return array;
+
+    public ArrayList<MethodNode> MethodNodes(){
+        return listOfMethods;
     }
 
 
