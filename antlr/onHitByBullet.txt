@@ -1,0 +1,10 @@
+getBearing                     Bullet.getBearing               double      none
+getHeading                     Bullet.getHeading               double      none
+getBullet.getName              Bullet.getName                  string      none
+getPower                       Bullet.getPower                 double      none
+getVelocity                    Bullet.getVelocity              double      none
+getBullet.getX                 Bullet.getX                     double      none
+getBullet.getY                 Bullet.getY                     double      none
+getBullet.isActive             Bullet.isActive                 boolean     none
+getName                         Enemy.getName                  string      none
+

@@ -10,15 +10,4 @@ onScannedRobot			void		OnScannedRobotEvent
 onWin				    void		WinEvent
 onRoundEnded			void		RoundEndedEvent
 onBattleEnded			void		BattleEndedEvent
-onKeyPressed			void		KeyEvent
-OnKeyReleased			void		KeyEvent
-onKeyTyped			    void		KeyEvent
-onMouseClicked			void		MouseEvent
-onMouseEntered			void		MouseEvent
-onMouseExited			void		MouseEvent
-onMousePressed			void		MouseEvent
-onMouseReleased			void		MouseEvent
-onMouseMoved			void		MouseEvent
-onMouseDragged			void		MouseEvent
-onMouseWheelMoved		void		MouseWheelEvent
 onStatus			    void		StatusEvent

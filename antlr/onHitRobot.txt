@@ -1,0 +1,4 @@
+getBearing          Enemy.getBearing        double      none
+getEnergy           Enemy.getEnergy         double      none
+getName             Enemy.getName           string      none
+isMyFault           isMyFault               boolean     none

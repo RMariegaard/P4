@@ -1,0 +1,13 @@
+isAborted                           Battle.isAborted                boolean
+getResults.getBulletDamage          Battle.getBulletDamage          int
+getResults.getBulletDamageBonus     Battle.getBulletDamageBonus     int
+getResults.getFirsts                Battle.getFirsts                int
+getResults.getLastSurvivorBonus     Battle.getLastSurvivorBonus     int
+getResults.getRamDamage             Battle.getRamDamage             int
+getResults.getRamDamageBonus        Battle.getRamDamageBonus        int
+getResults.getRank                  Battle.getRank                  int
+getResults.getRank                  Battle.getScore                 int
+getResults.getSeconds               Battle.getSeconds               int
+getResults.getSurvival              Battle.getSurvival              int
+getResults.getTeamLeaderName        Battle.getTeamLeaderName        string
+getResults.getThirds                Battle.getThirds                int

@@ -1,0 +1,3 @@
+getRound        Round.getRoundNumber    int
+getTotalTurns   Round.getTotalTurns     int
+getTurns        Round.getTurns          int

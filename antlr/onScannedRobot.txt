@@ -1,0 +1,7 @@
+getBearing      Enemy.getBearing        double
+getDistance     Enemy.getDistance       double
+getEnergy       Enemy.getEnergy         double
+getHeading      Enemy.getHeading        double
+getName         Enemy.getName           string
+getVelocity     Enemy.getVelocity       double
+isSentryRobot   Enemy.isSentryRobot     boolean
