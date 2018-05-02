@@ -49,8 +49,6 @@ public class Main {
             else{
                 System.out.println("Something happend");
             }
-
-<<<<<<< HEAD
             //TODO: create a new file.
             if(cst != null && typeChecker.ErrorList.isEmpty()){
                 CodeGeneratorVisitor codeGenerator = new CodeGeneratorVisitor(listOfAPIEvents);
@@ -61,13 +59,10 @@ public class Main {
             else{
                 System.out.println("Program could not be compiled.");
             }
-
-=======
             CodeGeneratorVisitor codeGenerator = new CodeGeneratorVisitor(listOfAPIEvents);
             String program = codeGenerator.Visit(ast);
             Path file = Paths.get("ourRobot.java");
             Files.write(file,program.getBytes());
->>>>>>> 41233ff39c39006caf41320f4f3682688d697f16
 
 
         }catch (IOException e){
