@@ -43,6 +43,6 @@ strategy Default
     end
 
     behavior BulletHit
-        Tank.turnRight(Bullet.getY)
+        Tank.turnRight(Bullet.getY())
      end
 end
