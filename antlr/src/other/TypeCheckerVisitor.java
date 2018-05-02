@@ -236,7 +236,6 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
 
     @Override
     public Node Visit(DoStmtNode node) {
-        //TODO: vi skal vel tjekke at første variable også er den er bliver talt op til sidst.
         symbolTable.OpenScope();
         ArgumentNode variable = (ArgumentNode) Visit(node.VariableNode());
         if (variable.Type != int.class) {
@@ -712,8 +711,8 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
                     node.Type = EventType.class;
                     symbolTable.EnterSymbol(id, node);
                 }
-                if(!RoboEvents.contains(elements[2])){
-                    RoboEvents.add(elements[2]);
+                if(!RoboEvents.contains(input.name)){
+                    RoboEvents.add(input.name);
                 }
             }
         }
