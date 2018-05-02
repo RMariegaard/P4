@@ -14,6 +14,7 @@ import java.util.List;
 public class TypeCheckerVisitor extends AstVisitor<Node> {
     public List<String> ErrorList = new ArrayList<>();
     public SymbolTable symbolTable = new SymbolTable();
+    public List<String> RoboEvents = new ArrayList<>();
 
 
     @Override
@@ -94,7 +95,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
 
     @Override
     public Node Visit(ArrayExprNode node) {
-        if(Visit(node.IDNode()).ErrorFlag == false){
+        if(!Visit(node.IDNode()).ErrorFlag){
             SymbolClass sym = symbolTable.RetrieveSymbol(node.IDNode().toString());
             Node exprType = Visit(node.ExprNode());
             if(exprType.Type.equals(int.class)){
@@ -144,18 +145,20 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
     public Node Visit(BehaviorNode node) {
         symbolTable.OpenScope();
         Visit(node.IDNode());
-        //TODO:Casper hvad fuck er det her? Sådan at vi kan håndtere events med deres event parameter
-        if(node.IDNode().idString.equals("BulletHit")){
-            try{
-                AddLibraryFunctionsToSymbolTable("BulletClass.txt");
-            }
-            catch (Exception e){
-                ErrorList.add(String.format("You are missing files. Please reinstall the language agian"));
-            }
-        }
+        AddEventVariablesToScope(node.IDNode().idString);
         Visit(node.BlockNode());
         symbolTable.CloseScope();
         return node;
+    }
+
+    public void AddEventVariablesToScope(String behaviourName){
+        if(RoboEvents.contains(behaviourName)){
+            try{
+                AddLibraryFunctionsToSymbolTable(String.format("%s.txt", behaviourName));
+            } catch (Exception e){
+                ErrorList.add(String.format("You are missing files. Reinstallation is needed"));
+            }
+        }
     }
 
     @Override
@@ -595,7 +598,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
 
     @Override
     public Node Visit(RTypeNode node) {
-        //TODO: er denne her lavet?
+        //TODO: er denne her lavet? Hvad skal der tjekkes?...
         return node;
     }
 
@@ -705,6 +708,9 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
                     node.AdoptChildren(new IDNode(0, id));
                     node.Type = EventType.class;
                     symbolTable.EnterSymbol(id, node);
+                }
+                if(!RoboEvents.contains(elements[2])){
+                    RoboEvents.add(elements[2]);
                 }
             }
         }
