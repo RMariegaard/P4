@@ -148,7 +148,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
     public Node Visit(BehaviorNode node) {
         symbolTable.OpenScope();
         Visit(node.IDNode());
-        //TODO:Casper hvad fuck er det her?
+        //TODO:Casper hvad fuck er det her? Sådan at vi kan håndtere events med deres event parameter
         if(node.IDNode().idString.equals("BulletHit")){
             try{
                 AddLibraryFunctionsToSymbolTable("BulletClass.txt");
@@ -235,7 +235,8 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
     public Node Visit(DoStmtNode node) {
         //TODO: vi skal vel tjekke at første variable også er den er bliver talt op til sidst.
         symbolTable.OpenScope();
-        if (Visit(node.VariableNode()).Type != int.class) {
+        ArgumentNode variable = (ArgumentNode) Visit(node.VariableNode());
+        if (variable.Type != int.class) {
             ErrorList.add(String.format("Line %s: the variable %s in Do construct has to be of type int", node.FirstLinenumber, node.VariableNode().RefNode().IDNode().toString()));
             node.ErrorFlag = true;
         }
@@ -250,15 +251,34 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
             ErrorList.add(String.format("Line %s: the endvalue for the do loop has to be of type int and cant be %s", node.FirstLinenumber, eType.Type));
             node.ErrorFlag = true;
         }
-        //Jaaaaaaaaaaa- hvordan var det lige vores do loop var ??
 
-        //Last term in do stmt has to be an increment or decrement, so we cant 
-        if(node.IncrementNode() instanceof UAddNode || node.IncrementNode() instanceof UsubNode)
-            Visit(node.IncrementNode());
+        UAddNode incANode = null;
+        UsubNode incSNode = null;
+
+        if(node.IncrementNode() instanceof UAddNode)
+             incANode = (UAddNode) Visit(node.IncrementNode());
+        else if (node.IncrementNode() instanceof UsubNode)
+            incSNode = (UsubNode) Visit(node.IncrementNode());
         else {
             ErrorList.add(String.format("Line %s: Last term in do Loop has to be an ++ or --", node.FirstLinenumber));
             node.ErrorFlag = true;
         }
+
+        String variableString = variable.RefNode().IDNode().idString;
+        String incString;
+        if(incANode != null){
+            incString = incANode.RefNode().IDNode().idString;
+            if(!incString.equals(variableString)){
+                ErrorList.add(String.format("Line %s: The term incremented has to be %s and cant be a different variable like %s", incANode.FirstLinenumber, variableString, incString));
+            }
+        } else if(incSNode != null){
+            incString = incSNode.RefNode().IDNode().idString;
+            if(!incString.equals(variableString)){
+                ErrorList.add(String.format("Line %s: The term incremented has to be %s and cant be a different variable like %s", incSNode.FirstLinenumber, variableString, incString));
+            }
+        }
+
+
         Visit(node.BlockNode());
         symbolTable.CloseScope();
         return node;
