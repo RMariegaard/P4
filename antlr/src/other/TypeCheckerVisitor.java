@@ -160,7 +160,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
             try{
                 AddLibraryFunctionsToSymbolTable(String.format("%s.txt", behaviourName));
             } catch (Exception e){
-                ErrorList.add(String.format("You are missing files. Reinstallation is needed"));
+                ErrorList.add(String.format("You are missing the file %s.txt. Reinstallation is needed", behaviourName));
             }
         }
     }

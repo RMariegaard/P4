@@ -7,7 +7,7 @@ Condition WhenEnergyIs40 = new Condition("Tank.Tank.getEnergy() == 40.0")
  return (Tank.Tank.getEnergy() == 40.0);
 };
 };
-String strategy = "Default"
+String strategy = "default"
 public void run() {
 Tank.Tank.setBodyColor(white);
 Tank.Tank.setGunColor(white);
@@ -24,7 +24,7 @@ if(e.getCondition() == WhenEnergyIs40){
 if(strategy.equals("Default"({
 for(int i = 0; i <= 5; i++)
 {
-Tank.Tank.fire(i);
+Tank.Tank.fire(2.0);
 
 }
 ;
@@ -49,18 +49,6 @@ Tank.Tank.turnRight(Enemy.Enemy.getBearing());
 public void onWin(WinEvent e){
 public void onRoundEnded(RoundEndedEvent e){
 public void onBattleEnded(BattleEndedEvent e){
-public void onKeyPressed(KeyEvent e){
-public void OnKeyReleased(KeyEvent e){
-public void onKeyTyped(KeyEvent e){
-public void onMouseClicked(MouseEvent e){
-public void onMouseEntered(MouseEvent e){
-public void onMouseExited(MouseEvent e){
-public void onMousePressed(MouseEvent e){
-public void onMouseReleased(MouseEvent e){
-public void onMouseMoved(MouseEvent e){
-public void onMouseDragged(MouseEvent e){
-public void onMouseWheelMoved(MouseWheelEvent e){
 public void onStatus(StatusEvent e){
-public void onCustomEvent(CustomEvent e){
 public void OnDeath(DeathEvent e){
 public void onSkippedTurn(SkippedTurnEvent e){

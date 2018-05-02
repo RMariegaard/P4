@@ -1,0 +1,7 @@
+getBullet.getHeading           Bullet.getHeading               double      none
+getBullet.getName              Bullet.getName                  string      none
+getBullet.getPower             Bullet.getPower                 double      none
+getBullet.getVelocity          Bullet.getVelocity              double      none
+getBullet.getX                 Bullet.getX                     double      none
+getBullet.getY                 Bullet.getY                     double      none
+getBullet.isActive             Bullet.isActive                 boolean     none
