@@ -10,6 +10,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     public String Code;
     private ArrayList<String> listOfCustomEvent = new ArrayList<>();
+    private String currentEvent;
     @Override
     public String Visit(ActionNode node) {
         String string = "";
@@ -20,17 +21,17 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     @Override
     public String Visit(AddExprNode node) {
-        return String.format("(%s) + (%s)", Visit(node.LeftNode()), Visit(node.RightNode()));
+        return String.format("%s + %s", Visit(node.LeftNode()), Visit(node.RightNode()));
     }
 
     @Override
     public String Visit(AndNode node) {
-        return String.format("%s && %s", Visit(node.LeftNode()), Visit(node.RightNode()));
+        return String.format("(%s) && (%s)", Visit(node.LeftNode()), Visit(node.RightNode()));
     }
 
     @Override
     public String Visit(ArgumentNode node) {
-        return String.format("%s %s;", getType(node.Type), Visit(node.RefNode()));
+        return String.format("%s %s", getType(node.Type), Visit(node.RefNode()));
     }
 
     @Override
@@ -40,14 +41,13 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     @Override
     public String Visit(AssignNode node) {
-        return String.format("%s = %s;", Visit(node.RefNode()), Visit(node.ValueNode()));
+        return String.format("%s = %s", Visit(node.RefNode()), Visit(node.ValueNode()));
     }
 
     @Override
     public String Visit(BehaviorNode node) {
-        String behavior;
-        //TODO: hvordan finder vi lige det event argument den skal have??. 2. argument mangler \/\/
-        behavior = String.format("public void %s(%s)\n{\n%s\n}\n", node.IDNode(), node.BlockNode());
+        String behavior = "";
+        behavior += Visit(node.BlockNode());
         return behavior;
     }
     @Override
@@ -72,11 +72,11 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
     {
         if (node.ChildNode().RightSibling == null)
         {
-            return String.format("%s %s;", node.Type, node.getID()); //burde ikke bare være visit(childnode)
+            return String.format("%s %s", node.Type, node.getID()); //burde ikke bare være visit(childnode)
         }
         else
         {
-            return String.format("%s %s = %s;", node.Type, node.getID(), Visit(node.ChildNode().RightSibling));
+            return String.format("%s %s = %s", node.Type, node.getID(), Visit(node.ChildNode().RightSibling));
         }
     }
 
@@ -94,9 +94,9 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
     public String Visit(DoStmtNode node)
     {
         //TODO: yea, vi skal snart tage en beslutning her
-        return String.format("for(%s = %s; %s < %s; %s = %s + %s)\n{\n%s\n}\n"
-                , Visit(node.VariableNode()), Visit(node.StartValueNode()), Visit(node.VariableNode()), Visit(node.EndValueNode())
-                , Visit(node.VariableNode()), Visit(node.VariableNode()), Visit(node.IncrementNode()), Visit(node.BlockNode()));
+        return String.format("for(%s = %s; %s <= %s; %s)\n{\n%s\n}\n"
+                , Visit(node.VariableNode()), Visit(node.StartValueNode()), node.VariableNode().RefNode().IDNode().toString(), Visit(node.EndValueNode())
+                ,  Visit(node.IncrementNode()), Visit(node.BlockNode()));
     }
 
     @Override
@@ -123,7 +123,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
         String eventDcl;
         String name = Visit(node.ID());
         eventDcl = String.format("Condition %s = new Condition(\"%s\")", name, Visit(node.ExprNode()));
-        eventDcl = String.format(eventDcl + "\n{\n public boolean test() \n{\n return (%s);\n};\n};");
+        eventDcl = String.format(eventDcl + "\n{\n public boolean test() \n{\n return (%s);\n};\n}");
         //TODO: Det her bliver fucking mærkeligt, først skal man declare event^^, derefter skal der i én
         //Function OnCustomEvent, laves en if for alle vores custom events, hvilket bliver fuuucking trælss...
         listOfCustomEvent.add(String.format("%s",node.ID()));
@@ -132,13 +132,13 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     @Override
     public String Visit(FcallNode node) {
+
+        //TODO: Af fuck, vi skal jo kalde navnet fra Robocode API.
         if(node.NumberOfArguments() == 0)
             return String.format("%s()", Visit(node.IDNode()));
         else if (node.NumberOfArguments() == 1)
             return String.format("%s(%s)", Visit(node.IDNode()), Visit(node.ArgumentNodes()[0]));
         else{
-            //TODO: ja det et godt sprøgsmål, lets try something HAHAHHAHAHHA det til grin det her..
-            //Hvad gør man hvis Fcall bliver brugt i en stmt i stedet, foregår det i block node???
             String Fcall = String.format("%s(", Visit(node.IDNode()));
             Node[] array = node.ArgumentNodes();
             for(int i = 0; i < node.NumberOfArguments() - 1; i++){
@@ -174,7 +174,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     @Override
     public String Visit(IfStmtNode node) {
-        String result = String.format("if (%s){%s}", node.Condition(), node.Block());
+        String result = String.format("if (%s)\n{\n%s\n}\n", node.Condition(), node.Block());
         for (int i = 0; i < node.NumberOfElseIf(); i++){
             result = result + Visit(node.ElseIf()[i]);
         }
@@ -204,7 +204,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
         String string = "";
         int parametersdone = 0;
         string += String.format("public %s %s(", node.RTypeNode(), node.IDNode());
-
+        //TODO: hvad hvis der ikke er nogen parametre, hvirker det stadig`?
         for( ArgumentNode parameter : node.Parameters() ){
             if(parametersdone + 1 == node.NumberOfParameters()){
                 string = String.format(string + "%s)", Visit(parameter));
@@ -237,16 +237,19 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     @Override
     public String Visit(OrNode node) {
-        return String.format("%s || &s", Visit(node.LeftNode()), Visit(node.RightNode()));
+        return String.format("(%s) || (&s)", Visit(node.LeftNode()), Visit(node.RightNode()));
     }
 
     @Override
     public String Visit(ProgNode node) {
         String string = "";
 
+        string += "import robocode.*\n";
 
         for(Node pnode : node.PreDclNodes())
-            string += Visit(pnode);
+            string += Visit(pnode) + ";\n";
+
+        string += "String strategy = \"default\"\n";
         string += "public void run() {\n";
         string += Visit(node.SetupNode());
         string += "while(true) {\n";
@@ -256,13 +259,27 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
         for(Node mnode : node.MethodNodes())
             string += Visit(mnode);
 
-        String strategies = "";
-        //Der skal laves nye filer
-        for(Node snode : node.StrategyNodes()){
-            strategies += Visit(snode);
-        }
+        string += "\n";
+        string += "public void onCustomEvent(CustomEvent e){ \n"; //First we make a specific event
+        for(String customEvent: listOfCustomEvent){ //All our custom events are called in this specific method in Java
+            currentEvent = customEvent; //setting this variable, so we can use it when visiting the strategies
+            string += String.format("if(e.getCondition() == %s){\n", customEvent); //Going through all the custom events
 
-        MakeRobotClass(string, strategies);
+            for(Node strat: node.StrategyNodes()){ //Visiting each strategy, to check if they have some behavior at this event.
+                string += Visit(strat);
+            }
+            string += "};\n";
+        }
+        string += "};\n";
+        //Going through the rest of the events from robocodeAPI:
+
+
+        //Prøver lige noget andet.
+        //String strategies = "";
+        //for(Node snode : node.StrategyNodes()){
+         //   strategies += Visit(snode);
+        //}
+        //MakeRobotClass(string, strategies);
 
         return string;
     }
@@ -272,7 +289,6 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
         String string = "";
         string += ImportLibaries(strategies);
         return null;
-        //TODO: det giver ingen mening det her. Return null???
     }
 
     private String ImportLibaries(String strategies) {
@@ -308,7 +324,15 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     @Override
     public String Visit(StrategyNode node) {
-        return null;
+        String string = "";
+        for(BehaviorNode bnode: node.BehaviourNodes()){
+            if(bnode.IDNode().toString().equals(currentEvent)){
+               string += String.format("if(strategy.equals(\"%s\"({\n",node.IDNode().toString());
+               string += Visit(bnode);
+               string += "};\n";
+            }
+        }
+        return string;
     }
 
     @Override
