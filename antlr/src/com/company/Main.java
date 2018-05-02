@@ -24,6 +24,8 @@ public class Main {
             antlrParser.ProgContext cst = getCST("CodeTemplet");
             ArrayList<APIevents> listOfAPIEvents = createListOfAPIEvents("RobotEvent_API.txt", "AdvancedRobotEvent_API.txt");
             Node ast = new IntNode(0, 1);
+            TypeCheckerVisitor typeChecker = new TypeCheckerVisitor(listOfAPIEvents);
+            typeChecker.AddLibraryFunctionsToSymbolTable("Robot_API.txt", "AdvancedRobot_API.txt");
 
             if(cst != null  ){
                 ast = new BuildASTVisitor().visitProg(cst);
@@ -34,8 +36,7 @@ public class Main {
                 //table.BuildTable(ast);
                 //table.hashCode();
 
-                TypeCheckerVisitor typeChecker = new TypeCheckerVisitor(listOfAPIEvents);
-                typeChecker.AddLibraryFunctionsToSymbolTable("Robot_API.txt", "AdvancedRobot_API.txt");
+
                 Object errorFree = typeChecker.Visit(ast);
                 //ASTPrinter.PrintTree((Node)errorFree);
                 if (!typeChecker.ErrorList.isEmpty()) {
@@ -50,10 +51,16 @@ public class Main {
             }
 
             //TODO: create a new file.
-            CodeGeneratorVisitor codeGenerator = new CodeGeneratorVisitor(listOfAPIEvents);
-            String program = codeGenerator.Visit(ast);
-            Path file = Paths.get("ourRobot.java");
-            Files.write(file,program.getBytes());
+            if(cst != null && typeChecker.ErrorList.isEmpty()){
+                CodeGeneratorVisitor codeGenerator = new CodeGeneratorVisitor(listOfAPIEvents);
+                String program = codeGenerator.Visit(ast);
+                Path file = Paths.get("ourRobot.java");
+                Files.write(file,program.getBytes());
+            }
+            else{
+                System.out.println("Program could not be compiled.");
+            }
+
 
 
         }catch (IOException e){
