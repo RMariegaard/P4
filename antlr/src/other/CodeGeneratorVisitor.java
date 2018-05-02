@@ -11,12 +11,14 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
     public String Code = "";
     private ArrayList<String> listOfCustomEvent = new ArrayList<>();
     private ArrayList<APIevents> listOfAPIEvents = new ArrayList<>();
+    private ArrayList<APIMethods> listOfAPIMethods = new ArrayList<>();
     private String currentEvent;
     int tabIndex = 0;
 
 
-    public CodeGeneratorVisitor(ArrayList<APIevents> list){
+    public CodeGeneratorVisitor(ArrayList<APIevents> list, ArrayList<APIMethods> listMethods){
         listOfAPIEvents = list;
+        listOfAPIMethods = listMethods;
     }
     public CodeGeneratorVisitor(){
     }
@@ -32,9 +34,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
     @Override
     public String Visit(ActionNode node) {
         String string = "";
-        for(Node idnode : node.IDNodes())
-            string = String.format(string + "%s.", Visit(idnode));
-        return string + Visit(node.Fcall());
+        return  Visit(node.Fcall());
     }
 
     @Override
@@ -74,7 +74,11 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
         String result = "";
         for (int i = 0; i < node.NumberOfStatements(); i++)
         {
-            result = String.format(result + AddTabs() + Visit(node.StmtNodes()[i]) + ";\n");
+            Node stmt = node.StmtNodes()[i];
+            if(stmt instanceof IfStmtNode || stmt instanceof WhileStmtNode || stmt instanceof DoStmtNode)
+                result = String.format(result + AddTabs() + Visit(stmt) + "\n");
+            else
+                result = String.format(result + AddTabs() + Visit(stmt) + ";\n");
         }
         return result;
     }
@@ -88,13 +92,13 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
     @Override
     public String Visit(DclNode node)
     {
-        if (node.ChildNode().RightSibling == null)
+        if (node.ChildNode().LeftmostChild.RightSibling == null)
         {
             return String.format("%s %s", node.Type, node.getID()); //burde ikke bare være visit(childnode)
         }
         else
         {
-            return String.format("%s %s = %s", node.Type, node.getID(), Visit(node.ChildNode().RightSibling));
+            return String.format("%s %s = %s", node.Type, node.getID(), Visit(node.ChildNode().LeftmostChild.RightSibling));
         }
     }
 
@@ -112,9 +116,13 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
     public String Visit(DoStmtNode node)
     {
         //TODO: yea, vi skal snart tage en beslutning her
-        return String.format("for(%s = %s; %s <= %s; %s)\n{\n%s\n}\n"
-                , Visit(node.VariableNode()), Visit(node.StartValueNode()), node.VariableNode().RefNode().IDNode().toString(), Visit(node.EndValueNode())
-                ,  Visit(node.IncrementNode()), Visit(node.BlockNode()));
+        String string = String.format("for (%s = %s; %s <= %s; %s) {\n",Visit(node.VariableNode()), Visit(node.StartValueNode()), node.VariableNode().RefNode().IDNode().toString(), Visit(node.EndValueNode())
+                ,  Visit(node.IncrementNode()));
+        tabIndex++;
+        string += String.format("%s", Visit(node.BlockNode()));
+        tabIndex--;
+        string += AddTabs() + "}";
+        return string;
     }
 
     @Override
@@ -162,10 +170,8 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
         tabIndex--;
         eventDcl += AddTabs() + "}\n";
         tabIndex--;
-        eventDcl += AddTabs() + "}\n";
+        eventDcl += AddTabs() + "};\n";
 
-        //TODO: Det her bliver fucking mærkeligt, først skal man declare event^^, derefter skal der i én
-        //Function OnCustomEvent, laves en if for alle vores custom events, hvilket bliver fuuucking trælss...
         listOfCustomEvent.add(String.format("%s",node.ID()));
         return eventDcl;
     }
@@ -173,7 +179,6 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
     @Override
     public String Visit(FcallNode node) {
 
-        //TODO: Af fuck, vi skal jo kalde navnet fra Robocode API.
         if(node.NumberOfArguments() == 0)
             return String.format("%s()", Visit(node.IDNode()));
         else if (node.NumberOfArguments() == 1)
@@ -208,8 +213,15 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     @Override
     public String Visit(IDNode node) {
-        // ved ikke om det er rigitgt kan ikke finde IDNode måsker det bare mig der er retarderet.
-        return String.format("%s", node.idString);
+        APIMethods test = new APIMethods();
+        test.DYERname = node.toString();
+        if(listOfAPIMethods.contains(test)){
+            int index = listOfAPIMethods.indexOf(test);
+            String APIname = listOfAPIMethods.get(index).APIname;
+            return APIname;
+        }
+        else
+            return String.format("%s", node.idString);
     }
 
     @Override
@@ -247,20 +259,22 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
     public String Visit(MethodNode node) {
         String string = "";
         int parametersdone = 0;
-        string += String.format("public %s %s(", node.RTypeNode(), node.IDNode());
+        string += String.format(AddTabs() + "public %s %s(", node.RTypeNode(), node.IDNode());
         //TODO: hvad hvis der ikke er nogen parametre, hvirker det stadig`?
         for( ArgumentNode parameter : node.Parameters() ){
             if(parametersdone + 1 == node.NumberOfParameters()){
-                string = String.format(string + "%s)", Visit(parameter));
+                string = String.format(string + "%s){\n", Visit(parameter));
             }
             else {
                 string = String.format(string + "%s, ", Visit(parameter));
             }
             parametersdone++;
         }
-
-
-        return String.format(string + "{\n %s }", Visit(node.BlockNode()));
+        tabIndex++;
+        string += String.format("%s", Visit(node.BlockNode()));
+        tabIndex--;
+        string += AddTabs() + "}\n";
+        return string;
     }
 
     @Override
@@ -288,17 +302,17 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
     public String Visit(ProgNode node) {
         String string = "";
 
-        string += "import robocode.*\n";
+        string += "import robocode.*;\n";
 
         string += "public class ThisRobot extends AdvancedRobot{\n"; //Start class
         tabIndex++;
         for(Node pnode : node.PreDclNodes()) {
             if(pnode instanceof EventNode)
-                string += AddTabs() + Visit(pnode) + "\n";
+                string += AddTabs() + Visit(pnode);
             else
                 string += AddTabs() + Visit(pnode) + ";\n";
         }
-        string += AddTabs() + "String strategy = \"default\";\n";
+        string += AddTabs() + "String strategy = \"Default\";\n";
         string += AddTabs() + "public void run() {\n";
         tabIndex++;
         string += Visit(node.SetupNode());
@@ -314,27 +328,33 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
             string += Visit(mnode);
 
         string += "\n";
-        string += "public void onCustomEvent(CustomEvent e){ \n"; //First we make a specific event
+        string += AddTabs() +"public void onCustomEvent(CustomEvent e){ \n"; //First we make a specific event
         for(String customEvent: listOfCustomEvent){ //All our custom events are called in this specific method in Java
+            tabIndex++;
             currentEvent = customEvent; //setting this variable, so we can use it when visiting the strategies
-            string += String.format("if(e.getCondition() == %s){\n", customEvent); //Going through all the custom events
-
+            string += String.format(AddTabs() + "if(e.getCondition() == %s){\n", customEvent); //Going through all the custom events
+            tabIndex++;
             for(Node strat: node.StrategyNodes()){ //Visiting each strategy, to check if they have some behavior at this event.
                 string += Visit(strat);
             }
-            string += "};\n";
+            tabIndex--;
+            string += AddTabs() + "}\n";
         }
-        string += "};\n";
+        tabIndex--;
+        string += AddTabs() + "}\n";
         //Going through the rest of the events from robocodeAPI:
         for(APIevents event: listOfAPIEvents){
-            string += String.format("public void %s(%s e){\n", event.name, event.EventArg);
+            string += String.format(AddTabs() + "public void %s(%s e){\n", event.name, event.EventArg);
             currentEvent = event.name;
+            tabIndex++;
             for(Node strat: node.StrategyNodes()){ //Visiting each strategy, to check if they have some behavior at this event.
                 string += Visit(strat);
             }
+            tabIndex--;
+            string += AddTabs() + "}\n";
         }
 
-        string += "};"; //end class
+        string += "}"; //end class
         return string;
     }
 
@@ -381,9 +401,11 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
         String string = "";
         for(BehaviorNode bnode: node.BehaviourNodes()){
             if(bnode.IDNode().toString().equals(currentEvent)){
-               string += String.format("if(strategy.equals(\"%s\"({\n",node.IDNode().toString());
+               string += String.format(AddTabs() + "if(strategy.equals(\"%s\")){\n",node.IDNode().toString());
+               tabIndex++;
                string += Visit(bnode);
-               string += "};\n";
+               tabIndex--;
+               string += AddTabs() + "}\n";
             }
         }
         return string;

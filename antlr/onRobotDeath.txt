@@ -1,1 +1,1 @@
-getName         Enemy.getName       string      none
+e.getName         Enemy.getName       string      none

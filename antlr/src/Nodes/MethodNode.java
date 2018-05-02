@@ -3,7 +3,7 @@ package Nodes;
 import Nodes.values.IDNode;
 
 public class MethodNode extends Node {
-
+    public String APIName;
     public MethodNode(int firstLinenumber) {
         super(firstLinenumber);
     }

@@ -18,6 +18,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
     public List<String> ErrorList = new ArrayList<>();
     public SymbolTable symbolTable = new SymbolTable();
     public List<String> RoboEvents = new ArrayList<>();
+    public ArrayList<APIMethods> ListOfAPIMethods = new ArrayList<>();
 
     public TypeCheckerVisitor(ArrayList<APIevents> list) throws IOException {
         AddLibraryEventsToSymbolTable(list);
@@ -162,7 +163,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
     public void AddEventVariablesToScope(String behaviourName){
         if(RoboEvents.contains(behaviourName)){
             try{
-                AddLibraryFunctionsToSymbolTable(String.format("%s.txt", behaviourName));
+                addToListOfAPIMethods(String.format("%s.txt", behaviourName));
             } catch (Exception e){
                 ErrorList.add(String.format("You are missing the file %s.txt. Reinstallation is needed", behaviourName));
             }
@@ -724,7 +725,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
         return node;
     }
 
-    public void AddLibraryEventsToSymbolTable(ArrayList<APIevents> list) throws IOException{
+    public void AddLibraryEventsToSymbolTable(ArrayList<APIevents> list) {
         for(APIevents input : list){
                 String id = input.name;
                 SymbolClass sym = symbolTable.RetrieveSymbol(id);
@@ -770,7 +771,49 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
             }
 
         }
+    }
 
+    public void addToListOfAPIMethods(String... files) throws IOException{
+        for(String input : files){
+            List<String> content = Files.readAllLines(Paths.get(input));
+            String[] elements;
+            for(String line : content){
+                elements = line.split("\\s+");
+                APIMethods method = new APIMethods();
+                method.APIname = elements[0];
+                method.DYERname = elements[1];
+                method.Rtype = elements[2];
+                method.Param = elements[3];
+                ListOfAPIMethods.add(method);
+                AddAPIFunctionsToSymolTable(method);
+            }
+        }
+    }
+
+    public void AddAPIFunctionsToSymolTable(APIMethods method) {
+        String id = method.DYERname;
+        Object type = FindType(method.Rtype);
+        SymbolClass sym = symbolTable.RetrieveSymbol(id);
+        if(method.Param.equals("none")) {
+            if(sym  == null) {
+                MethodNode node = new MethodNode(0);
+                node.Type = type;
+                node.APIName = method.APIname;
+                node.AdoptChildren(new IDNode(0, id), new RTypeNode(0, method.Rtype));
+                symbolTable.EnterSymbol(id, node);
+            }
+        }
+        else{
+            ArgumentNode anode = new ArgumentNode(0, method.Param); //Has no refNode, might be a problem
+            if(sym  == null){
+                MethodNode mnode = new MethodNode(0);
+                mnode.Type = type;
+                mnode.APIName = method.APIname;
+                mnode.AdoptChildren(new IDNode(0, id), new RTypeNode(0, method.Rtype));
+                mnode.AdoptChildren(anode);
+                symbolTable.EnterSymbol(id, mnode);
+            }
+        }
     }
 
     private Object FindType(String type) {

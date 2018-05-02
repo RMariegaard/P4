@@ -1,74 +1,81 @@
-import robocode.*
+import robocode.*;
 public class ThisRobot extends AdvancedRobot{
-    Condition round10Event = new Condition("Game.Game.getRoundNumber() == 10")
+    int target = 40;
+    Condition WhenEnergyIs40 = new Condition("getEnergy() == 40.0")
     {
         public boolean test() 
         {
-            return (Game.Game.getRoundNumber() == 10);
+            return (getEnergy() == 40.0);
         }
-    }
-
-    String strategy = "default";
+    };
+    String strategy = "Default";
     public void run() {
-        This.Late.Main.This.Late.Main.peter();
-        Tank();
-        int oldSchoolStuff;
+        setBodyColor(white);
+        setGunColor(white);
+        setRadarColor(white);
         while(true) {
-            while(true){             dothis.dothis.NOW(hej);
-            alsoThis();
- };
+            ahead(123.0);
+            turnGunLeft(123.0);
+            if (getNumRounds() > 10){ 
+                fire(2.0);
+                turnRadarRight(200.0);
+            }
+            else if(getRoundNum() > 5){
+                fire(1.0);
+                turnRight(100.0);
+            }
+
         }
     }
-public int myAddFunction(int a, int b){
-     if (late() < 123){ 
-        goback();
+    public int myAddFunction(int a, int b){
+        int res = a + b;
+        res++;
+        return res;
     }
-    else if(12 < 13){
-        goHard(12);
-    }
-    else if(peter < 12){
-        goLeft(angel);
-    }
-;
- }
-public void onCustomEvent(CustomEvent e){ 
-if(e.getCondition() == round10Event){
-if(strategy.equals("Default"({
-    CurrentStrategy = lateGameStrat;
-};
-};
-};
-public void onBulletHit(BulletHitEvent e){
-public void onBulletHitBullet(BulletHitBulletEvent e){
-public void onBulletMissed(BulletMissedEvent e){
-public void onDeath(DeathEvent e){
-public void onHitByBullet(HitByBulletEvent e){
-if(strategy.equals("Default"({
-    for(int q = 0; q <= 3; q++)
-{
-    fire(q);
-    tank.tank.ahead(100);
 
+    public void onCustomEvent(CustomEvent e){ 
+        if(e.getCondition() == WhenEnergyIs40){
+            if(strategy.equals("Default")){
+                for (int i = 0; i <= 5; i++) {
+                    fire(2.0);
+                }
+            }
+        }
+    }
+    public void onBulletHit(BulletHitEvent e){
+        if(strategy.equals("Default")){
+            turnRight(e.getBullet().getY());
+        }
+    }
+    public void onBulletHitBullet(BulletHitBulletEvent e){
+    }
+    public void onBulletMissed(BulletMissedEvent e){
+    }
+    public void onDeath(DeathEvent e){
+    }
+    public void onHitByBullet(HitByBulletEvent e){
+    }
+    public void onHitRobot(HitRobotEvent e){
+    }
+    public void onHitWall(HitWallEvent e){
+    }
+    public void onRobotDeath(RobotDeathEvent e){
+    }
+    public void onScannedRobot(ScannedRobotEvent e){
+        if(strategy.equals("Default")){
+            turnRight(e.getBearing());
+        }
+    }
+    public void onWin(WinEvent e){
+    }
+    public void onRoundEnded(RoundEndedEvent e){
+    }
+    public void onBattleEnded(BattleEndedEvent e){
+    }
+    public void onStatus(StatusEvent e){
+    }
+    public void OnDeath(DeathEvent e){
+    }
+    public void onSkippedTurn(SkippedTurnEvent e){
+    }
 }
-;
-};
-public void onHitRobot(HitRobotEvent e){
-public void onHitWall(HitWallEvent e){
-public void onRobotDeath(RobotDeathEvent e){
-public void onScannedRobot(OnScannedRobotEvent e){
-if(strategy.equals("Default"({
-    dothis();
-    Tank.fire.Tank.fire.GG(12345);
-    int x;
-    x++;
-};
-if(strategy.equals("lateGameStrat"({
-    Tank.Tank.fire(123.0);
-};
-public void onWin(WinEvent e){
-public void onRoundEnded(RoundEndedEvent e){
-public void onBattleEnded(BattleEndedEvent e){
-public void onStatus(StatusEvent e){
-public void OnDeath(DeathEvent e){
-public void onSkippedTurn(SkippedTurnEvent e){
-};

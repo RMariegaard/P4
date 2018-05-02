@@ -1,1 +1,1 @@
-getBearing      Wall.getBearing         double      none
+e.getBearing      Wall.getBearing         double      none

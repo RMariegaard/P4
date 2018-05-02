@@ -21,11 +21,11 @@ public class Main {
     public static void main(String[] args) {
 	// write your code here
         try {
-            antlrParser.ProgContext cst = getCST("CodeExample4.txt");
+            antlrParser.ProgContext cst = getCST("CodeTemplet");
             ArrayList<APIevents> listOfAPIEvents = createListOfAPIEvents("RobotEvent_API.txt", "AdvancedRobotEvent_API.txt");
             Node ast = new IntNode(0, 1);
             TypeCheckerVisitor typeChecker = new TypeCheckerVisitor(listOfAPIEvents);
-            typeChecker.AddLibraryFunctionsToSymbolTable("Robot_API.txt", "AdvancedRobot_API.txt");
+            typeChecker.addToListOfAPIMethods("Robot_API.txt", "AdvancedRobot_API.txt");
 
             if(cst != null  ){
                 ast = new BuildASTVisitor().visitProg(cst);
@@ -51,7 +51,7 @@ public class Main {
             }
             //TODO: create a new file.
             if(cst != null && typeChecker.ErrorList.isEmpty()){
-                CodeGeneratorVisitor codeGenerator = new CodeGeneratorVisitor(listOfAPIEvents);
+                CodeGeneratorVisitor codeGenerator = new CodeGeneratorVisitor(listOfAPIEvents, typeChecker.ListOfAPIMethods);
                 String program = codeGenerator.Visit(ast);
                 Path file = Paths.get("ourRobot.java");
                 Files.write(file,program.getBytes());
@@ -90,7 +90,7 @@ public class Main {
             List<String> content = Files.readAllLines(Paths.get(input));
             String[] elements;
             for(String line : content){
-                elements = line.split("\\s+"); //RobocodeName - returnType (most likely void) - OurName
+                elements = line.split("\\s+"); //RobocodeName - returnType (most likely void) - EventArg
                 APIevents event = new APIevents();
                 event.name = elements[0];
                 event.param = elements[1];

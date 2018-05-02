@@ -6,7 +6,7 @@ onHitByBullet			void		HitByBulletEvent
 onHitRobot			    void		HitRobotEvent
 onHitWall			    void		HitWallEvent
 onRobotDeath			void		RobotDeathEvent
-onScannedRobot			void		OnScannedRobotEvent
+onScannedRobot			void		ScannedRobotEvent
 onWin				    void		WinEvent
 onRoundEnded			void		RoundEndedEvent
 onBattleEnded			void		BattleEndedEvent
