@@ -19,6 +19,7 @@ public class IfStmtNode extends Node {
         int result = 0;
         while(node.RightSibling != null){
             result++;
+            node = node.RightSibling;
         }
         //the last else node is counted in the loop above
         // If there is no else block nor else if then we have to return 0 and not -1

@@ -8,13 +8,25 @@ import java.util.ArrayList;
 
 public class CodeGeneratorVisitor extends AstVisitor<String> {
 
-    public String Code;
+    public String Code = "";
     private ArrayList<String> listOfCustomEvent = new ArrayList<>();
     private ArrayList<APIevents> listOfAPIEvents = new ArrayList<>();
     private String currentEvent;
+    int tabIndex = 0;
+
 
     public CodeGeneratorVisitor(ArrayList<APIevents> list){
         listOfAPIEvents = list;
+    }
+    public CodeGeneratorVisitor(){
+    }
+
+    private String AddTabs(){
+        String string ="";
+        for (int i = 0; i< tabIndex; i++){
+            string += "    ";
+        }
+        return string;
     }
 
     @Override
@@ -62,7 +74,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
         String result = "";
         for (int i = 0; i < node.NumberOfStatements(); i++)
         {
-            result = String.format(result + Visit(node.StmtNodes()[i]) + ";\n");
+            result = String.format(result + AddTabs() + Visit(node.StmtNodes()[i]) + ";\n");
         }
         return result;
     }
@@ -108,12 +120,24 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
     @Override
     public String Visit(ElseNode node)
     {
-        return String.format("else \n{\n %s \n}\n", Visit(node.Block()));
+        String string = "";
+        string += "else{\n";
+        tabIndex++;
+        string += String.format("%s", Visit(node.Block()));
+        tabIndex--;
+        string += AddTabs() + "}\n";
+        return string;
     }
 
     @Override
     public String Visit(ElseIfNode node) {
-        return String.format("else if(%s)\n{\n %s \n}\n", Visit(node.Condition()), Visit(node.Block()));
+        String string = "";
+        string += String.format("else if(%s){\n",Visit(node.Condition()));
+        tabIndex++;
+        string += String.format("%s", Visit(node.Block()));
+        tabIndex--;
+        string += AddTabs() + "}\n";
+        return string;
     }
 
     @Override
@@ -129,7 +153,17 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
         String eventDcl;
         String name = Visit(node.ID());
         eventDcl = String.format("Condition %s = new Condition(\"%s\")", name, Visit(node.ExprNode()));
-        eventDcl = String.format(eventDcl + "\n{\n public boolean test() \n{\n return (%s);\n};\n}",Visit(node.ExprNode()));
+        eventDcl += "\n" + AddTabs() +"{";
+        tabIndex++;
+        eventDcl += "\n" + AddTabs() + "public boolean test() \n";
+        eventDcl += AddTabs()+ "{\n";
+        tabIndex++;
+        eventDcl += String.format(AddTabs() + "return (%s);\n", Visit(node.ExprNode()));
+        tabIndex--;
+        eventDcl += AddTabs() + "}\n";
+        tabIndex--;
+        eventDcl += AddTabs() + "}\n";
+
         //TODO: Det her bliver fucking mærkeligt, først skal man declare event^^, derefter skal der i én
         //Function OnCustomEvent, laves en if for alle vores custom events, hvilket bliver fuuucking trælss...
         listOfCustomEvent.add(String.format("%s",node.ID()));
@@ -157,7 +191,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     @Override
     public String Visit(GameLoopNode node) {
-        return String.format("%s",node.Block());
+        return String.format("%s",Visit(node.Block()));
     }
 
     @Override
@@ -180,9 +214,13 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     @Override
     public String Visit(IfStmtNode node) {
-        String result = String.format("if (%s)\n{\n%s\n}\n", node.Condition(), node.Block());
+        String result = String.format("if (%s){ \n",Visit(node.Condition()));
+        tabIndex++;
+        result += String.format("%s", Visit(node.Block()));
+        tabIndex--;
+        result += AddTabs() + "}\n";
         for (int i = 0; i < node.NumberOfElseIf(); i++){
-            result = result + Visit(node.ElseIf()[i]);
+            result += AddTabs() + Visit(node.ElseIf()[i]);
         }
         return result;
     }
@@ -252,16 +290,25 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
         string += "import robocode.*\n";
 
-
-        for(Node pnode : node.PreDclNodes())
-            string += Visit(pnode) + ";\n";
-
-        string += "String strategy = \"default\"\n";
-        string += "public void run() {\n";
+        string += "public class ThisRobot extends AdvancedRobot{\n"; //Start class
+        tabIndex++;
+        for(Node pnode : node.PreDclNodes()) {
+            if(pnode instanceof EventNode)
+                string += AddTabs() + Visit(pnode) + "\n";
+            else
+                string += AddTabs() + Visit(pnode) + ";\n";
+        }
+        string += AddTabs() + "String strategy = \"default\";\n";
+        string += AddTabs() + "public void run() {\n";
+        tabIndex++;
         string += Visit(node.SetupNode());
-        string += "while(true) {\n";
-        string += Visit(node.GameLoopNode());
-        string += "}\n";
+        string += AddTabs() + "while(true) {\n";
+        tabIndex++;
+        string +=  Visit(node.GameLoopNode());
+        tabIndex--;
+        string += AddTabs() + "}\n";
+        tabIndex--;
+        string += AddTabs() + "}\n";
 
         for(Node mnode : node.MethodNodes())
             string += Visit(mnode);
@@ -287,13 +334,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
             }
         }
 
-        //Prøver lige noget andet.
-        //String strategies = "";
-        //for(Node snode : node.StrategyNodes()){
-         //   strategies += Visit(snode);
-        //}
-        //MakeRobotClass(string, strategies);
-
+        string += "};"; //end class
         return string;
     }
 
