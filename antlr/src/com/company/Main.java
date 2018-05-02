@@ -49,7 +49,6 @@ public class Main {
                 System.out.println("Something happend");
             }
 
-            //TODO: create a new file.
             CodeGeneratorVisitor codeGenerator = new CodeGeneratorVisitor(listOfAPIEvents);
             String program = codeGenerator.Visit(ast);
             Path file = Paths.get("ourRobot.java");
