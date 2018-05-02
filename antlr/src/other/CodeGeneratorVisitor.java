@@ -129,7 +129,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
         String eventDcl;
         String name = Visit(node.ID());
         eventDcl = String.format("Condition %s = new Condition(\"%s\")", name, Visit(node.ExprNode()));
-        eventDcl = String.format(eventDcl + "\n{\n public boolean test() \n{\n return (%s);\n};\n}");
+        eventDcl = String.format(eventDcl + "\n{\n public boolean test() \n{\n return (%s);\n};\n}",Visit(node.ExprNode()));
         //TODO: Det her bliver fucking mærkeligt, først skal man declare event^^, derefter skal der i én
         //Function OnCustomEvent, laves en if for alle vores custom events, hvilket bliver fuuucking trælss...
         listOfCustomEvent.add(String.format("%s",node.ID()));

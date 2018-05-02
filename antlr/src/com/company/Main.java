@@ -1,18 +1,17 @@
 package com.company;
 import Nodes.Node;
+import Nodes.values.IntNode;
 import antlr.antlrLexer;
 import antlr.antlrParser;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
-import other.APIevents;
-import other.BuildASTVisitor;
-import other.ErrorListner;
-import other.TypeCheckerVisitor;
+import other.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,15 +22,17 @@ public class Main {
 	// write your code here
         try {
             antlrParser.ProgContext cst = getCST("CodeTemplet");
+            ArrayList<APIevents> listOfAPIEvents = createListOfAPIEvents("RobotEvent_API.txt", "AdvancedRobotEvent_API.txt");
+            Node ast = new IntNode(0, 1);
+
             if(cst != null  ){
-                Node ast = new BuildASTVisitor().visitProg(cst);
+                ast = new BuildASTVisitor().visitProg(cst);
                 ast.makeNode();
                 //ASTPrinter.PrintTree((ast));
 
                 //SymbolTable table = new SymbolTable();
                 //table.BuildTable(ast);
                 //table.hashCode();
-                ArrayList<APIevents> listOfAPIEvents = createListOfAPIEvents("RobotEvent_API.txt", "AdvancedRobotEvent_API.txt");
 
                 TypeCheckerVisitor typeChecker = new TypeCheckerVisitor(listOfAPIEvents);
                 typeChecker.AddLibraryFunctionsToSymbolTable("Robot_API.txt", "AdvancedRobot_API.txt");
@@ -49,6 +50,10 @@ public class Main {
             }
 
             //TODO: create a new file.
+            CodeGeneratorVisitor codeGenerator = new CodeGeneratorVisitor(listOfAPIEvents);
+            String program = codeGenerator.Visit(ast);
+            Path file = Paths.get("ourRobot.java");
+            Files.write(file,program.getBytes());
 
 
         }catch (IOException e){
