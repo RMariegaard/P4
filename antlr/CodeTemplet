@@ -31,7 +31,7 @@ function int myAddFunction (int a, int b)
 end
 
 strategy Default
-    behavior OnScannedRobot
+    behavior onScannedRobot
 	    Tank.turnRight(Enemy.getBearing())
     end
 
@@ -42,7 +42,7 @@ strategy Default
 	    end
     end
 
-    behavior BulletHit
-        Tank.turnRight(Bullet.getY)
+    behavior onBulletHit
+        Tank.turnRight(Bullet.getY())
      end
 end

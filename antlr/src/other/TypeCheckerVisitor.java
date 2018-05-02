@@ -15,7 +15,11 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
     public List<String> ErrorList = new ArrayList<>();
     public SymbolTable symbolTable = new SymbolTable();
 
-
+    public TypeCheckerVisitor(ArrayList<APIevents> list) throws IOException {
+        AddLibraryEventsToSymbolTable(list);
+    }
+    public TypeCheckerVisitor(){
+    }
     @Override
     public Node Visit(ActionNode node) {
         //This is done because we dont have time to implement id.id.id from RobocodeAPI
@@ -672,20 +676,15 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
         return node;
     }
 
-    public void AddLibraryEventsToSymbolTable(String... files) throws IOException{
-        for(String input : files){
-            List<String> content = Files.readAllLines(Paths.get(input));
-            String[] elements;
-            for(String line : content){
-                elements = line.split("\\s+"); //RobocodeName - returnType (most likely void) - OurName
-                String id = elements[2];
+    public void AddLibraryEventsToSymbolTable(ArrayList<APIevents> list) throws IOException{
+        for(APIevents input : list){
+                String id = input.name;
                 SymbolClass sym = symbolTable.RetrieveSymbol(id);
                 if(sym == null){
                     EventNode node = new EventNode(0);
                     node.AdoptChildren(new IDNode(0, id));
                     node.Type = EventType.class;
                     symbolTable.EnterSymbol(id, node);
-                }
             }
         }
     }
