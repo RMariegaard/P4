@@ -1,7 +1,7 @@
-getBearing      Enemy.getBearing        double
-getDistance     Enemy.getDistance       double
-getEnergy       Enemy.getEnergy         double
-getHeading      Enemy.getHeading        double
-getName         Enemy.getName           string
-getVelocity     Enemy.getVelocity       double
-isSentryRobot   Enemy.isSentryRobot     boolean
+getDistance     Enemy.getDistance       double      none
+getBearing      Enemy.getBearing        double      none
+getEnergy       Enemy.getEnergy         double      none
+getHeading      Enemy.getHeading        double      none
+getName         Enemy.getName           string      none
+getVelocity     Enemy.getVelocity       double      none
+isSentryRobot   Enemy.isSentryRobot     boolean     none
