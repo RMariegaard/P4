@@ -9,7 +9,7 @@ public class StringNode extends Node {
 
     public StringNode(int firstLinenumber, String value) {
         super(firstLinenumber);
-        this.value = value;
+        this.value = value.substring(1,value.length()-1); //removes ""
     }
 
 

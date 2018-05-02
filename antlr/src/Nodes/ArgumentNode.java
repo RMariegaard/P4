@@ -7,7 +7,7 @@ public class ArgumentNode extends Node {
     }
     public ArgumentNode(int firstLinenumber, String type) {
         super(firstLinenumber);
-        if(type.equals("text"))
+        if(type.equals("text") || type.equals("string"))
             Type = String.class;
         else if(type.equals("bool") || type.equals("boolean"))
             Type = boolean.class;

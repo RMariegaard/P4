@@ -5,10 +5,13 @@ import Nodes.expr.*;
 import Nodes.values.*;
 import Types.EventType;
 
+import java.awt.*;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TypeCheckerVisitor extends AstVisitor<Node> {
@@ -368,10 +371,29 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
                         node.ErrorFlag = true;
                     }
                 }
+                List<String> colorFunctions = Arrays.asList("Tank.Gun.setColor", "Tank.setBodyColor", "Tank.Radar.setColor");
+                if(colorFunctions.contains(node.IDNode().idString)){
+                    if(!doesColorExcist(arguments[0].toString())){
+                        ErrorList.add(String.format("Line %s: The color %s is not available. Use another color", node.FirstLinenumber, arguments[0].toString()));
+                    }
+
+                }
             }
         }
         node.Type = type.Type;
         return node;
+    }
+
+    private boolean doesColorExcist(String s) {
+        Color color;
+        try {
+            Field field = Class.forName("java.awt.Color").getField(s);
+            color = (Color)field.get(null);
+            color.brighter();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override

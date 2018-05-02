@@ -26,3 +26,6 @@ getEnergy                       Tank.getEnergy                      double      
 turnLeft                        Tank.turnLeft                       double      double
 turnRight                       Tank.turnRight                      double      double
 fire                            Tank.fire                           void        double
+setGunColor                     Tank.Gun.setColor                   void        string
+setBodyColor                    Tank.setBodyColor                   void        string
+setRadarColor                   Tank.Radar.setColor                 void        string

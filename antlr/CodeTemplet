@@ -1,9 +1,9 @@
 int target = 40
 event(Tank.getEnergy() == 40.0) -> WhenEnergyIs40
 setup
-	Tank.setBodyColor(white)
-	Tank.setGunColor(white)
-	Tank.setRadarColor(white)
+	Tank.setBodyColor("white")
+	Tank.Gun.setColor("white")
+	Tank.Radar.setColor("white")
 end
 
 game-loop

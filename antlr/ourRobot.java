@@ -10,8 +10,8 @@ Condition WhenEnergyIs40 = new Condition("Tank.Tank.getEnergy() == 40.0")
 String strategy = "default"
 public void run() {
 Tank.Tank.setBodyColor(white);
-Tank.Tank.setGunColor(white);
-Tank.Tank.setRadarColor(white);
+Tank.Gun.Tank.Gun.setColor(white);
+Tank.Radar.Tank.Radar.setColor(white);
 while(true) {
 Block}
 public int myAddFunction(int a, int b){
