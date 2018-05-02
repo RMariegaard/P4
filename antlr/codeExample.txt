@@ -1,7 +1,7 @@
 setup
-	Tank.setBodyColor(white)
-	Tank.setGunColor(white)
-	Tank.setRadarColor(white)
+	Tank.setBodyColor("white")
+	Tank.Gun.setColor("white")
+	Tank.Radar.setColor("white")
 end
 
 game-loop
@@ -15,7 +15,7 @@ function int myAddFunction (int a, int b)
 end
 
 strategy Default
-    behavior OnScannedRobot
+    behavior onScannedRobot
 
     end
 

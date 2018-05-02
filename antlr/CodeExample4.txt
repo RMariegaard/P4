@@ -1,6 +1,3 @@
-//Code Translation from a robot sample: "Crazy" in Java to
-  domain specific language
-
 setup
 
     Tank.setColor(Color.black)
@@ -36,20 +33,17 @@ end
 
 strategy Default
 
-    behavior onHitWall(HitWallEvent enemy)
+    behavior onHitWall
 
         reverseDirection()
     end
 
-    behavior onScannedRobot(ScannedRobotEvent enemy)
-
+    behavior onScannedRobot
         fire(1)
     end
 
-    behavior onHitRobot(HitRobotEvent enemy)
-
+    behavior onHitRobot
         if (enemy.isMyFault())
-
             reverseDirection()
         end
     end

@@ -9,7 +9,7 @@ getSentryBorderSize             Tank.getSentryBorderSize            int         
 getOthers                       Game.getOthers                      int         none
 getNumSentries                  Game.getNumSentries                 int         none
 getRadarHeading                 Tank.Radar.getHeading               double      none
-getRoundNum                     Game.getRoundNum                    int         none
+getRoundNum                     Game.getRoundNumber                    int         none
 getVelocity                     Tank.getVelocity                    double      none
 scan                            Tank.Radar.scan                     void        none
 setAdjustGunForRobotTurn        Tank.Gun.setAdjustForRobotTurn      void        boolean

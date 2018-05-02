@@ -22,6 +22,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
     public TypeCheckerVisitor(ArrayList<APIevents> list) throws IOException {
         AddLibraryEventsToSymbolTable(list);
     }
+
     public TypeCheckerVisitor(){
     }
     @Override

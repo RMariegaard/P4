@@ -21,7 +21,7 @@ public class Main {
     public static void main(String[] args) {
 	// write your code here
         try {
-            antlrParser.ProgContext cst = getCST("CodeTemplet");
+            antlrParser.ProgContext cst = getCST("CodeExample4.txt");
             ArrayList<APIevents> listOfAPIEvents = createListOfAPIEvents("RobotEvent_API.txt", "AdvancedRobotEvent_API.txt");
             Node ast = new IntNode(0, 1);
             TypeCheckerVisitor typeChecker = new TypeCheckerVisitor(listOfAPIEvents);
@@ -59,10 +59,6 @@ public class Main {
             else{
                 System.out.println("Program could not be compiled.");
             }
-            CodeGeneratorVisitor codeGenerator = new CodeGeneratorVisitor(listOfAPIEvents);
-            String program = codeGenerator.Visit(ast);
-            Path file = Paths.get("ourRobot.java");
-            Files.write(file,program.getBytes());
 
 
         }catch (IOException e){

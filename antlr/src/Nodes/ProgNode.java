@@ -33,7 +33,10 @@ public class ProgNode extends Node {
 
     public SetupNode SetupNode(){
         Node[] array = PreDclNodes();
-        return (SetupNode) array[array.length-1].RightSibling;
+        if(array.length > 0)
+           return (SetupNode) array[array.length-1].RightSibling;
+        else
+            return (SetupNode) this.LeftmostChild;
     }
 
     public GameLoopNode GameLoopNode(){

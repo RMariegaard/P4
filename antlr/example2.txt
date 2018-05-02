@@ -1,4 +1,4 @@
-event(getRoundNumber() == 10) -> round10Event
+event(Game.getRoundNumber() == 10) -> round10Event
 //test
 setup
 	This.Late.Main.peter()
@@ -10,6 +10,7 @@ game-loop
     while(true)
         dothis.NOW(hej)
         alsoThis()
+        myAddFunction(1,2)
     end
 
 end
@@ -22,7 +23,7 @@ strategy Default
         int x = 34
         x++
     end
-    behavior onHitByRobot
+    behavior onHitByBullet
         do(int q, 0, 3, q++)
             fire(q)
             tank.ahead(100)
@@ -32,9 +33,10 @@ strategy Default
         CurrentStrategy = lateGameStrat
     end
 end
+
 strategy lateGameStrat
     behavior  onScannedRobot
-        fire(123)
+        Tank.fire(123.0)
     end
 end
 
