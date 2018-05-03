@@ -514,8 +514,13 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
         else {
             node.Type = typeNode.Type;
             symbolTable.EnterSymbol(node.IDNode().toString(), node);
+            for (ArgumentNode argNode: node.Parameters()) {
+                Visit(argNode);
+            }
+            Visit(node.BlockNode());
             return node;
         }
+
     }
 
     @Override
