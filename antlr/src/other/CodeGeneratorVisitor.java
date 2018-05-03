@@ -5,6 +5,8 @@ import Nodes.expr.*;
 import Nodes.values.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class CodeGeneratorVisitor extends AstVisitor<String> {
 
@@ -115,9 +117,8 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
     @Override
     public String Visit(DoStmtNode node)
     {
-        //TODO: yea, vi skal snart tage en beslutning her
-        String string = String.format("for (%s = %s; %s <= %s; %s) {\n",Visit(node.VariableNode()), Visit(node.StartValueNode()), node.VariableNode().RefNode().IDNode().toString(), Visit(node.EndValueNode())
-                ,  Visit(node.IncrementNode()));
+        String string = String.format("for (%s = %s; %s <= %s; %s += %s) {\n",Visit(node.VariableNode()), Visit(node.StartValueNode()), node.VariableNode().RefNode().IDNode().toString(), Visit(node.EndValueNode())
+                ,node.VariableNode().RefNode().IDNode().toString(),  Visit(node.IncrementNode()));
         tabIndex++;
         string += String.format("%s", Visit(node.BlockNode()));
         tabIndex--;
@@ -160,7 +161,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
     public String Visit(EventNode node) {
         String eventDcl;
         String name = Visit(node.ID());
-        eventDcl = String.format("Condition %s = new Condition(\"%s\")", name, Visit(node.ExprNode()));
+        eventDcl = String.format("Condition %s = new Condition(\"%s\")", name,name);
         eventDcl += "\n" + AddTabs() +"{";
         tabIndex++;
         eventDcl += "\n" + AddTabs() + "public boolean test() \n";
@@ -172,14 +173,19 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
         tabIndex--;
         eventDcl += AddTabs() + "};\n";
 
-        listOfCustomEvent.add(String.format("%s",node.ID()));
+        listOfCustomEvent.add(String.format("%s",name));
         return eventDcl;
     }
 
     @Override
     public String Visit(FcallNode node) {
-
-        if(node.NumberOfArguments() == 0)
+        List<String> colorFunctions = Arrays.asList("Tank.Gun.setColor", "Tank.setBodyColor", "Tank.Radar.setColor");
+        //Den første if checker om det er en af de tre functioner hvor vi bruger farver, dette er nemmelig lidt specielt
+        //Her skal man nemlig printe Color.farve, men i DYER angiver man farven som en string, hvilket tegnet " ikke skal printes i java.
+        if(colorFunctions.contains(node.IDNode().idString)){
+            return String.format("%s(Color.%s)", Visit(node.IDNode()), node.ArgumentNodes()[0].toString());
+        }
+        else if(node.NumberOfArguments() == 0)
             return String.format("%s()", Visit(node.IDNode()));
         else if (node.NumberOfArguments() == 1)
             return String.format("%s(%s)", Visit(node.IDNode()), Visit(node.ArgumentNodes()[0]));
@@ -223,6 +229,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
         else
             return String.format("%s", node.idString);
     }
+
 
     @Override
     public String Visit(IfStmtNode node) {
@@ -303,6 +310,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
         String string = "";
 
         string += "import robocode.*;\n";
+        string += "import java.awt.*;\n";
 
         string += "public class ThisRobot extends AdvancedRobot{\n"; //Start class
         tabIndex++;
@@ -315,6 +323,9 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
         string += AddTabs() + "String strategy = \"Default\";\n";
         string += AddTabs() + "public void run() {\n";
         tabIndex++;
+        for (String customEvent: listOfCustomEvent) {
+            string += String.format(AddTabs() + "addCustomEvent(%s);\n", customEvent);
+        }
         string += Visit(node.SetupNode());
         string += AddTabs() + "while(true) {\n";
         tabIndex++;
@@ -414,7 +425,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
     @Override
     public String Visit(StringNode node)
     {
-        return node.value;
+        return String.format("\"%s\"",node.value);
     }
 
     @Override

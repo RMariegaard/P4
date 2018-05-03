@@ -13,7 +13,6 @@ game-loop
         Tank.fire(2.0)
         Tank.Radar.turnRight(200.0)
     end
-
     else if (Game.getRoundNum() > 5)
 		Tank.fire(1.0)
 	    Tank.Radar.turnRight(100.0)
@@ -34,14 +33,11 @@ strategy Default
     behavior onScannedRobot
 	    Tank.turnRight(Enemy.getBearing())
     end
-
-
     behavior WhenEnergyIs40
-	    do(int i, 0, 5, i++)
+	    do(int i, 0, 5, 2)
 	    	Tank.fire(2.0)  //FAAAACK fire tager kun en double...
 	    end
     end
-
     behavior onBulletHit
         Tank.turnRight(Bullet.getY())
      end

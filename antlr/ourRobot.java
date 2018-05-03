@@ -1,7 +1,8 @@
 import robocode.*;
+import java.awt.*;
 public class ThisRobot extends AdvancedRobot{
     int target = 40;
-    Condition WhenEnergyIs40 = new Condition("getEnergy() == 40.0")
+    Condition WhenEnergyIs40 = new Condition("WhenEnergyIs40")
     {
         public boolean test() 
         {
@@ -10,9 +11,10 @@ public class ThisRobot extends AdvancedRobot{
     };
     String strategy = "Default";
     public void run() {
-        setBodyColor(white);
-        setGunColor(white);
-        setRadarColor(white);
+        addCustomEvent(WhenEnergyIs40);
+        setBodyColor(Color.white);
+        setGunColor(Color.white);
+        setRadarColor(Color.white);
         while(true) {
             ahead(123.0);
             turnGunLeft(123.0);
@@ -36,7 +38,7 @@ public class ThisRobot extends AdvancedRobot{
     public void onCustomEvent(CustomEvent e){ 
         if(e.getCondition() == WhenEnergyIs40){
             if(strategy.equals("Default")){
-                for (int i = 0; i <= 5; i++) {
+                for (int i = 0; i <= 5; i += i++) {
                     fire(2.0);
                 }
             }

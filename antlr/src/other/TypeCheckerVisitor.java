@@ -99,7 +99,6 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
             symbolTable.EnterSymbol(rNode.IDNode().toString(), node);
             return node;
         }
-
     }
 
     @Override
@@ -258,33 +257,11 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
             ErrorList.add(String.format("Line %s: the endvalue for the do loop has to be of type int and cant be %s", node.FirstLinenumber, eType.Type));
             node.ErrorFlag = true;
         }
-
-        UAddNode incANode = null;
-        UsubNode incSNode = null;
-
-        if(node.IncrementNode() instanceof UAddNode)
-             incANode = (UAddNode) Visit(node.IncrementNode());
-        else if (node.IncrementNode() instanceof UsubNode)
-            incSNode = (UsubNode) Visit(node.IncrementNode());
-        else {
-            ErrorList.add(String.format("Line %s: Last term in do Loop has to be an ++ or --", node.FirstLinenumber));
+        Node incrementer = Visit(node.IncrementNode());
+        if(eType.Type != int.class){
+            ErrorList.add(String.format("Line %s: the incrementing value for the do loop has to be of type int and cant be %s", node.FirstLinenumber, eType.Type));
             node.ErrorFlag = true;
         }
-
-        String variableString = variable.RefNode().IDNode().idString;
-        String incString;
-        if(incANode != null){
-            incString = incANode.RefNode().IDNode().idString;
-            if(!incString.equals(variableString)){
-                ErrorList.add(String.format("Line %s: The term incremented has to be %s and cant be a different variable like %s", incANode.FirstLinenumber, variableString, incString));
-            }
-        } else if(incSNode != null){
-            incString = incSNode.RefNode().IDNode().idString;
-            if(!incString.equals(variableString)){
-                ErrorList.add(String.format("Line %s: The term incremented has to be %s and cant be a different variable like %s", incSNode.FirstLinenumber, variableString, incString));
-            }
-        }
-
 
         Visit(node.BlockNode());
         symbolTable.CloseScope();
@@ -378,7 +355,6 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
                     if(!doesColorExcist(arguments[0].toString())){
                         ErrorList.add(String.format("Line %s: The color %s is not available. Use another color", node.FirstLinenumber, arguments[0].toString()));
                     }
-
                 }
             }
         }
