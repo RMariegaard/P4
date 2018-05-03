@@ -38,7 +38,7 @@ public class ThisRobot extends AdvancedRobot{
     public void onCustomEvent(CustomEvent e){ 
         if(e.getCondition() == WhenEnergyIs40){
             if(strategy.equals("Default")){
-                for (int i = 0; i <= 5; i += i++) {
+                for (int i = 0; i <= 5; i += 2) {
                     fire(2.0);
                 }
             }

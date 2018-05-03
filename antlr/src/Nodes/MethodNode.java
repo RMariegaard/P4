@@ -36,8 +36,11 @@ public class MethodNode extends Node {
     }
 
     public BlockNode BlockNode(){
-        Node node = Parameters()[NumberOfParameters()-1];
-        return (BlockNode) node.RightSibling;
+        Node node = this.LeftmostChild;
+        while (node.RightSibling != null){
+            node = node.RightSibling;
+        }
+        return (BlockNode) node;
     }
 
     @Override

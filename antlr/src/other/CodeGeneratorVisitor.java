@@ -267,15 +267,18 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
         String string = "";
         int parametersdone = 0;
         string += String.format(AddTabs() + "public %s %s(", node.RTypeNode(), node.IDNode());
-        //TODO: hvad hvis der ikke er nogen parametre, hvirker det stadig`?
-        for( ArgumentNode parameter : node.Parameters() ){
-            if(parametersdone + 1 == node.NumberOfParameters()){
-                string = String.format(string + "%s){\n", Visit(parameter));
+        if(node.Parameters().length != 0)
+            for( ArgumentNode parameter : node.Parameters() ){
+                if(parametersdone + 1 == node.NumberOfParameters()){
+                    string = String.format(string + "%s){\n", Visit(parameter));
+                }
+                else {
+                    string = String.format(string + "%s, ", Visit(parameter));
+                }
+                parametersdone++;
             }
-            else {
-                string = String.format(string + "%s, ", Visit(parameter));
-            }
-            parametersdone++;
+        else{
+            string += ")\n";
         }
         tabIndex++;
         string += String.format("%s", Visit(node.BlockNode()));
