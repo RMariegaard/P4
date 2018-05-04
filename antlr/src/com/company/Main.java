@@ -21,7 +21,7 @@ public class Main {
     public static void main(String[] args) {
 	// write your code here
         try {
-            antlrParser.ProgContext cst = getCST("example2.txt");
+            antlrParser.ProgContext cst = getCST("CodeTemplet");
             ArrayList<APIevents> listOfAPIEvents = createListOfAPIEvents("RobotEvent_API.txt", "AdvancedRobotEvent_API.txt");
             Node ast = new IntNode(0, 1);
             TypeCheckerVisitor typeChecker = new TypeCheckerVisitor(listOfAPIEvents);

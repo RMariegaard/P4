@@ -9,7 +9,7 @@ public class ThisRobot extends AdvancedRobot{
             return (getEnergy() == 40.0);
         }
     };
-    String strategy = "Default";
+    String CurrentStrategy = "Default";
     public void run() {
         addCustomEvent(WhenEnergyIs40);
         setBodyColor(Color.white);
@@ -17,8 +17,10 @@ public class ThisRobot extends AdvancedRobot{
         setRadarColor(Color.white);
         myAddFunction(5,5);
         while(true) {
+            CurrentStrategy = Default;
             ahead(123.0);
             turnGunLeft(123.0);
+            CurrentStrategy = Offensive;
             if (getNumRounds() > 10){ 
                 fire(2.0);
                 turnRadarRight(200.0);
@@ -67,6 +69,9 @@ public class ThisRobot extends AdvancedRobot{
     public void onScannedRobot(ScannedRobotEvent e){
         if(strategy.equals("Default")){
             turnRight(e.getBearing());
+        }
+        if(strategy.equals("Offensive")){
+            fire(5.0);
         }
     }
     public void onWin(WinEvent e){

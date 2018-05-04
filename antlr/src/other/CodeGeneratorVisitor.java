@@ -1,10 +1,3 @@
-
-
-
-//TODO: CurrentStrategy som er lavet i TypeCheckeren
-
-
-
 package other;
 
 import Nodes.*;
@@ -68,7 +61,12 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     @Override
     public String Visit(AssignNode node) {
-        return String.format("%s = %s", Visit(node.RefNode()), Visit(node.ValueNode()));
+        if(node.ValueNode().LeftmostChild.Type != StrategyType.class){ //Det bliver åbenbart en ref node med den måde jeg har lagt det ind TODO typen bliver ikke gemt i symboltable
+            return String.format("%s = %s", Visit(node.RefNode()), Visit(node.ValueNode()));
+        }
+        else{
+            return String.format("%s = \"%s\"", Visit(node.RefNode()), Visit(node.ValueNode()));
+        }
     }
 
     @Override
@@ -330,7 +328,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
             else
                 string += AddTabs() + Visit(pnode) + ";\n";
         }
-        string += AddTabs() + "String strategy = \"Default\";\n";
+        string += AddTabs() + "String CurrentStrategy = \"Default\";\n";
         string += AddTabs() + "public void run() {\n";
         tabIndex++;
         for (String customEvent: listOfCustomEvent) {
