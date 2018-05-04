@@ -598,7 +598,11 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
     }
 
     private void AddStrategiesToScope(ProgNode node) {
+        IDNode defaultStrategy = new IDNode(0, "CurrentStrategy");
+        defaultStrategy.Type = StrategyType.class;
+        symbolTable.EnterSymbol(defaultStrategy.idString, defaultStrategy);
         for(StrategyNode startegy : node.StrategyNodes()){
+            startegy.Type = StrategyType.class;
             symbolTable.EnterSymbol(startegy.IDNode().idString, node);
         }
     }

@@ -1,3 +1,10 @@
+
+
+
+//TODO: CurrentStrategy som er lavet i TypeCheckeren
+
+
+
 package other;
 
 import Nodes.*;
