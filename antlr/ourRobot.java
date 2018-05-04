@@ -15,6 +15,7 @@ public class ThisRobot extends AdvancedRobot{
         setBodyColor(Color.white);
         setGunColor(Color.white);
         setRadarColor(Color.white);
+        myAddFunction(5,5);
         while(true) {
             ahead(123.0);
             turnGunLeft(123.0);

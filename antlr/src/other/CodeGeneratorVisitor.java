@@ -195,7 +195,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
             for(int i = 0; i < node.NumberOfArguments() - 1; i++){
                 Fcall = String.format(Fcall + "%s,",Visit(array[i]));
             }
-            Fcall = String.format(Fcall + "%s)", Visit(array[array.length]));
+            Fcall = String.format(Fcall + "%s)", Visit(array[array.length-1])); //TODO: går ud fra at det var sidste element du ville besøge; har tilføjet -1 ellers er den jo outofbounds
             return Fcall;
         }
     }

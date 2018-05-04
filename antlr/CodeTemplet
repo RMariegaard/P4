@@ -4,6 +4,7 @@ setup
 	Tank.setBodyColor("white")
 	Tank.Gun.setColor("white")
 	Tank.Radar.setColor("white")
+	myAddFunction(5,5)
 end
 
 game-loop

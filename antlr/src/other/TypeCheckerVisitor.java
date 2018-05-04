@@ -505,23 +505,14 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
 
     @Override
     public Node Visit(MethodNode node) {
-        RTypeNode typeNode = node.RTypeNode();
-        if(symbolTable.DeclaredLocally(node.IDNode().toString())){
-            ErrorList.add(String.format("Line %s: The name %s is already used in this scope", node.FirstLinenumber, node.IDNode().toString()));
-            node.ErrorFlag = true;
-            return node;
+            //Everything else has already been added to the symbol table - See function addMethodsToScope, called when visiting ProgNode
+        for (ArgumentNode argNode: node.Parameters()) {
+            Visit(argNode);
         }
-        else {
-            node.Type = typeNode.Type;
-            symbolTable.EnterSymbol(node.IDNode().toString(), node);
-            for (ArgumentNode argNode: node.Parameters()) {
-                Visit(argNode);
-            }
-            Visit(node.BlockNode());
+        Visit(node.BlockNode());
             return node;
         }
 
-    }
 
     @Override
     public Node Visit(MulExprNode node) {
@@ -594,6 +585,8 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
     @Override
     public Node Visit(ProgNode node) {
         symbolTable.OpenScope();
+        AddMethodsToScope(node);
+        AddStrategiesToScope(node);
         Node child = node.LeftmostChild;
         while (child != null){
             Visit(child);
@@ -602,6 +595,29 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
 
         symbolTable.CloseScope();
         return node;
+    }
+
+    private void AddStrategiesToScope(ProgNode node) {
+        for(StrategyNode startegy : node.StrategyNodes()){
+            symbolTable.EnterSymbol(startegy.IDNode().idString, node);
+        }
+    }
+
+    private void AddMethodsToScope(ProgNode node) {
+
+       for(MethodNode method : node.MethodNodes()){
+           RTypeNode typeNode = method.RTypeNode();
+           if(symbolTable.DeclaredLocally(method.IDNode().toString())){
+               ErrorList.add(String.format("Line %s: The name %s is already used in this scope", method.FirstLinenumber, method.IDNode().toString()));
+               method.ErrorFlag = true;
+           }
+           else {
+               method.Type = typeNode.Type;
+               symbolTable.EnterSymbol(method.IDNode().toString(), method);
+           }
+       }
+
+
     }
 
     @Override
@@ -629,7 +645,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
 
     @Override
     public Node Visit(StrategyNode node) {
-        symbolTable.EnterSymbol(node.IDNode().toString(), node);
+        //Has already been added to scope in AddstrategiesToScope, which called in ProgNode
         Visit(node.IDNode());
         symbolTable.OpenScope();
         for(Node bnode : node.BehaviourNodes()){
