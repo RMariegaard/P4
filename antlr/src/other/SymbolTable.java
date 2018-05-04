@@ -12,13 +12,13 @@ import java.util.List;
 public class SymbolTable {
     private Hashtable<String, SymbolClass> hashtable = new Hashtable<>();
     private List<SymbolClass> scopeDisplay = new ArrayList<>();
-    private int depth;
+    private int depth = 0;
 
     public SymbolTable(){
 
     }
     public void OpenScope(){
-        depth = depth > 0 ? depth + 1 : 0;
+        depth++;
         scopeDisplay.add(depth, null);
     }
 
@@ -56,10 +56,6 @@ public class SymbolTable {
             sym.Depth = depth;
             sym.Node = node;
             scopeDisplay.add(depth, sym);
-
-            //prints to console
-            //System.out.println(node.Type.toString() + " " + name);
-
 
             //Add to hash
             if (oldSym == null){

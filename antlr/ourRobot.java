@@ -20,6 +20,7 @@ public class ThisRobot extends AdvancedRobot{
             CurrentStrategy = Default;
             ahead(123.0);
             turnGunLeft(123.0);
+            int i;
             CurrentStrategy = Offensive;
             if (getNumRounds() > 10){ 
                 fire(2.0);
