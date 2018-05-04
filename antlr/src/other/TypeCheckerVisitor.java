@@ -603,7 +603,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
         symbolTable.EnterSymbol(defaultStrategy.idString, defaultStrategy);
         for(StrategyNode startegy : node.StrategyNodes()){
             startegy.Type = StrategyType.class;
-            symbolTable.EnterSymbol(startegy.IDNode().idString, node);
+            symbolTable.EnterSymbol(startegy.IDNode().idString, startegy);
         }
     }
 

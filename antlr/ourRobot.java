@@ -17,11 +17,10 @@ public class ThisRobot extends AdvancedRobot{
         setRadarColor(Color.white);
         myAddFunction(5,5);
         while(true) {
-            CurrentStrategy = Default;
+            CurrentStrategy = "Default";
             ahead(123.0);
             turnGunLeft(123.0);
-            int i;
-            CurrentStrategy = Offensive;
+            CurrentStrategy = "Offensive";
             if (getNumRounds() > 10){ 
                 fire(2.0);
                 turnRadarRight(200.0);
