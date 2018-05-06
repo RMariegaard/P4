@@ -37,6 +37,7 @@ public abstract class AstVisitor<T> {
     public abstract T Visit(NullNode node);
     public abstract T Visit(OrNode node);
     public abstract T Visit(ProgNode node);
+    public abstract T Visit(ParenNode node);
     public abstract T Visit(RTypeNode node);
     public abstract T Visit(ReturnStmtNode node);
     public abstract T Visit(RefNode node);
@@ -50,26 +51,28 @@ public abstract class AstVisitor<T> {
 
 
 
-    public T Visit(Node node){
-        if(node instanceof WhileStmtNode){
-            return Visit((WhileStmtNode)node);
-        } else if(node instanceof UsubNode){
+    public T Visit(Node node) {
+        if (node instanceof WhileStmtNode) {
+            return Visit((WhileStmtNode) node);
+        } else if (node instanceof UsubNode) {
             return Visit((UsubNode) node);
-        } else if(node instanceof UAddNode){
+        } else if (node instanceof UAddNode) {
             return Visit((UAddNode) node);
-        } else if(node instanceof StrategyNode){
+        } else if (node instanceof StrategyNode) {
             return Visit((StrategyNode) node);
-        } else if(node instanceof SetupNode){
+        } else if (node instanceof SetupNode) {
             return Visit((SetupNode) node);
-        } else if(node instanceof RTypeNode){
+        } else if (node instanceof RTypeNode) {
             return Visit((RTypeNode) node);
-        } else if(node instanceof ReturnStmtNode){
+        } else if (node instanceof ReturnStmtNode) {
             return Visit((ReturnStmtNode) node);
-        } else if(node instanceof RefNode){
+        } else if (node instanceof RefNode) {
             return Visit((RefNode) node);
-        } else if(node instanceof ProgNode){
+        } else if (node instanceof ProgNode) {
             return Visit((ProgNode) node);
-        } else if(node instanceof OrNode){
+        } else if(node instanceof ParenNode) {
+            return Visit((ParenNode) node);
+        }else if(node instanceof OrNode){
             return Visit((OrNode) node);
         } else if(node instanceof NullNode){
             return Visit((NullNode) node);

@@ -1,7 +1,7 @@
 import robocode.*;
 import java.awt.*;
 public class ThisRobot extends AdvancedRobot{
-    int target = 40;
+    int target = (40 + 40) * 2;
     Condition WhenEnergyIs40 = new Condition("WhenEnergyIs40")
     {
         public boolean test() 

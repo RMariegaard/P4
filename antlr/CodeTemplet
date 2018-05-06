@@ -1,4 +1,4 @@
-int target = 40
+int target = (40 + 40) * 2
 event(Tank.getEnergy() == 40.0) -> WhenEnergyIs40
 setup
 	Tank.setBodyColor("white")

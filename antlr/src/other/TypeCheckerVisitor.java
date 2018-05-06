@@ -597,6 +597,13 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
         return node;
     }
 
+    @Override
+    public Node Visit(ParenNode node) {
+        Node expr = Visit(node.Aoexpr());
+        node.ErrorFlag = expr.ErrorFlag; //TODO Skal det her gøres?
+        return node;
+    }
+
     private void AddStrategiesToScope(ProgNode node) {
         IDNode defaultStrategy = new IDNode(0, "CurrentStrategy");
         defaultStrategy.Type = StrategyType.class;

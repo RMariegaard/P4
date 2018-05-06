@@ -61,7 +61,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     @Override
     public String Visit(AssignNode node) {
-        if(node.ValueNode().LeftmostChild.Type != StrategyType.class){ //Det bliver åbenbart en ref node med den måde jeg har lagt det ind TODO typen bliver ikke gemt i symboltable
+        if(node.ValueNode().LeftmostChild.Type != StrategyType.class){ //Det bliver åbenbart en ref node med den måde jeg har lagt det ind
             return String.format("%s = %s", Visit(node.RefNode()), Visit(node.ValueNode()));
         }
         else{
@@ -375,6 +375,11 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
         string += "}"; //end class
         return string;
+    }
+
+    @Override
+    public String Visit(ParenNode node) {
+        return String.format("(%s)", Visit(node.Aoexpr()));
     }
 
     //The code has all imported libaries.
