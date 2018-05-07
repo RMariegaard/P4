@@ -246,6 +246,9 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
         for (int i = 0; i < node.NumberOfElseIf(); i++){
             result += AddTabs() + Visit(node.ElseIf()[i]);
         }
+        if(node.elseNode != null){
+            result += AddTabs() + Visit(node.elseNode);
+        }
         return result;
     }
 
