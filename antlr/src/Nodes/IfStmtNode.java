@@ -23,7 +23,7 @@ public class IfStmtNode extends Node {
         }
         //the last else node is counted in the loop above
         // If there is no else block nor else if then we have to return 0 and not -1
-        return result == 0 ? 0 : result - 1;
+        return result;
     }
 
     public ElseIfNode[] ElseIf(){

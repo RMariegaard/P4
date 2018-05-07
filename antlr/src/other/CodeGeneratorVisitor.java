@@ -425,7 +425,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
         String string = "";
         for(BehaviorNode bnode: node.BehaviourNodes()){
             if(bnode.IDNode().toString().equals(currentEvent)){
-               string += String.format(AddTabs() + "if(strategy.equals(\"%s\")){\n",node.IDNode().toString());
+               string += String.format(AddTabs() + "if(CurrentStrategy.equals(\"%s\")){\n",node.IDNode().toString());
                tabIndex++;
                string += Visit(bnode);
                tabIndex--;
