@@ -9,7 +9,6 @@ public class ThisRobot extends AdvancedRobot{
         setGunColor(Color.pink);
         setRadarColor(Color.pink);
         CurrentStrategy = "mainStrategy";
-        int p = 2;
         while(true) {
             turnGunRight(10.0);
             if (getEnergy() < 30.0){ 

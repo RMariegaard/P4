@@ -27,7 +27,7 @@ public class SymbolTable {
         while(sym != null){
             SymbolClass prevsym = sym.Var;
 
-            hashtable.remove(sym);
+            hashtable.remove(sym.Name);
             if(prevsym != null){
                 hashtable.put(prevsym.Name, prevsym);
             }
