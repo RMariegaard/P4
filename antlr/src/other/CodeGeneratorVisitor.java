@@ -322,6 +322,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
         string += "import robocode.*;\n";
         string += "import java.awt.*;\n";
+        string += "import static robocode.util.Utils.*;\n";
 
         string += "public class ThisRobot extends AdvancedRobot{\n"; //Start class
         tabIndex++;
