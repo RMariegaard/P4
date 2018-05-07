@@ -600,6 +600,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
     @Override
     public Node Visit(ParenNode node) {
         Node expr = Visit(node.Aoexpr());
+        node.Type = expr.Type;
         node.ErrorFlag = expr.ErrorFlag; //TODO Skal det her gøres?
         return node;
     }
