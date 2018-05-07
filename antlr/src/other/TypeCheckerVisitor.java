@@ -350,7 +350,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
                         node.ErrorFlag = true;
                     }
                 }
-                List<String> colorFunctions = Arrays.asList("Tank.Gun.setColor", "Tank.setBodyColor", "Tank.Radar.setColor");
+                List<String> colorFunctions = Arrays.asList("Tank.Gun.setColor", "Tank.setColor", "Tank.Radar.setColor");
                 if(colorFunctions.contains(node.IDNode().idString)){
                     if(!doesColorExcist(arguments[0].toString())){
                         ErrorList.add(String.format("Line %s: The color %s is not available. Use another color", node.FirstLinenumber, arguments[0].toString()));

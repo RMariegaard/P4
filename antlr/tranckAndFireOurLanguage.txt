@@ -1,5 +1,5 @@
 setup
-	Tank.setBodyColor("pink")
+	Tank.setColor("pink")
 	Tank.Gun.setColor("pink")
 	Tank.Radar.setColor("pink")
 	//setScanColor("pink")
@@ -18,7 +18,7 @@ strategy mainStrategy
 		if (absoluteValue(bearingFromGun) <= 3.0)
 			Tank.Gun.turnRight(bearingFromGun)
 			if (Tank.Gun.getHeat() == 0.0)
-				Tank.fire(minimumValue(3 - absoluteValue(bearingFromGun), Tank.Get.energy() - 0.1))
+				Tank.Gun.fire(minimumValue(3.0 - absoluteValue(bearingFromGun), Tank.getEnergy() - 0.1))
 			end
 		end
 		
@@ -26,7 +26,7 @@ strategy mainStrategy
 			Tank.Gun.turnRight(bearingFromGun)
 		end
 		
-		if (bearingFromGun == 0)
+		if (bearingFromGun == 0.0)
 			Tank.scan()
 		end
 	end

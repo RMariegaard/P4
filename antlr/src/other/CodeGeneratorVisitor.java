@@ -184,7 +184,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     @Override
     public String Visit(FcallNode node) {
-        List<String> colorFunctions = Arrays.asList("Tank.Gun.setColor", "Tank.setBodyColor", "Tank.Radar.setColor");
+        List<String> colorFunctions = Arrays.asList("Tank.Gun.setColor", "Tank.setColor", "Tank.Radar.setColor");
         //Den første if checker om det er en af de tre functioner hvor vi bruger farver, dette er nemmelig lidt specielt
         //Her skal man nemlig printe Color.farve, men i DYER angiver man farven som en string, hvilket tegnet " ikke skal printes i java.
         if(colorFunctions.contains(node.IDNode().idString)){
