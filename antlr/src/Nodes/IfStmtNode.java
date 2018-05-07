@@ -13,7 +13,7 @@ public class IfStmtNode extends Node {
     public BlockNode Block(){
         return (BlockNode) this.Condition().RightSibling;
     }
-
+    public ElseNode elseNode;
     public int NumberOfElseIf(){
         Node node = this.Block();
         int result = 0;
@@ -23,7 +23,12 @@ public class IfStmtNode extends Node {
         }
         //the last else node is counted in the loop above
         // If there is no else block nor else if then we have to return 0 and not -1
-        return result;
+        if(node instanceof ElseNode) {
+            elseNode = (ElseNode)node;
+            return result == 0 ? 0 : result - 1;
+        }
+        else
+            return result;
     }
 
     public ElseIfNode[] ElseIf(){
@@ -35,7 +40,6 @@ public class IfStmtNode extends Node {
         }
         return array;
     }
-
 
     @Override
     public String toString() {
