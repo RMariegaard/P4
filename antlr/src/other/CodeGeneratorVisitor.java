@@ -328,7 +328,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
             else
                 string += AddTabs() + Visit(pnode) + ";\n";
         }
-        string += AddTabs() + "String CurrentStrategy = \"Default\";\n";
+        string += AddTabs() + String.format("String CurrentStrategy = \"%s\";\n", node.StrategyNodes().get(0).IDNode().idString);
         string += AddTabs() + "public void run() {\n";
         tabIndex++;
         for (String customEvent: listOfCustomEvent) {
