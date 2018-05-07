@@ -2,12 +2,14 @@ import robocode.*;
 import java.awt.*;
 import static robocode.util.Utils.*;
 public class ThisRobot extends AdvancedRobot{
-    String CurrentStrategy = "Default";
+    int direction = 0;
+    String CurrentStrategy = "mainStrategy";
     public void run() {
         setBodyColor(Color.pink);
         setGunColor(Color.pink);
         setRadarColor(Color.pink);
         CurrentStrategy = "mainStrategy";
+        int p = 2;
         while(true) {
             turnGunRight(10.0);
             if (getEnergy() < 30.0){ 
@@ -48,6 +50,15 @@ public void onHitByBullet(HitByBulletEvent e){
 public void onHitRobot(HitRobotEvent e){
 }
 public void onHitWall(HitWallEvent e){
+    if(CurrentStrategy.equals("BeMoreDefensive")){
+        if (direction == 0){ 
+            direction = 1;
+        }
+        else{
+            direction = 0;
+        }
+
+    }
 }
 public void onRobotDeath(RobotDeathEvent e){
 }
@@ -55,6 +66,7 @@ public void onScannedRobot(ScannedRobotEvent e){
     if(CurrentStrategy.equals("mainStrategy")){
         double absoluteBearing = getHeading() + e.getBearing();
         double bearingFromGun = normalRelativeAngleDegrees(absoluteBearing - getGunHeading());
+        int p = 4;
         if (absoluteValue(bearingFromGun) <= 3.0){ 
             turnGunRight(bearingFromGun);
             if (getGunHeat() == 0.0){ 
@@ -72,6 +84,7 @@ public void onScannedRobot(ScannedRobotEvent e){
 
     }
     if(CurrentStrategy.equals("BeMoreDefensive")){
+        int p = 3;
         double absoluteBearing2 = getHeading() + e.getBearing();
         double bearingFromGun2 = normalRelativeAngleDegrees(absoluteBearing2 - getGunHeading());
         if (absoluteValue(bearingFromGun2) <= 3.0){ 
@@ -89,6 +102,13 @@ public void onScannedRobot(ScannedRobotEvent e){
             scan();
         }
 
+        if (direction == 0){ 
+            ahead(50.0);
+        }
+        else{
+            back(50.0);
+        }
+
     }
 }
 public void onWin(WinEvent e){
@@ -104,10 +124,6 @@ public void onRoundEnded(RoundEndedEvent e){
 public void onBattleEnded(BattleEndedEvent e){
 }
 public void onStatus(StatusEvent e){
-    if(CurrentStrategy.equals("BeMoreDefensive")){
-        ahead(50.0);
-        back(50.0);
-    }
 }
 public void OnDeath(DeathEvent e){
 }

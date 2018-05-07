@@ -3,6 +3,7 @@ package other;
 import Nodes.*;
 import Nodes.expr.*;
 import Nodes.values.*;
+import Types.StrategyType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,7 +62,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     @Override
     public String Visit(AssignNode node) {
-        if(node.ValueNode().LeftmostChild.Type != StrategyType.class){ //Det bliver åbenbart en ref node med den måde jeg har lagt det ind
+        if(node.ValueNode().Type != StrategyType.class){ //Det bliver åbenbart en ref node med den måde jeg har lagt det ind
             return String.format("%s = %s", Visit(node.RefNode()), Visit(node.ValueNode()));
         }
         else{

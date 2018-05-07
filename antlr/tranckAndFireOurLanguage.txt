@@ -20,7 +20,7 @@ strategy mainStrategy
 	behavior onScannedRobot
 		decimal absoluteBearing = Tank.getHeading() + Enemy.getBearing()
 		decimal bearingFromGun = normalRelativeAngleDegrees(absoluteBearing - Tank.Gun.getHeading())
-		
+        int p = 4
 		if (absoluteValue(bearingFromGun) <= 3.0)
 			Tank.Gun.turnRight(bearingFromGun)
 			if (Tank.Gun.getHeat() == 0.0)
@@ -44,6 +44,7 @@ end
 
 strategy BeMoreDefensive
 	behavior onScannedRobot
+		int p = 3
 		decimal absoluteBearing2 = Tank.getHeading() + Enemy.getBearing()
 		decimal bearingFromGun2 = normalRelativeAngleDegrees(absoluteBearing2 - Tank.Gun.getHeading())
 		

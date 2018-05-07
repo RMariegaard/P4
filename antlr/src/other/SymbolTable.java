@@ -29,7 +29,7 @@ public class SymbolTable {
 
             hashtable.remove(sym);
             if(prevsym != null){
-                hashtable.put(sym.Name, sym);
+                hashtable.put(prevsym.Name, prevsym);
             }
             sym = sym.Level;
         }
@@ -60,12 +60,12 @@ public class SymbolTable {
             //Add to hash
             if (oldSym == null){
                 hashtable.put(sym.Name, sym);
-        }
-        else {
-            hashtable.remove(oldSym.Name);
-            hashtable.put(sym.Name, sym);
-        }
-        sym.Var = oldSym;
+            }
+            else {
+                hashtable.remove(oldSym.Name);
+                hashtable.put(sym.Name, sym);
+            }
+            sym.Var = oldSym;
     }
 
 

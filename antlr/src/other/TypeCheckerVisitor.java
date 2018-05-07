@@ -4,6 +4,7 @@ import Nodes.*;
 import Nodes.expr.*;
 import Nodes.values.*;
 import Types.EventType;
+import Types.StrategyType;
 
 import java.awt.*;
 import java.io.IOException;
@@ -151,8 +152,8 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
 
     @Override
     public Node Visit(BehaviorNode node) {
-        symbolTable.OpenScope();
         Visit(node.IDNode());
+        symbolTable.OpenScope();
         AddEventVariablesToScope(node.IDNode().idString);
         Visit(node.BlockNode());
         symbolTable.CloseScope();
@@ -270,18 +271,22 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
 
     @Override
     public Node Visit(ElseNode node) {
+        symbolTable.OpenScope();
         Visit(node.Block());
+        symbolTable.CloseScope();
         return node;
     }
 
     @Override
     public Node Visit(ElseIfNode node) {
+        symbolTable.OpenScope();
         Node condition = Visit(node.Condition());
         if (!(condition.Type == boolean.class)) {
             ErrorList.add(String.format("Line %s: Condition in else if statement has to be type bool, not %s", node.FirstLinenumber, condition.Type));
             node.ErrorFlag = true;
         }
         Visit(node.Block());
+        symbolTable.CloseScope();
         return node;
     }
 
@@ -376,7 +381,11 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
 
     @Override
     public Node Visit(GameLoopNode node) {
+        symbolTable.OpenScope();
         Visit(node.Block());
+        symbolTable.CloseScope();
+        symbolTable.CloseScope();
+        //Close twice, because we also close the Setup node here, since its variables should be used in gameloop
         return node;
     }
 
@@ -447,7 +456,9 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
             ErrorList.add(String.format("Line %s: Condition in if statement has to be type bool, not %s", node.FirstLinenumber, condition.Type));
             node.ErrorFlag = true;
         }
+        symbolTable.OpenScope();
         Visit(node.Block());
+        symbolTable.CloseScope();
         return node;
     }
 
@@ -506,12 +517,15 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
     @Override
     public Node Visit(MethodNode node) {
             //Everything else has already been added to the symbol table - See function addMethodsToScope, called when visiting ProgNode
+        symbolTable.OpenScope();
+        //TODO: skal vi åbne scopet før eller efter man indlæser argumenterne??
         for (ArgumentNode argNode: node.Parameters()) {
             Visit(argNode);
         }
         Visit(node.BlockNode());
-            return node;
-        }
+        symbolTable.CloseScope();
+        return node;
+    }
 
 
     @Override
@@ -652,12 +666,15 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
 
     @Override
     public Node Visit(SetupNode node) {
+        symbolTable.OpenScope();
         return Visit(node.BlockNode());
+        //We close this scope after gameloop.
     }
 
     @Override
     public Node Visit(StrategyNode node) {
         //Has already been added to scope in AddstrategiesToScope, which called in ProgNode
+
         Visit(node.IDNode());
         symbolTable.OpenScope();
         for(Node bnode : node.BehaviourNodes()){
@@ -728,7 +745,9 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
             ErrorList.add(String.format("Line %s: ", node.FirstLinenumber) + node.toString() + "Condition not boolean");
             node.ErrorFlag = true;
         }
+        symbolTable.OpenScope();
         Visit(node.BlockNode());
+        symbolTable.CloseScope();
 
 
         return node;

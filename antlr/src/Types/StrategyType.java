@@ -1,4 +1,4 @@
-package other;
+package Types;
 
 public class StrategyType {
 }
