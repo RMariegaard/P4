@@ -29,3 +29,9 @@ fire                            Tank.fire                           void        
 setGunColor                     Tank.Gun.setColor                   void        string
 setBodyColor                    Tank.setBodyColor                   void        string
 setRadarColor                   Tank.Radar.setColor                 void        string
+normalAbsoluteAngle             normalAbsoluteAngle                 double      double
+normalAbsoluteAngleDegrees      normalAbsoluteAngleDegrees          double      double
+normalNearAbsoluteAngle         normalNearAbsoluteAngle             double      double
+normalNearAbsoluteAngleDegrees  normalNearAbsoluteAngleDegrees      double      double
+normalRelativeAngle             normalRelativeAngle                 double      double
+normalRelativeAngleDegrees      normalRelativeAngleDegrees          double      double
