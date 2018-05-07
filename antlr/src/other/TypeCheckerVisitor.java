@@ -223,13 +223,13 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
                     return node;
                 }
                 else{
-                    ErrorList.add(String.format("Line %s: It is illegal to divide two elements of type %s together", node.FirstLinenumber, leftNodeType.toString()));
+                    ErrorList.add(String.format("Line %s: It is illegal to divide two elements of type %s together", node.FirstLinenumber, leftNodeType.Type));
                     node.ErrorFlag = true;
                 }
             }
             else{
                 node.ErrorFlag = true;
-                ErrorList.add(String.format("Line %s: You can't divide two elements of different types together.\nThe type of %s is %s, which doesn't match the type of %s, which is %s", node.FirstLinenumber, node.LeftNode(), leftNodeType, node.RightNode(), rightNodeType));
+                ErrorList.add(String.format("Line %s: You can't divide two elements of different types together.\nThe type of %s is %s, which doesn't match the type of %s, which is %s", node.FirstLinenumber, node.LeftNode(), leftNodeType.Type, node.RightNode(), rightNodeType.Type));
 
             }
             return node;
@@ -296,7 +296,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
                 //skal man kunne sige string == string i vores sprog? kan man ikke i java så dette skal vi tage højde for når vi laver code generation.
             }
             else
-                ErrorList.add(String.format("Line %s: Cannot compare type %s and %s, type must be the same",node.FirstLinenumber,leftNodeType, rightNodeType));
+                ErrorList.add(String.format("Line %s: Cannot compare type %s and %s, type must be the same",node.FirstLinenumber,leftNodeType.Type, rightNodeType.Type));
                 node.ErrorFlag = true;
         }catch (NullPointerException e){
 
@@ -394,7 +394,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
                 return node;
             }
             else
-                ErrorList.add(String.format("Line %s: Cannot compare type %s and %s, type must be the same",node.FirstLinenumber,leftNodeType, rightNodeType));
+                ErrorList.add(String.format("Line %s: Cannot compare type %s and %s, type must be the same",node.FirstLinenumber,leftNodeType.Type, rightNodeType.Type));
             node.ErrorFlag = true;
         }catch (NullPointerException e){
 
@@ -417,7 +417,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
                 return node;
             }
             else
-                ErrorList.add(String.format("Line %s: Cannot compare type %s and %s, type must be the same",node.FirstLinenumber,leftNodeType, rightNodeType));
+                ErrorList.add(String.format("Line %s: Cannot compare type %s and %s, type must be the same",node.FirstLinenumber,leftNodeType.Type, rightNodeType.Type));
             node.ErrorFlag = true;
         }catch (NullPointerException e){
 
@@ -471,7 +471,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
                 return node;
             }
             else
-                ErrorList.add(String.format("Line %s: Cannot compare type %s and %s, type must be the same",node.FirstLinenumber,leftNodeType, rightNodeType));
+                ErrorList.add(String.format("Line %s: Cannot compare type %s and %s, type must be the same",node.FirstLinenumber,leftNodeType.Type, rightNodeType.Type));
             node.ErrorFlag = true;
         }catch (NullPointerException e){
 
@@ -494,7 +494,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
                 return node;
             }
             else
-                ErrorList.add(String.format("Line %s: Cannot compare type %s and %s, type must be the same",node.FirstLinenumber,leftNodeType, rightNodeType));
+                ErrorList.add(String.format("Line %s: Cannot compare type %s and %s, type must be the same",node.FirstLinenumber,leftNodeType.Type, rightNodeType.Type));
             node.ErrorFlag = true;
         }catch (NullPointerException e){
 
@@ -526,12 +526,12 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
                     return node;
                 }
                 else{
-                    ErrorList.add(String.format("Line %s: It is illegal to multiply two elements of type %s together",node.FirstLinenumber,  leftNodeType.toString()));
+                    ErrorList.add(String.format("Line %s: It is illegal to multiply two elements of type %s together",node.FirstLinenumber,  leftNodeType.Type));
                     node.ErrorFlag = true;
                 }
             }
             else{
-                ErrorList.add(String.format("Line %s: You can't multiply two elements of different types together.\nThe type of %s is %s, which doesn't match the type of %s, which is %s",node.FirstLinenumber,  node.LeftNode(), leftNodeType, node.RightNode(), rightNodeType));
+                ErrorList.add(String.format("Line %s: You can't multiply two elements of different types together.\nThe type of %s is %s, which doesn't match the type of %s, which is %s",node.FirstLinenumber,  node.LeftNode(), leftNodeType.Type, node.RightNode(), rightNodeType.Type));
                 node.ErrorFlag = true;
             }
             return node;
@@ -684,13 +684,13 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
                     return node;
                 }
                 else{
-                    ErrorList.add(String.format("Line %s: It is illegal to subtract two elements of type %s together",node.FirstLinenumber,  leftNodeType.toString()));
+                    ErrorList.add(String.format("Line %s: It is illegal to subtract two elements of type %s together",node.FirstLinenumber,  leftNodeType.Type));
                     node.ErrorFlag = true;
                     return node;
                 }
             }
             else{
-                ErrorList.add(String.format("Line %s: You can't subtract two elements of different types together.\nThe type of %s is %s, which doesn't match the type of %s, which is %s",node.FirstLinenumber,  node.LeftNode(), leftNodeType, node.RightNode(), rightNodeType));
+                ErrorList.add(String.format("Line %s: You can't subtract two elements of different types together.\nThe type of %s is %s, which doesn't match the type of %s, which is %s",node.FirstLinenumber,  node.LeftNode(), leftNodeType.Type, node.RightNode(), rightNodeType.Type));
                 node.ErrorFlag = true;
             }
             return node;
