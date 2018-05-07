@@ -20,51 +20,46 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 	// write your code here
-        try {
-            antlrParser.ProgContext cst = getCST("CodeTemplet");
-            ArrayList<APIevents> listOfAPIEvents = createListOfAPIEvents("RobotEvent_API.txt", "AdvancedRobotEvent_API.txt");
-            Node ast = new IntNode(0, 1);
-            TypeCheckerVisitor typeChecker = new TypeCheckerVisitor(listOfAPIEvents);
-            typeChecker.addToListOfAPIMethods("Robot_API.txt", "AdvancedRobot_API.txt");
-
-            if(cst != null  ){
-                ast = new BuildASTVisitor().visitProg(cst);
-                ast.makeNode();
-                //ASTPrinter.PrintTree((ast));
-
-                //SymbolTable table = new SymbolTable();
-                //table.BuildTable(ast);
-                //table.hashCode();
-
-
-                Object errorFree = typeChecker.Visit(ast);
-                //ASTPrinter.PrintTree((Node)errorFree);
-                if (!typeChecker.ErrorList.isEmpty()) {
-                    System.out.println("TYPECHECkER ERROR MESSAGES:");
-                    for (String error : typeChecker.ErrorList) {
-                        System.out.println(error);
+            if(args.length == 0){
+                System.out.println("You have to specify a robot file to compile");
+            }
+            else{
+                try{
+                    antlrParser.ProgContext cst = getCST(args[0]);
+                    ArrayList<APIevents> listOfAPIEvents = createListOfAPIEvents("EventFiles/RobotEvent_API.txt", "EventFiles/AdvancedRobotEvent_API.txt");
+                    Node ast = new IntNode(0, 1);
+                    TypeCheckerVisitor typeChecker = new TypeCheckerVisitor(listOfAPIEvents);
+                    typeChecker.addToListOfAPIMethods("EventFiles/Robot_API.txt", "EventFiles/AdvancedRobot_API.txt");
+                    if(cst != null  ){
+                        ast = new BuildASTVisitor().visitProg(cst);
+                        ast.makeNode();
+                        Object errorFree = typeChecker.Visit(ast);
+                        if (!typeChecker.ErrorList.isEmpty()) {
+                         System.out.println("TYPECHECkER ERROR MESSAGES:");
+                         for (String error : typeChecker.ErrorList) {
+                            System.out.println(error);
+                         }
+                        }
                     }
+                    else{
+                    System.out.println("Something happend");
+                    }
+                //TODO: create a new file.
+                    if(cst != null && typeChecker.ErrorList.isEmpty()){
+                        CodeGeneratorVisitor codeGenerator = new CodeGeneratorVisitor(listOfAPIEvents, typeChecker.ListOfAPIMethods);
+                        String program = codeGenerator.Visit(ast);
+                        Path file = Paths.get("ourRobot.java");
+                        Files.write(file,program.getBytes());
+                    }
+                    else{
+                    System.out.println("Program could not be compiled.");
+                    }
+
+                }catch (IOException e){
+                System.out.println(e + " ERROR" );
                 }
+                System.out.println("DONE");
             }
-            else{
-                System.out.println("Something happend");
-            }
-            //TODO: create a new file.
-            if(cst != null && typeChecker.ErrorList.isEmpty()){
-                CodeGeneratorVisitor codeGenerator = new CodeGeneratorVisitor(listOfAPIEvents, typeChecker.ListOfAPIMethods);
-                String program = codeGenerator.Visit(ast);
-                Path file = Paths.get("ourRobot.java");
-                Files.write(file,program.getBytes());
-            }
-            else{
-                System.out.println("Program could not be compiled.");
-            }
-
-
-        }catch (IOException e){
-            System.out.println(e.getMessage() + " ERROR" );
-        }
-        System.out.println("DONE");
 
     }
 

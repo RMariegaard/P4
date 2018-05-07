@@ -1,0 +1,13 @@
+onBulletHit			    void		BulletHitEvent
+onBulletHitBullet		void		BulletHitBulletEvent
+onBulletMissed			void		BulletMissedEvent
+onDeath				    void		DeathEvent
+onHitByBullet			void		HitByBulletEvent
+onHitRobot			    void		HitRobotEvent
+onHitWall			    void		HitWallEvent
+onRobotDeath			void		RobotDeathEvent
+onScannedRobot			void		ScannedRobotEvent
+onWin				    void		WinEvent
+onRoundEnded			void		RoundEndedEvent
+onBattleEnded			void		BattleEndedEvent
+onStatus			    void		StatusEvent

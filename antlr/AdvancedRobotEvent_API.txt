@@ -1,2 +1,0 @@
-OnDeath			void		DeathEvent
-onSkippedTurn		void		SkippedTurnEvent

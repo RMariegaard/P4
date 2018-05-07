@@ -162,7 +162,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
     public void AddEventVariablesToScope(String behaviourName){
         if(RoboEvents.contains(behaviourName)){
             try{
-                addToListOfAPIMethods(String.format("%s.txt", behaviourName));
+                addToListOfAPIMethods(String.format("EventFiles/%s.txt", behaviourName));
             } catch (Exception e){
                 ErrorList.add(String.format("You are missing the file %s.txt. Reinstallation is needed", behaviourName));
             }
