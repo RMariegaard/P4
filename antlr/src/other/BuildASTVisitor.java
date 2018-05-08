@@ -493,6 +493,14 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
     }
 
     @Override
+    public Node visitNegativeFactor(antlrParser.NegativeFactorContext ctx) {
+        int linenumber = ctx.start.getLine();
+        Node negate = new NegateNode(linenumber);
+        negate.AdoptChildren(visit(ctx.factor()));
+        return negate;
+    }
+
+    @Override
     public Node visitActionFactor(antlrParser.ActionFactorContext ctx) {
         return visit(ctx.action());
     }

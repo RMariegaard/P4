@@ -24,7 +24,7 @@ public class ThisRobot extends AdvancedRobot{
     }
     public double absoluteValue(double number){
         if (number < 0.0){ 
-            number = number * (1.0 - 2.0);
+            number = number * -1.0;
         }
 
         return number;

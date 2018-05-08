@@ -70,6 +70,7 @@ term      : factor op=('*' | '/') term
           ;
 factor    : '(' aoexpr ')'                                          #parenFactor
           | value=( INT_NUM |BOOL_VALUE | DECIMAL_NUM | TEXT)       #valueFactor
+          | '-'factor                                               #negativeFactor
           | action                                                  #actionFactor
           | ref                                                     #refFactor
           | ref op=('++'|'--')                                      #unaryExpr

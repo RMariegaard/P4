@@ -305,6 +305,10 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
     }
 
     @Override
+    public String Visit(NegateNode node) {
+        return String.format("-%s", Visit(node.LeftmostChild));
+    }
+    @Override
     public String Visit(NotExprNode node)
     {
         return String.format("!(%s)", Visit(node.ExprNode()));
@@ -469,6 +473,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
     {
         return String.format("while(%s){ %s }", Visit(node.ConditionNode()), Visit(node.BlockNode()));
     }
+
 
     private String getType(Object type){
         if(type == String.class)

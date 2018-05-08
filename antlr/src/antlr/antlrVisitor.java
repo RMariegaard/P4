@@ -238,6 +238,13 @@ public interface antlrVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitValueFactor(antlrParser.ValueFactorContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code negativeFactor}
+	 * labeled alternative in {@link antlrParser#factor}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNegativeFactor(antlrParser.NegativeFactorContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code actionFactor}
 	 * labeled alternative in {@link antlrParser#factor}.
 	 * @param ctx the parse tree

@@ -553,7 +553,20 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
             return node;
         }
     }
-
+    @Override
+    public Node Visit(NegateNode node) {
+        Node value = Visit(node.LeftmostChild);
+        if(!value.ErrorFlag){
+            if(!(value.Type == int.class || value.Type == double.class)){
+                ErrorList.add(String.format("Line %s: Cannot use negate (-) on this type %s", node.FirstLinenumber, value.Type));
+                node.ErrorFlag = true;
+            }
+            else{
+                node.Type = value.Type;
+            }
+        }
+        return node;
+    }
     @Override
     public Node Visit(NotExprNode node) {
         Node type = Visit(node.ExprNode());
@@ -752,6 +765,8 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
 
         return node;
     }
+
+
 
     public void AddLibraryEventsToSymbolTable(ArrayList<APIevents> list) {
         for(APIevents input : list){

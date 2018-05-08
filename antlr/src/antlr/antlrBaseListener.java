@@ -436,6 +436,18 @@ public class antlrBaseListener implements antlrListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterNegativeFactor(antlrParser.NegativeFactorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNegativeFactor(antlrParser.NegativeFactorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterActionFactor(antlrParser.ActionFactorContext ctx) { }
 	/**
 	 * {@inheritDoc}

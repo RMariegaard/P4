@@ -51,7 +51,7 @@ end
 
 function decimal absoluteValue(decimal number)
 	if (number < 0.0)
-		number = number * (1.0 - 2.0)
+		number = number * -1.0
 	end
 	return number
 end

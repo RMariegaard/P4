@@ -392,6 +392,18 @@ public interface antlrListener extends ParseTreeListener {
 	 */
 	void exitValueFactor(antlrParser.ValueFactorContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code negativeFactor}
+	 * labeled alternative in {@link antlrParser#factor}.
+	 * @param ctx the parse tree
+	 */
+	void enterNegativeFactor(antlrParser.NegativeFactorContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code negativeFactor}
+	 * labeled alternative in {@link antlrParser#factor}.
+	 * @param ctx the parse tree
+	 */
+	void exitNegativeFactor(antlrParser.NegativeFactorContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code actionFactor}
 	 * labeled alternative in {@link antlrParser#factor}.
 	 * @param ctx the parse tree

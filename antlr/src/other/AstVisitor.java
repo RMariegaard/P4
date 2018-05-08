@@ -48,6 +48,7 @@ public abstract class AstVisitor<T> {
     public abstract T Visit(UsubNode node);
     public abstract T Visit(UAddNode node);
     public abstract T Visit(WhileStmtNode node);
+    public abstract T Visit(NegateNode node);
 
 
 
@@ -138,6 +139,8 @@ public abstract class AstVisitor<T> {
             return Visit((BoolNode) node);
         } else if(node instanceof FcallNode){
             return Visit((FcallNode) node);
+        }else if(node instanceof NegateNode){
+            return Visit((NegateNode) node);
         }
         else
             return null; //hvad skal vi ellers returnere...
