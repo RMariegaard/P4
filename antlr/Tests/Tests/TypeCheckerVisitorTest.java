@@ -19,10 +19,12 @@ class TypeCheckerVisitorTest {
     @BeforeEach
     void setUp() {
          typeChecker = new TypeCheckerVisitor();
+         typeChecker.symbolTable.OpenScope();
     }
 
     @AfterEach
     void tearDown() {
+        typeChecker.symbolTable.CloseScope();
     }
 
     @Test
@@ -1083,17 +1085,29 @@ class TypeCheckerVisitorTest {
         assertTrue( typeChecker.Visit(node).ErrorFlag);
     }
 
-    @Test
+    //vi kan ikke længere teste efter navnet på metoderne, for det gør vi oppe i progNode i stedet.
+  /*  @Test
     void visitMethodNode(){
+        //creating method
         Node methodNode = new MethodNode(1);
         Node nameNode = new IDNode(1, "MethodTest");
         nameNode.Type = int.class;
         Node type = new RTypeNode(0, "int");
         methodNode.Type = int.class;
-        Node argument = new ArgumentNode(1, "int");
-        methodNode.AdoptChildren(nameNode, type, argument);
+        Node blockNode = new BlockNode(1);
+
+        //create an argument node
+        Node argument = new ArgumentNode(0, "int");
+        Node refNode = new RefNode(0);
+        refNode.AdoptChildren(new IDNode(0, "Lars"));
+        argument.AdoptChildren(refNode);
+
+
+        methodNode.AdoptChildren(nameNode, type, argument, blockNode);
         typeChecker.Visit(methodNode);
-        assertTrue(typeChecker.symbolTable.DeclaredLocally("MethodTest"));
+
+        SymbolClass sym = typeChecker.symbolTable.RetrieveSymbol("MethodTest");
+        assertTrue(sym != null);
 
     }
     @Test
@@ -1106,13 +1120,21 @@ class TypeCheckerVisitorTest {
         nameNode.Type = int.class;
         Node type = new RTypeNode(0, "int");
         methodNode.Type = int.class;
-        Node argument = new ArgumentNode(1, "int");
-        methodNode.AdoptChildren(nameNode, type, argument);
+        //create an argument node
+        Node argument = new ArgumentNode(0, "int");
+        Node refNode = new RefNode(0);
+        refNode.AdoptChildren(new IDNode(0, "Lars"));
+        argument.AdoptChildren(refNode);
+
+        Node block = new BlockNode(0);
+
+
+        methodNode.AdoptChildren(nameNode, type, argument, block);
         typeChecker.Visit(methodNode);
         assertTrue(methodNode.ErrorFlag);
 
     }
-
+*/
 
     @Test
     void visitMulExprIntAndDecimal() {

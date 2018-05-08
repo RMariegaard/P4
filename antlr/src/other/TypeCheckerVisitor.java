@@ -518,7 +518,6 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
     public Node Visit(MethodNode node) {
             //Everything else has already been added to the symbol table - See function addMethodsToScope, called when visiting ProgNode
         symbolTable.OpenScope();
-        //TODO: skal vi åbne scopet før eller efter man indlæser argumenterne??
         for (ArgumentNode argNode: node.Parameters()) {
             Visit(argNode);
         }
