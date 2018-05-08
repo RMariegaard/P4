@@ -2,7 +2,6 @@ import robocode.*;
 import java.awt.*;
 import static robocode.util.Utils.*;
 public class ThisRobot extends AdvancedRobot{
-    int direction = 0;
     String CurrentStrategy = "mainStrategy";
     public void run() {
         setBodyColor(Color.pink);
@@ -10,9 +9,15 @@ public class ThisRobot extends AdvancedRobot{
         setRadarColor(Color.pink);
         CurrentStrategy = "mainStrategy";
         while(true) {
-            turnGunRight(10.0);
-            if (getEnergy() < 30.0){ 
-                CurrentStrategy = "BeMoreDefensive";
+            if (CurrentStrategy.equals("mainStrategy")){ 
+                turnGunRight(10.0);
+            }
+
+            if (CurrentStrategy.equals("BeMoreDefensive")){ 
+                ahead(100.0);
+                turnGunRight(360.0);
+                back(100.0);
+                turnGunRight(360.0);
             }
 
         }
@@ -49,15 +54,6 @@ public void onHitByBullet(HitByBulletEvent e){
 public void onHitRobot(HitRobotEvent e){
 }
 public void onHitWall(HitWallEvent e){
-    if(CurrentStrategy.equals("BeMoreDefensive")){
-        if (direction == 0){ 
-            direction = 1;
-        }
-        else{
-            direction = 0;
-        }
-
-    }
 }
 public void onRobotDeath(RobotDeathEvent e){
 }
@@ -65,7 +61,6 @@ public void onScannedRobot(ScannedRobotEvent e){
     if(CurrentStrategy.equals("mainStrategy")){
         double absoluteBearing = getHeading() + e.getBearing();
         double bearingFromGun = normalRelativeAngleDegrees(absoluteBearing - getGunHeading());
-        int p = 4;
         if (absoluteValue(bearingFromGun) <= 3.0){ 
             turnGunRight(bearingFromGun);
             if (getGunHeat() == 0.0){ 
@@ -77,37 +72,13 @@ public void onScannedRobot(ScannedRobotEvent e){
             turnRight(bearingFromGun);
         }
 
-        if (bearingFromGun == 0.0){ 
-            scan();
+        if (getEnergy() < 60.0){ 
+            CurrentStrategy = "BeMoreDefensive";
         }
 
     }
     if(CurrentStrategy.equals("BeMoreDefensive")){
-        int p = 3;
-        double absoluteBearing2 = getHeading() + e.getBearing();
-        double bearingFromGun2 = normalRelativeAngleDegrees(absoluteBearing2 - getGunHeading());
-        if (absoluteValue(bearingFromGun2) <= 3.0){ 
-            turnGunRight(bearingFromGun2);
-            if (getGunHeat() == 0.0){ 
-                fire(minimumValue(3.0 - absoluteValue(bearingFromGun2),getEnergy() - 0.1));
-            }
-
-        }
-        else{
-            turnRight(bearingFromGun2);
-        }
-
-        if (bearingFromGun2 == 0.0){ 
-            scan();
-        }
-
-        if (direction == 0){ 
-            ahead(50.0);
-        }
-        else{
-            back(50.0);
-        }
-
+        fire(3.0);
     }
 }
 public void onWin(WinEvent e){

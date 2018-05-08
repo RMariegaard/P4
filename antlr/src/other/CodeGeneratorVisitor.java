@@ -157,8 +157,11 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     @Override
     public String Visit(EqualNode node) {
-        if(node.Type == String.class){
-            return String.format("%s.equals(%s)", Visit(node.LeftNode()), Visit(node.RightNode()) );
+        if(node.LeftNode().Type == String.class){
+            return String.format("%s.equals(%s)", Visit(node.LeftNode()), Visit(node.RightNode()));
+        }
+        else if (node.LeftNode().Type == StrategyType.class){
+            return String.format("%s.equals(\"%s\")", Visit(node.LeftNode()), Visit(node.RightNode()));
         }
         return String.format("%s == %s", Visit(node.LeftNode()), Visit(node.RightNode()));
     }

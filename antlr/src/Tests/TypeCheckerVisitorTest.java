@@ -1,4 +1,3 @@
-/*
 package Tests;
 
 import Nodes.*;
@@ -1306,4 +1305,3 @@ class TypeCheckerVisitorTest {
 
     }
 }
-*/
