@@ -1,6 +1,7 @@
 import robocode.*;
 import java.awt.*;
 public class ThisRobot extends AdvancedRobot{
+    int[] array = new int[3];
     int target = (40 + 40) * 2;
     Condition WhenEnergyIs40 = new Condition("WhenEnergyIs40")
     {

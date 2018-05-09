@@ -2,6 +2,7 @@ import robocode.*;
 import java.awt.*;
 import static robocode.util.Utils.*;
 public class ThisRobot extends AdvancedRobot{
+    int[] array = new int[3];
     String CurrentStrategy = "mainStrategy";
     public void run() {
         setBodyColor(Color.pink);

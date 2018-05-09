@@ -24,6 +24,19 @@ public class DclNode extends Node {
             idNode = idNode.LeftmostChild;
         return idNode.toString();
     }
+
+    public RefNode getRefNode(){
+        Node refNode = LeftmostChild;
+        while(!(refNode instanceof RefNode)){
+            if(refNode.LeftmostChild != null){
+            refNode = refNode.LeftmostChild;
+            }
+            else{
+                return null;
+            }
+        }
+        return (RefNode) refNode;
+    }
     @Override
     public String toString() {
         return Type.toString() + " Dcl " + getID();

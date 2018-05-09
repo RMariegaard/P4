@@ -1,3 +1,4 @@
+int array[3]
 setup
 	Tank.setColor("pink")
 	Tank.Gun.setColor("pink")

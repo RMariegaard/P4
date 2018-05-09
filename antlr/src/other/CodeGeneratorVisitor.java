@@ -100,7 +100,10 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
     @Override
     public String Visit(DclNode node)
     {
-        if (node.ChildNode().LeftmostChild.RightSibling == null)
+        if(node.getRefNode() != null && node.getRefNode().IsArrayRef()){
+            return String.format("%s[] %s = new %s[%s]", node.Type, node.getID(), node.Type, node.getRefNode().ArrayIndexNode());
+        }
+        else if (node.ChildNode().LeftmostChild.RightSibling == null)
         {
             return String.format("%s %s", node.Type, node.getID()); //burde ikke bare være visit(childnode)
         }
