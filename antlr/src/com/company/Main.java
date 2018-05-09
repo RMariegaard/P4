@@ -64,12 +64,15 @@ public class Main {
     }
 
     public static antlrParser.ProgContext getCST(String fileName) throws FileNotFoundException, IOException{
+        ErrorListner error = new ErrorListner();
         CharStream input = CharStreams.fromFileName(fileName);
         antlrLexer lexer = new antlrLexer(input);
+        lexer.removeErrorListeners();
+        lexer.addErrorListener(error);
         CommonTokenStream tokenStream = new CommonTokenStream(lexer);
         antlrParser parser = new antlrParser(tokenStream);
-
-        parser.addErrorListener(new ErrorListner()); //TODO Use this for something. Should print out to the user
+        parser.removeErrorListeners();
+        parser.addErrorListener(error);
         antlrParser.ProgContext cst = parser.prog();
         if(parser.getNumberOfSyntaxErrors() ==0){
             return cst;
