@@ -22,15 +22,11 @@ public class SymbolTable {
     private int depth = 0;
 
     public SymbolTable(){
-
+        scopeDisplay.add(null);
     }
     public void OpenScope(){
-        //If the scopedisplay is empty, we cannot add an element at index depth, because at index zero there is nothing, so we have to add a null element first.
-        if(scopeDisplay.isEmpty())
-            scopeDisplay.add(null);
         depth++;
         scopeDisplay.add(depth, null);
-
     }
 
     public void CloseScope(){
@@ -46,7 +42,7 @@ public class SymbolTable {
             if(prevsym != null){ //if there was another variable with the same name declared, this will now be put into the hashtable instead.
                 hashtable.put(prevsym.Name, prevsym); //using the name of the variable as the hash.
             }
-            //The sym has a reference (Var) to the next symbol in the table at the same lvl, like a list, which can be used to find all the symbols at this lvl.
+            //The sym has a reference (Level) to the next symbol in the table at the same lvl, like a list, which can be used to find all the symbols at this lvl.
             sym = sym.Level;
         }
         //finally the depth will be decreased.
@@ -66,8 +62,6 @@ public class SymbolTable {
     }
 
     public void EnterSymbol(String name, Node node){
-        //First we check if the variable already excist in the symbol table
-
         //Creating a new SymbolClass to reprecent the new variable.
         SymbolClass sym = new SymbolClass();
 
@@ -93,7 +87,7 @@ public class SymbolTable {
             hashtable.put(sym.Name, sym);
         }
         else {
-            //If suck a variable with the same name excist, we first have to remove it from the hashtable, and then add our new variable
+            //If such a variable with the same name excist, we first have to remove it from the hashtable, and then add our new variable
             hashtable.remove(oldSym.Name);
             hashtable.put(sym.Name, sym);
         }//and the we can give a reference to the old variable to our new variable, or null, if oldSym does not excist.

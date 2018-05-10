@@ -85,6 +85,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
         }catch (NullPointerException e){
             return node;
         }
+        node.Type = boolean.class;
         return node;
     }
 
@@ -192,11 +193,9 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
             node.ErrorFlag = true;
             return node;
         }
-        //Why do we add the dcl node to the symbol table?
+
         symbolTable.EnterSymbol(node.getID(), node);
         Visit(node.ChildNode());
-        //if(node.Type.equals(Visit(node.ChildNode())))
-        //    symbolTable.EnterSymbol(node.getID(), node.Type);
         return node;
     }
 
@@ -259,8 +258,8 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
             node.ErrorFlag = true;
         }
         Node incrementer = Visit(node.IncrementNode());
-        if(eType.Type != int.class){
-            ErrorList.add(String.format("Line %s: the incrementing value for the do loop has to be of type int and cant be %s", node.FirstLinenumber, eType.Type));
+        if(incrementer.Type != int.class){
+            ErrorList.add(String.format("Line %s: the incrementing value for the do loop has to be of type int and cant be %s", node.FirstLinenumber, incrementer.Type));
             node.ErrorFlag = true;
         }
 
@@ -307,6 +306,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
 
             System.out.println(String.format("Something went wrong... Left node on line %s was most likely type null", node.FirstLinenumber));
         }
+        node.Type = boolean.class;
         return node;
     }
 
@@ -409,6 +409,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
 
             System.out.println(String.format("Something went wrong... Left node on line %s was most likely type null", node.FirstLinenumber));
         }
+        node.Type = boolean.class;
         return node;
     }
 
@@ -432,6 +433,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
 
             System.out.println(String.format("Something went wrong... Left node on line %s was most likely type null", node.FirstLinenumber));
         }
+        node.Type = boolean.class;
         return node;
     }
 
@@ -488,6 +490,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
 
             System.out.println(String.format("Something went wrong... Left node on line %s was most likely type null", node.FirstLinenumber));
         }
+        node.Type = boolean.class;
         return node;
     }
 
@@ -511,6 +514,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
 
             System.out.println(String.format("Something went wrong... Left node on line %s was most likely type null", node.FirstLinenumber));
         }
+        node.Type = boolean.class;
         return node;
     }
 
@@ -605,6 +609,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
             //can this happen?
             return node;
         }
+        node.Type = boolean.class;
         return node;
     }
 
@@ -673,6 +678,14 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
     @Override
     public Node Visit(RefNode node) {
         node.Type = Visit(node.IDNode()).Type;
+
+        if(node.IsArrayRef()) {
+            Object ArrayIndex = Visit(node.ArrayIndexNode()).Type;
+            if( ArrayIndex != int.class){
+                ErrorList.add(String.format("Line %s: Array initializer has to be type int, not type %s", node.FirstLinenumber,ArrayIndex ));
+                node.ErrorFlag = true;
+            }
+        }
         return node;
     }
 

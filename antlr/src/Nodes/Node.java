@@ -7,7 +7,11 @@ public abstract class Node{
     public Node RightSibling;
     public Node LeftmostChild;
     public int Distance;
+
     public int FirstLinenumber;
+    public Object Type;
+    public boolean ErrorFlag = false;
+
 
 
     public Node(int firstLinenumber){
@@ -65,10 +69,6 @@ public abstract class Node{
         }
         return this;
     }
-
-    public Object Type;
-    public boolean ErrorFlag = false;
-
 
 
 
