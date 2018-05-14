@@ -101,15 +101,15 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
     public String Visit(DclNode node)
     {
         if(node.getRefNode() != null && node.getRefNode().IsArrayRef()){
-            return String.format("%s[] %s = new %s[%s]", node.Type, node.getID(), node.Type, node.getRefNode().ArrayIndexNode());
+            return String.format("%s[] %s = new %s[%s]", getType(node.Type), node.getID(), getType(node.Type), node.getRefNode().ArrayIndexNode());
         }
         else if (node.ChildNode().LeftmostChild.RightSibling == null)
         {
-            return String.format("%s %s", node.Type, node.getID()); //burde ikke bare være visit(childnode)
+            return String.format("%s %s", getType(node.Type), node.getID()); //burde ikke bare være visit(childnode)
         }
         else
         {
-            return String.format("%s %s = %s", node.Type, node.getID(), Visit(node.ChildNode().LeftmostChild.RightSibling));
+            return String.format("%s %s = %s", getType(node.Type), node.getID(), Visit(node.ChildNode().LeftmostChild.RightSibling));
         }
     }
 
@@ -374,7 +374,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
             tabIndex--;
             string += AddTabs() + "}\n";
         }
-        tabIndex--;
+
         string += AddTabs() + "}\n";
         //Going through the rest of the events from robocodeAPI:
         for(APIevents event: listOfAPIEvents){
@@ -387,7 +387,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
             tabIndex--;
             string += AddTabs() + "}\n";
         }
-
+        tabIndex--;
         string += "}"; //end class
         return string;
     }
@@ -423,7 +423,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
     public String Visit(RefNode node) {
         if(node.IsArrayRef()){
             //forstår ikke helt det med isarrayref siger den aldrig bliver brugt ?
-            return String.format("%s",Visit(node.IDNode()));
+            return String.format("%s[%s]",Visit(node.IDNode()), Visit(node.ArrayIndexNode()));
         }
         else {
            return String.format("%s", Visit(node.IDNode()));
@@ -480,7 +480,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     private String getType(Object type){
         if(type == String.class)
-            return "string";
+            return "String";
         else
             return type.toString();
     }
