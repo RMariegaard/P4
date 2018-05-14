@@ -120,7 +120,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     @Override
     public String Visit(DivExprNode node) {
-        return String.format("%s/%s", node.LeftNode(), node.RightNode());
+        return String.format("%s/%s", Visit(node.LeftNode()), Visit(node.RightNode()));
     }
 
     @Override
@@ -293,7 +293,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
                 parametersdone++;
             }
         else{
-            string += ")\n";
+            string += "){\n";
         }
         tabIndex++;
         string += String.format("%s", Visit(node.BlockNode()));
@@ -324,7 +324,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     @Override
     public String Visit(OrNode node) {
-        return String.format("(%s) || (&s)", Visit(node.LeftNode()), Visit(node.RightNode()));
+        return String.format("(%s) || (%s)", Visit(node.LeftNode()), Visit(node.RightNode()));
     }
 
     @Override
@@ -350,11 +350,13 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
             string += String.format(AddTabs() + "addCustomEvent(%s);\n", customEvent);
         }
         string += Visit(node.SetupNode());
-        string += AddTabs() + "while(true) {\n";
-        tabIndex++;
-        string +=  Visit(node.GameLoopNode());
-        tabIndex--;
-        string += AddTabs() + "}\n";
+        if(node.GameLoopNode().Block().NumberOfStatements() != 0) {
+            string += AddTabs() + "while(true) {\n";
+            tabIndex++;
+            string += Visit(node.GameLoopNode());
+            tabIndex--;
+            string += AddTabs() + "}\n";
+        }
         tabIndex--;
         string += AddTabs() + "}\n";
 

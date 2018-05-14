@@ -1,0 +1,66 @@
+int others
+decimal corner = 0.0
+bool stopWhenSeeRobot = false
+
+setup
+	Tank.setColor("red")
+	Tank.Gun.setColor("black")
+	Tank.Radar.setColor("yellow")
+
+	others = Game.getOthers()
+	goCorner()
+	decimal gunIncrement = 3.0
+end
+
+game-loop
+	do(int i, 0, 29, 1)
+		Tank.Gun.turnLeft(gunIncrement)
+	end
+	gunIncrement = gunIncrement * -1.0
+end
+
+strategy mainStrategy 
+	behavior onScannedRobot
+		if (stopWhenSeeRobot)
+			Game.stop()
+			smartFire(Enemy.getDistance())
+			Tank.scan()
+			Game.resume()
+		end
+		else
+			smartFire(Enemy.getDistance())
+		end
+	end
+	behavior onDeath
+		if (!(others == 0))
+			if (((others - Game.getOthers()) / others)*100 < 75)
+				corner = corner * 90.0
+				if (corner == 270.0)
+					corner = -90.0
+				end
+			end
+		end
+	end
+end
+
+function void goCorner()
+	stopWhenSeeRobot = false
+	Tank.turnRight(normalRelativeAngleDegrees(corner - Tank.getHeading()))
+	stopWhenSeeRobot = true
+	Tank.ahead(5000.0)
+	Tank.turnLeft(90.0)
+	Tank.ahead(5000.0)
+	Tank.Gun.turnLeft(90.0)
+end
+
+function void smartFire(decimal robotDistance)
+	if (robotDistance > 200.0 || Tank.getEnergy() < 15.0)
+		Tank.Gun.fire(1.0)
+	end
+	else if (robotDistance > 50.0)
+		Tank.Gun.fire(2.0)
+	end
+	else
+		Tank.Gun.fire(3.0)
+	end
+end

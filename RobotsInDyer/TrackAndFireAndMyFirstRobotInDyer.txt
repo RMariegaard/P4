@@ -1,0 +1,67 @@
+setup
+	Tank.setColor("pink")
+	Tank.Gun.setColor("pink")
+	Tank.Radar.setColor("pink")
+	CurrentStrategy = mainStrategy
+end
+
+game-loop
+	if (CurrentStrategy == mainStrategy)
+		Tank.Gun.turnRight(10.0)
+	end
+	if (CurrentStrategy == BeMoreDefensive)
+		Tank.ahead(100.0)
+		Tank.Gun.turnRight(360.0)
+		Tank.back(100.0)
+		Tank.Gun.turnRight(360.0)
+	end
+end
+
+strategy mainStrategy 
+	behavior onScannedRobot
+		decimal absoluteBearing = Tank.getHeading() + Enemy.getBearing()
+		decimal bearingFromGun = normalRelativeAngleDegrees(absoluteBearing - Tank.Gun.getHeading())
+		if (absoluteValue(bearingFromGun) <= 3.0)
+			Tank.Gun.turnRight(bearingFromGun)
+			if (Tank.Gun.getHeat() == 0.0)
+				Tank.Gun.fire(minimumValue(3.0 - absoluteValue(bearingFromGun), Tank.getEnergy() - 0.1))
+			end
+		end
+		else
+			Tank.Gun.turnRight(bearingFromGun)
+		end
+
+		if (Tank.getEnergy() < 60.0)
+			CurrentStrategy = BeMoreDefensive
+		end
+	end
+	behavior onWin
+		Tank.turnRight(36000.0)
+	end
+end
+
+strategy BeMoreDefensive
+	behavior onScannedRobot
+		Tank.Gun.fire(3.0)
+	end
+	behavior onWin
+		Tank.turnRight(36000.0)
+	end
+end
+
+function decimal absoluteValue(decimal number)
+	if (number < 0.0)
+		number = number * -1.0
+	end
+	return number
+end
+
+function decimal minimumValue(decimal num1, decimal num2)
+	if (num1 < num2)
+		return num1
+	end
+	else 
+		return num2
+	end
+end
+

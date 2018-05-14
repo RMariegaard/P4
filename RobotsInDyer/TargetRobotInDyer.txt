@@ -1,0 +1,22 @@
+decimal trigger
+
+event (Tank.getEnergy() <= trigger) -> triggerhit
+
+setup
+	Tank.setColor("white")
+	Tank.Gun.setColor("white")
+	Tank.Radar.setColor("white")
+	trigger = 80.0
+end
+
+game-loop
+
+end
+
+strategy mainStrategy 
+	behavior triggerhit
+		trigger = trigger - 20.0
+		Tank.turnLeft(65.0)
+		Tank.ahead(100.0)
+	end
+end

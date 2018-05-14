@@ -1,0 +1,25 @@
+setup
+	Tank.setColor("blue")
+	Tank.Gun.setColor("blue")
+	Tank.Radar.setColor("black")
+end
+
+game-loop
+	Tank.setTurnRight(10000.0)
+	Tank.setMaxVelocity(5.0)
+	Tank.ahead(10000.0)
+end
+
+strategy mainStrategy 
+	behavior onScannedRobot
+		Tank.Gun.fire(3.0)
+	end
+	behavior onHitRobot
+		if (Enemy.getBearing() > -10.0 && Enemy.getBearing() < 10.0)
+			Tank.Gun.fire(3.0)
+		end
+		if (isMyFault())
+			Tank.turnRight(10.0)
+		end
+	end
+end

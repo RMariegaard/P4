@@ -461,6 +461,18 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
         symbolTable.OpenScope();
         Visit(node.Block());
         symbolTable.CloseScope();
+
+        for (int i = 0; i < node.NumberOfElseIf(); i++){
+            symbolTable.OpenScope();
+            Visit(node.ElseIf()[i]);
+            symbolTable.CloseScope();
+        }
+        if(node.elseNode != null){
+            symbolTable.OpenScope();
+            Visit(node.elseNode);
+            symbolTable.CloseScope();
+        }
+
         return node;
     }
 

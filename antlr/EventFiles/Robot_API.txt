@@ -37,3 +37,4 @@ normalNearAbsoluteAngleDegrees  normalNearAbsoluteAngleDegrees      double      
 normalRelativeAngle             normalRelativeAngle                 double      double
 normalRelativeAngleDegrees      normalRelativeAngleDegrees          double      double
 scan                            Tank.scan                           void        none
+getOthers                       Game.getOthers                      int         none
