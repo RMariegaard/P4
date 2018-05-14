@@ -1,5 +1,5 @@
 grammar antlr;
-prog      : predcl* setup gameloop (strategy | method)* EOF
+prog      : NEWLINE* predcl* setup gameloop (strategy | method)* EOF
           ;
 setup     : 'setup' block
           ;
@@ -75,7 +75,7 @@ factor    : '(' aoexpr ')'                                          #parenFactor
           | ref                                                     #refFactor
           | ref op=('++'|'--')                                      #unaryExpr
           ;
-
+ESC: '\\' [btnr"\\];
 OP_ADD : '+';
 OP_SUB : '-';
 OP_UADD : '++';
@@ -96,7 +96,7 @@ ID: [a-zA-Z]+ ([a-zA-Z0-9])*;
 INT_NUM: [0-9]+ ;
 DECIMAL_NUM: [0-9]+ ('.' [0-9]+)? ;
 
-ESC: '\\' [btnr"\\];
+
 TEXT: '"'(ESC|.)*?'"';
 
 
