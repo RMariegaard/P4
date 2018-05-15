@@ -42,7 +42,7 @@ public class Main {
                         }
                     }
                     else{
-                    System.out.println("Something happend");
+                    System.out.println("CST could not be created");
                     }
                 //TODO: create a new file.
                     if(cst != null && typeChecker.ErrorList.isEmpty()){

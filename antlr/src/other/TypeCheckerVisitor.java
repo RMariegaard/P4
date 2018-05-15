@@ -105,6 +105,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
 
     @Override
     public Node Visit(ArrayExprNode node) {
+
         if(!Visit(node.IDNode()).ErrorFlag){
             SymbolClass sym = symbolTable.RetrieveSymbol(node.IDNode().toString());
             Node exprType = Visit(node.ExprNode());

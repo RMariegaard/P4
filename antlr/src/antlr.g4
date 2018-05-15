@@ -75,7 +75,7 @@ factor    : '(' aoexpr ')'                                          #parenFactor
           | ref                                                     #refFactor
           | ref op=('++'|'--')                                      #unaryExpr
           ;
-ESC: '\\' [btnr"\\];
+
 OP_ADD : '+';
 OP_SUB : '-';
 OP_UADD : '++';
@@ -96,8 +96,8 @@ ID: [a-zA-Z]+ ([a-zA-Z0-9])*;
 INT_NUM: [0-9]+ ;
 DECIMAL_NUM: [0-9]+ ('.' [0-9]+)? ;
 
-
-TEXT: '"'(ESC|.)*?'"';
+ESC: '\\' [btnr"\\];
+TEXT: '"'(ESC| ~[\n])*?'"';
 
 
 WS: [ \t\r] ->skip;

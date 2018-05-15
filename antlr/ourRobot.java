@@ -2,60 +2,102 @@ import robocode.*;
 import java.awt.*;
 import static robocode.util.Utils.*;
 public class ThisRobot extends AdvancedRobot{
-    double trigger;
-    Condition triggerhit = new Condition("triggerhit")
-    {
-        public boolean test() 
-        {
-            return (getEnergy() <= trigger);
-        }
-    };
     String CurrentStrategy = "mainStrategy";
     public void run() {
-        addCustomEvent(triggerhit);
-        setBodyColor(Color.white);
-        setGunColor(Color.white);
-        setRadarColor(Color.white);
-        trigger = 80.0;
+        setBodyColor(Color.pink);
+        setGunColor(Color.pink);
+        setRadarColor(Color.pink);
+        CurrentStrategy = "mainStrategy";
+        String hej = "asdsd\n";
+        while(true) {
+            if (CurrentStrategy.equals("mainStrategy")){ 
+                turnGunRight(10.0);
+            }
+
+            if (CurrentStrategy.equals("BeMoreDefensive")){ 
+                ahead(100.0);
+                turnGunRight(360.0);
+                back(100.0);
+                turnGunRight(360.0);
+            }
+
+        }
+    }
+    public double absoluteValue(double number){
+        if (number < 0.0){ 
+            number = number * -1.0;
+        }
+
+        return number;
+    }
+    public double minimumValue(double num1, double num2){
+        if (num1 < num2){ 
+            return num1;
+        }
+        else{
+            return num2;
+        }
+
     }
 
     public void onCustomEvent(CustomEvent e){ 
-        if(e.getCondition() == triggerhit){
-            if(CurrentStrategy.equals("mainStrategy")){
-                trigger = trigger - 20.0;
-                turnLeft(65.0);
-                ahead(100.0);
+    }
+    public void onBulletHit(BulletHitEvent e){
+    }
+    public void onBulletHitBullet(BulletHitBulletEvent e){
+    }
+    public void onBulletMissed(BulletMissedEvent e){
+    }
+    public void onDeath(DeathEvent e){
+    }
+    public void onHitByBullet(HitByBulletEvent e){
+    }
+    public void onHitRobot(HitRobotEvent e){
+    }
+    public void onHitWall(HitWallEvent e){
+    }
+    public void onRobotDeath(RobotDeathEvent e){
+    }
+    public void onScannedRobot(ScannedRobotEvent e){
+        if(CurrentStrategy.equals("mainStrategy")){
+            double absoluteBearing = getHeading() + e.getBearing();
+            double bearingFromGun = normalRelativeAngleDegrees(absoluteBearing - getGunHeading());
+            if (absoluteValue(bearingFromGun) <= 3.0){ 
+                turnGunRight(bearingFromGun);
+                if (getGunHeat() == 0.0){ 
+                    fire(minimumValue(3.0 - absoluteValue(bearingFromGun),getEnergy() - 0.1));
+                }
+
             }
+            else{
+                turnGunRight(bearingFromGun);
+            }
+
+            if (getEnergy() < 60.0){ 
+                CurrentStrategy = "BeMoreDefensive";
+            }
+
         }
+        if(CurrentStrategy.equals("BeMoreDefensive")){
+            fire(3.0);
         }
-        public void onBulletHit(BulletHitEvent e){
+    }
+    public void onWin(WinEvent e){
+        if(CurrentStrategy.equals("mainStrategy")){
+            turnRight(36000.0);
         }
-        public void onBulletHitBullet(BulletHitBulletEvent e){
+        if(CurrentStrategy.equals("BeMoreDefensive")){
+            turnRight(36000.0);
         }
-        public void onBulletMissed(BulletMissedEvent e){
-        }
-        public void onDeath(DeathEvent e){
-        }
-        public void onHitByBullet(HitByBulletEvent e){
-        }
-        public void onHitRobot(HitRobotEvent e){
-        }
-        public void onHitWall(HitWallEvent e){
-        }
-        public void onRobotDeath(RobotDeathEvent e){
-        }
-        public void onScannedRobot(ScannedRobotEvent e){
-        }
-        public void onWin(WinEvent e){
-        }
-        public void onRoundEnded(RoundEndedEvent e){
-        }
-        public void onBattleEnded(BattleEndedEvent e){
-        }
-        public void onStatus(StatusEvent e){
-        }
-        public void OnDeath(DeathEvent e){
-        }
-        public void onSkippedTurn(SkippedTurnEvent e){
-        }
+    }
+    public void onRoundEnded(RoundEndedEvent e){
+    }
+    public void onBattleEnded(BattleEndedEvent e){
+    }
+    public void onStatus(StatusEvent e){
+    }
+    public void OnDeath(DeathEvent e){
+    }
+    public void onSkippedTurn(SkippedTurnEvent e){
+    }
 }

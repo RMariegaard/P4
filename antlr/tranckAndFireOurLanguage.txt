@@ -3,6 +3,7 @@ setup
 	Tank.Gun.setColor("pink")
 	Tank.Radar.setColor("pink")
 	CurrentStrategy = mainStrategy
+	text hej = "asdsd\n"
 end
 
 game-loop
