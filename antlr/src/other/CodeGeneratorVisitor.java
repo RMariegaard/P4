@@ -16,12 +16,14 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
     private ArrayList<APIevents> listOfAPIEvents = new ArrayList<>();
     private ArrayList<APIMethods> listOfAPIMethods = new ArrayList<>();
     private String currentEvent;
+    private String robotName;
     int tabIndex = 0;
 
 
-    public CodeGeneratorVisitor(ArrayList<APIevents> list, ArrayList<APIMethods> listMethods){
+    public CodeGeneratorVisitor(ArrayList<APIevents> list, ArrayList<APIMethods> listMethods, String name){
         listOfAPIEvents = list;
         listOfAPIMethods = listMethods;
+        robotName = name;
     }
     public CodeGeneratorVisitor(){
     }
@@ -335,7 +337,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
         string += "import java.awt.*;\n";
         string += "import static robocode.util.Utils.*;\n";
 
-        string += "public class ThisRobot extends AdvancedRobot{\n"; //Start class
+        string += String.format("public class %s extends AdvancedRobot{\n", robotName); //Start class
         tabIndex++;
         for(Node pnode : node.PreDclNodes()) {
             if(pnode instanceof EventNode)

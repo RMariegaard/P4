@@ -19,11 +19,11 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-	// write your code here
             if(args.length == 0){
                 System.out.println("You have to specify a robot file to compile");
             }
             else{
+                String robotName = args[1];
                 try{
                     antlrParser.ProgContext cst = getCST(args[0]);
                     ArrayList<APIevents> listOfAPIEvents = createListOfAPIEvents("EventFiles/RobotEvent_API.txt", "EventFiles/AdvancedRobotEvent_API.txt");
@@ -36,23 +36,22 @@ public class Main {
                         Object errorFree = typeChecker.Visit(ast);
                         if (!typeChecker.ErrorList.isEmpty()) {
                          System.out.println("TYPECHECkER ERROR MESSAGES:");
-                         for (String error : typeChecker.ErrorList) {
-                            System.out.println(error);
-                         }
+                            for (String error : typeChecker.ErrorList) {
+                                System.out.println(error);
+                            }
                         }
                     }
                     else{
                     System.out.println("CST could not be created");
                     }
-                //TODO: create a new file.
                     if(cst != null && typeChecker.ErrorList.isEmpty()){
-                        CodeGeneratorVisitor codeGenerator = new CodeGeneratorVisitor(listOfAPIEvents, typeChecker.ListOfAPIMethods);
+                        CodeGeneratorVisitor codeGenerator = new CodeGeneratorVisitor(listOfAPIEvents, typeChecker.ListOfAPIMethods, robotName);
                         String program = codeGenerator.Visit(ast);
-                        Path file = Paths.get("ourRobot.java");
+                        Path file = Paths.get(String.format("%s.java", robotName));
                         Files.write(file,program.getBytes());
                     }
                     else{
-                    System.out.println("Program could not be compiled.");
+                        System.out.println("Program could not be compiled.");
                     }
 
                 }catch (IOException e){
