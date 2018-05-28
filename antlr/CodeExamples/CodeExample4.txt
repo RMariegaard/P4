@@ -1,32 +1,31 @@
+bool movingForward
 setup
 
-    Tank.setColor(Color.black)
-    Tank.Gun.setColor(Color.white)
-    Tank.Radar.setColor(Color.yellow)
-    Tank.BulletColor(Color.red)
-    Tank.ScanColor(Color.green)
+    Tank.setColor("black")
+    Tank.Gun.setColor("white")
+    Tank.Radar.setColor("yellow")
 end
 
 game-loop
 
-    Tank.setAhead(40000)
+    Tank.setAhead(40000.0)
     movingForward = true
-    Tank.setTurnRight(90)
-    Tank.setTurnLeft(180)
-    Tank.setTurnRight(180)
+    Tank.setTurnRight(90.0)
+    Tank.setTurnLeft(180.0)
+    Tank.setTurnRight(180.0)
 end
 
-function void reversedirection()
+function void reverseDirection()
 
     if (movingForward)
 
-        setBack(40000)
+        Tank.back(40000.0)
         movingForward = false
     end
 
     else
 
-        setAhead(40000)
+        Tank.ahead(40000.0)
         movingForward = true
     end
 end
@@ -39,11 +38,11 @@ strategy Default
     end
 
     behavior onScannedRobot
-        fire(1)
+        Tank.Gun.fire(1.0)
     end
 
     behavior onHitRobot
-        if (enemy.isMyFault())
+        if (isMyFault())
             reverseDirection()
         end
     end

@@ -1,7 +1,7 @@
 int target = (40 + 40) * 2
 event(Tank.getEnergy() == 40.0) -> WhenEnergyIs40
 setup
-	Tank.setBodyColor("white")
+	Tank.setColor("white")
 	Tank.Gun.setColor("white")
 	Tank.Radar.setColor("white")
 	myAddFunction(5,5)
@@ -13,15 +13,15 @@ game-loop
     Tank.Gun.turnLeft(123.0)
     CurrentStrategy = Offensive
     if( Game.getNumRounds() > 10)
-        Tank.fire(2.0)
+        Tank.Gun.fire(2.0)
         Tank.Radar.turnRight(200.0)
     end
-    else if (Game.getRoundNum() > 5)
-		Tank.fire(1.0)
+    else if (Game.getRoundNumber() > 5)
+		Tank.Gun.fire(1.0)
 	    Tank.Radar.turnRight(100.0)
 	end
 	else
-        Tank.fire(3.0)
+        Tank.Gun.fire(3.0)
 	    Tank.Radar.turnRight(50.0)
 	end
 end
@@ -38,7 +38,7 @@ strategy Default
     end
     behavior WhenEnergyIs40
 	    do(int i, 0, 5, 2)
-	    	Tank.fire(2.0)  //FAAAACK fire tager kun en double...
+	    	Tank.Gun.fire(2.0)
 	    end
     end
     behavior onBulletHit
@@ -48,6 +48,6 @@ end
 
 strategy Offensive
     behavior onScannedRobot
-        Tank.fire(5.0)
+        Tank.Gun.fire(5.0)
     end
 end

@@ -298,7 +298,6 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
             if (leftNodeType.Type.equals(rightNodeType.Type)) {
                 node.Type = boolean.class;
                 return node;
-                //skal man kunne sige string == string i vores sprog? kan man ikke i java så dette skal vi tage højde for når vi laver code generation.
             }
             else
                 ErrorList.add(String.format("Line %s: Cannot compare type %s and %s, type must be the same",node.FirstLinenumber,leftNodeType.Type, rightNodeType.Type));
@@ -330,7 +329,6 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
             ErrorList.add(String.format("Line %s: The condition of event %s is not of type boolean", node.FirstLinenumber, node.ID().toString()));
             node.ErrorFlag = true;
         }
-        //Visit(node.ID()); Den skal vel ikke besøge ID, da vi lægger den ind her anyway.
         return node;
     }
 
@@ -619,7 +617,6 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
             }
         }catch (NullPointerException e){
             node.ErrorFlag = true;
-            //can this happen?
             return node;
         }
         node.Type = boolean.class;
@@ -645,7 +642,7 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
     public Node Visit(ParenNode node) {
         Node expr = Visit(node.Aoexpr());
         node.Type = expr.Type;
-        node.ErrorFlag = expr.ErrorFlag; //TODO Skal det her gøres?
+        node.ErrorFlag = expr.ErrorFlag;
         return node;
     }
 
@@ -678,7 +675,6 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
 
     @Override
     public Node Visit(RTypeNode node) {
-        //TODO: er denne her lavet? Hvad skal der tjekkes?...
         return node;
     }
 
@@ -764,7 +760,6 @@ public class TypeCheckerVisitor extends AstVisitor<Node> {
         node.Type = int.class;
         return node;
         //Returns integer even if an error occurs, so that the program can continue
-        //Ved ikke om dette er iorden, men hvis man returnere andet blever den jo ved med at lave fejl hele vejen op igennem træet
     }
 
     @Override

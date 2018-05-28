@@ -57,7 +57,7 @@ public class ProgNode extends Node {
         return listOfStrategies;
     }
     public void FindAllMethods(){
-        Node node = listOfStrategies.get(listOfStrategies.size()-1).RightSibling;
+        Node node = listOfStrategies.size() > 0 ? listOfStrategies.get(listOfStrategies.size()-1).RightSibling : this.GameLoopNode().RightSibling;
         while (node instanceof MethodNode){
             listOfMethods.add((MethodNode) node);
             node = node.RightSibling;

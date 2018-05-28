@@ -1,5 +1,5 @@
 setup
-	Tank.setBodyColor("white")
+	Tank.setColor("white")
 	Tank.Gun.setColor("white")
 	Tank.Radar.setColor("white")
 end
@@ -11,7 +11,7 @@ kasper = 10
 end
 
 function int myAddFunction (int a, int b)
-
+    return a
 end
 
 strategy Default
