@@ -143,6 +143,6 @@ public abstract class AstVisitor<T> {
             return Visit((NegateNode) node);
         }
         else
-            return null; //hvad skal vi ellers returnere...
+            return null;
     }
 }

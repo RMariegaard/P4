@@ -18,8 +18,6 @@ public abstract class Node{
         this.FirstLinenumber = firstLinenumber;
     }
 
-
-    //Ifølge bogen skal de alle sammen returnere node...
     public Node MakeSiblings(Node y){
 
         Node xSibs;
@@ -45,7 +43,6 @@ public abstract class Node{
         return ySibs;
     }
 
-    //Ifølge bogen skal de alle sammen returnere node... Her siger de ikke hvad der skal returneres.
     public Node AdoptChildren(Node y) {
         Node ySibs;
         if(y.LeftmostSibling == null)
@@ -60,7 +57,7 @@ public abstract class Node{
                 ySibs = ySibs.RightSibling;
             }
         }
-        return this;   //idk hvad man skal returnere
+        return this;
     }
 
     public Node AdoptChildren(Node... ys){
@@ -72,22 +69,10 @@ public abstract class Node{
 
 
 
-
-
-    //Forstår ikke helt de to næste functioner.. skal de overhoved være her?
-
-
-    //Er vel bare constructeren som jo skal være specifict vel?
     public Node makeNode(){
         return this;
     }
 
-
-    //Ifølge bogen skal den kaldes udefra med en parameter op hvor makeNode(op).AdoptChildren bliver kaldt på
-    //Men det her er vel det samme??
-
-
-    //Fuck nu det her. syntes ikke det giver mening
     public Node MakeFamily( Node... kids){
 
         for(int i = 0; i<kids.length; i++) {

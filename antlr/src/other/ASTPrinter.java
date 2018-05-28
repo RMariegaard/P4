@@ -3,7 +3,7 @@ import Nodes.Node;
 import sun.misc.Queue;
 
 public class ASTPrinter {
-    //virker ikke endnu
+
     public static void PrintTree(Node ast){
 
 

@@ -184,8 +184,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
                 unaryNode = new UsubNode(linenumber);
                 break;
             default:
-                unaryNode = new NullNode(linenumber); //This is not supposed to be there call exception instead
-                //idk where to catch it tho, and in java u have to catch it.
+                unaryNode = new NullNode(linenumber);
         }
 
         return unaryNode.AdoptChildren(visit(ctx.ref()));
@@ -406,8 +405,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
                 infixNode = new SubExprNode(linenumber);
                 break;
             default:
-                //throw an exeption or some shit.
-                infixNode = new NullNode(linenumber); //this is not something that should be used.
+                infixNode = new NullNode(linenumber);
         }
         infixNode.AdoptChildren(visit(ctx.term()));
         infixNode.AdoptChildren(visit(ctx.expr()));
@@ -434,8 +432,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
                 unaryNode = new UsubNode(linenumber);
                 break;
             default:
-                unaryNode = new NullNode(linenumber); //This is not supposed to be there call exception instead
-                //idk where to catch it tho, and in java u have to catch it.
+                unaryNode = new NullNode(linenumber);
         }
 
         return unaryNode.AdoptChildren(visit(ctx.ref()));
@@ -455,8 +452,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
                     infixNode = new DivExprNode(linenumber);
                     break;
                 default:
-                    //throw an exeption or some shit.
-                    infixNode = new NullNode(linenumber); //this is not something that should be used.
+                    infixNode = new NullNode(linenumber);
             }
             infixNode.AdoptChildren(visit(ctx.factor()));
             infixNode.AdoptChildren(visit(ctx.term()));
@@ -487,7 +483,7 @@ public class BuildASTVisitor extends antlrBaseVisitor<Node>
             case antlrParser.DECIMAL_NUM:
                 return new DecimalNode(linenumber, Double.parseDouble(ctx.DECIMAL_NUM().getText()));
             default:
-                return new NullNode(linenumber); //should not call this, exeptions instead
+                return new NullNode(linenumber);
 
         }
     }

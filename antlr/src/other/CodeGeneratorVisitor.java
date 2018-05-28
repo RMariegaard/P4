@@ -64,7 +64,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
 
     @Override
     public String Visit(AssignNode node) {
-        if(node.ValueNode().Type != StrategyType.class){ //Det bliver åbenbart en ref node med den måde jeg har lagt det ind
+        if(node.ValueNode().Type != StrategyType.class){
             return String.format("%s = %s", Visit(node.RefNode()), Visit(node.ValueNode()));
         }
         else{
@@ -194,8 +194,6 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
     @Override
     public String Visit(FcallNode node) {
         List<String> colorFunctions = Arrays.asList("Tank.Gun.setColor", "Tank.setColor", "Tank.Radar.setColor");
-        //Den første if checker om det er en af de tre functioner hvor vi bruger farver, dette er nemmelig lidt specielt
-        //Her skal man nemlig printe Color.farve, men i DYER angiver man farven som en string, hvilket tegnet " ikke skal printes i java.
         if(colorFunctions.contains(node.IDNode().idString)){
             return String.format("%s(Color.%s)", Visit(node.IDNode()), node.ArgumentNodes()[0].toString());
         }
@@ -209,7 +207,7 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
             for(int i = 0; i < node.NumberOfArguments() - 1; i++){
                 Fcall = String.format(Fcall + "%s,",Visit(array[i]));
             }
-            Fcall = String.format(Fcall + "%s)", Visit(array[array.length-1])); //TODO: går ud fra at det var sidste element du ville besøge; har tilføjet -1 ellers er den jo outofbounds
+            Fcall = String.format(Fcall + "%s)", Visit(array[array.length-1]));
             return Fcall;
         }
     }
@@ -426,7 +424,6 @@ public class CodeGeneratorVisitor extends AstVisitor<String> {
     @Override
     public String Visit(RefNode node) {
         if(node.IsArrayRef()){
-            //forstår ikke helt det med isarrayref siger den aldrig bliver brugt ?
             return String.format("%s[%s]",Visit(node.IDNode()), Visit(node.ArrayIndexNode()));
         }
         else {
